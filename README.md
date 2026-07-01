@@ -84,8 +84,11 @@ testtea/
 
 | Nombre | Rol |
 |---|---|
-| Adriana Aranguez | Data Scientist / Full Stack |
-| _(anadir resto del equipo)_ | |
+| | |
+| | |
+| | |
+| | |
+| | |
 
 ## Licencia de datos
 
