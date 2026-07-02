@@ -1,0 +1,92 @@
+/* base.css — Reset, tipografia y variables raiz */
+
+/* Reset minimo */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* Tipografia (las fuentes se cargan via <link> en el HTML) */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+  font-weight: 800;
+}
+
+h2 {
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+}
+
+h3 {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+}
+
+p {
+  max-width: 680px;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+/* Seleccion */
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* Focus visible para accesibilidad */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Reducir movimiento si el usuario lo prefiere */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}

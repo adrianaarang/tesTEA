@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TesTEA — Cribado temprano de TEA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="wrap">
+      <div class="brand">
+        <svg class="brand-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 18c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+          <path d="M22 18c1.1 0 2 .9 2 2s-.9 2-2 2H6c-1.1 0-2-.9-2-2s.9-2 2-2" stroke="var(--accent)" stroke-width="2"/>
+          <path d="M10 10c0-2.2 1.8-4 4-4s4 1.8 4 4" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+          <line x1="14" y1="4" x2="14" y2="2" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" opacity="0.3"/>
+          <path d="M11 5c-.5-1.5-.2-2.5.5-3" stroke="var(--accent)" stroke-width="1" stroke-linecap="round" opacity="0.3"/>
+          <path d="M17 5c.5-1.5.2-2.5-.5-3" stroke="var(--accent)" stroke-width="1" stroke-linecap="round" opacity="0.3"/>
+          <circle cx="10" cy="16" r="1" fill="var(--accent)" opacity="0.4"/>
+          <circle cx="14" cy="14" r="1" fill="var(--accent)" opacity="0.4"/>
+          <circle cx="18" cy="16" r="1" fill="var(--accent)" opacity="0.4"/>
+          <line x1="10" y1="16" x2="14" y2="14" stroke="var(--accent)" stroke-width="0.8" opacity="0.3"/>
+          <line x1="14" y1="14" x2="18" y2="16" stroke="var(--accent)" stroke-width="0.8" opacity="0.3"/>
+        </svg>
+        TesTEA
+      </div>
+      <ul class="nav-links">
+        <li><a href="#proyecto">El proyecto</a></li>
+        <li><a href="#datos">Los datos</a></li>
+        <li><a href="#resultados">Resultados</a></li>
+        <li><a href="#cuestionario">Cuestionario</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero" id="hero">
+    <div class="wrap">
+      <div class="section-label">DataScope Solutions / Proyecto de clasificacion / Modulo III</div>
+      <h1>Dos consultas menos.<br>Una derivacion <em>mejor</em>.</h1>
+      <p class="hero-subtitle">
+        TesTEA es una herramienta de cribado temprano de TEA basada en machine learning.
+        Analiza las respuestas del cuestionario AQ-10 y asiste a profesionales de atencion
+        primaria en la decision de derivar a evaluacion especializada.
+      </p>
+      <div class="hero-badges">
+        <span class="badge"><span class="badge-dot"></span>Cribado, no diagnostico</span>
+        <span class="badge"><span class="badge-dot"></span>7.833 registros analizados</span>
+        <span class="badge"><span class="badge-dot"></span>Recall como metrica prioritaria</span>
+      </div>
+
+      <div class="ethics-banner">
+        <p>
+          <strong>Marco etico:</strong> TesTEA es una herramienta de apoyo al cribado, no un sistema
+          de diagnostico automatizado. Los resultados son orientativos y no sustituyen la evaluacion
+          clinica por parte de un profesional especializado. Reconocemos los sesgos potenciales de los
+          datos (sobrerrepresentacion de poblacion anglosajona, criterios DSM-5, posible infradiagnostico
+          en mujeres) y recomendamos validacion continua en contextos diversos.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <!-- PROYECTO -->
+  <section id="proyecto">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="section-label">El proyecto</div>
+        <h2>El problema que resuelve TesTEA</h2>
+        <p>
+          Una unidad de pediatria de atencion primaria quiere optimizar las derivaciones
+          a neuropediatria. Actualmente, el proceso de cribado con el cuestionario AQ-10
+          requiere dos consultas: una para administrar el test y otra para corregirlo e
+          interpretar los resultados. TesTEA reduce ese proceso a una sola interaccion
+          digital, derivando directamente a diagnostico los casos con mayor probabilidad.
+        </p>
+      </div>
+
+      <div class="grid-4 reveal">
+        <div class="stat-card">
+          <div class="num" data-count="7833">0</div>
+          <div class="label">registros analizados</div>
+        </div>
+        <div class="stat-card">
+          <div class="num" data-count="3">0</div>
+          <div class="label">datasets combinados</div>
+        </div>
+        <div class="stat-card">
+          <div class="num" data-count="4">0</div>
+          <div class="label">modelos entrenados</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">91%</div>
+          <div class="label">recall del mejor modelo</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DATOS -->
+  <section id="datos">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="section-label">Los datos</div>
+        <h2>Tres datasets, tres franjas de edad</h2>
+        <p>
+          Exploramos datos de adultos (UCI), adolescentes (UCI), una coleccion agrupada (Kaggle)
+          y un dataset especifico de toddlers (Kaggle). Para el modelado, nos centramos en los
+          datasets de adultos, ninos y toddlers, todos basados en el cuestionario AQ-10/Q-CHAT-10.
+        </p>
+      </div>
+
+      <div class="grid-2 reveal">
+        <div class="data-card">
+          <h3>Importancia de cada pregunta</h3>
+          <p style="font-size:0.85rem; color:var(--text-faint); margin-bottom:var(--space-md);">
+            Que preguntas del AQ-10 pesan mas en la prediccion del modelo.
+          </p>
+          <div id="feature-importance"></div>
+        </div>
+        <div class="data-card">
+          <h3>Matriz de confusion del mejor modelo</h3>
+          <p style="font-size:0.85rem; color:var(--text-faint); margin-bottom:var(--space-md);">
+            Falsos negativos (abajo-izquierda) son los mas criticos en cribado.
+          </p>
+          <div id="confusion-matrix"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTADOS -->
+  <section id="resultados">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="section-label">Resultados</div>
+        <h2>Comparacion de modelos</h2>
+        <p>
+          Priorizamos el recall (sensibilidad) porque en un contexto de cribado medico,
+          un falso negativo (no derivar a alguien que lo necesita) es mucho mas grave
+          que un falso positivo (derivar a alguien que al final no lo necesita).
+        </p>
+      </div>
+
+      <div class="reveal" style="overflow-x: auto;">
+        <div id="metrics-table"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CUESTIONARIO INTERACTIVO -->
+  <section id="cuestionario" style="background: var(--bg-warm);">
+    <div class="wrap">
+      <div class="section-head reveal" style="text-align: center; max-width: 600px; margin: 0 auto var(--space-xl);">
+        <div class="section-label">Prueba el cuestionario</div>
+        <h2>Cribado AQ-10 interactivo</h2>
+        <p style="margin: var(--space-sm) auto 0;">
+          Responde las 10 preguntas y obtendras el resultado del cribado.
+          Recuerda: esto no es un diagnostico.
+        </p>
+      </div>
+
+      <div class="questionnaire reveal">
+        <!-- Selector de grupo de edad -->
+        <div class="age-selector">
+          <button class="age-btn active" data-group="adults">Adulto</button>
+          <button class="age-btn" data-group="children">Nino/a</button>
+          <button class="age-btn" data-group="toddlers">Bebe/Toddler</button>
+        </div>
+
+        <div id="questionnaire-form">
+          <!-- Barra de progreso -->
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 10%"></div>
+          </div>
+
+          <!-- Contenedor de preguntas -->
+          <div id="questions-container"></div>
+
+          <!-- Navegacion -->
+          <div class="question-nav">
+            <button class="btn btn-secondary" id="btn-prev" disabled>Anterior</button>
+            <button class="btn btn-primary" id="btn-next">Siguiente</button>
+            <button class="btn btn-primary" id="btn-result" style="display:none">Ver resultado</button>
+          </div>
+        </div>
+
+        <!-- Panel de resultado -->
+        <div class="result-panel" id="result-panel">
+          <div class="result-score" id="result-score-value"></div>
+          <div class="result-label" id="result-label"></div>
+          <p class="result-detail" id="result-detail"></p>
+          <div class="result-disclaimer">
+            Este resultado es orientativo y no constituye un diagnostico clinico.
+            Si el resultado sugiere derivacion, consulte con un profesional
+            especializado para una evaluacion completa.
+          </div>
+          <button class="btn btn-secondary btn-reset" id="btn-reset">Repetir cuestionario</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONCLUSION -->
+  <section id="conclusion">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="section-label">Conclusion</div>
+        <h2>Lo que le recomendamos al cliente</h2>
+      </div>
+      <div class="conclusion-box reveal">
+        <p>
+          <strong>TesTEA demuestra que es posible automatizar el cribado AQ-10 con un nivel
+          de recall suficiente para uso como herramienta de apoyo en atencion primaria.</strong>
+          El modelo identifica correctamente mas del 90% de los casos positivos, reduciendo
+          significativamente el riesgo de falsos negativos.
+        </p>
+        <p>
+          Recomendamos desplegar TesTEA como herramienta complementaria (no sustitutiva)
+          en consultas de atencion primaria, con las siguientes consideraciones:
+        </p>
+        <p>
+          <strong>Validacion clinica:</strong> antes de su uso en produccion, el modelo debe
+          ser validado con datos de poblacion espanola para confirmar que los patrones
+          detectados en los datasets de entrenamiento (mayoritariamente anglosajones)
+          se mantienen en nuestro contexto clinico.
+        </p>
+        <p>
+          <strong>Sesgo de genero:</strong> el TEA se diagnostica con mayor frecuencia en
+          hombres, pero hay evidencia de que en mujeres la presentacion clinica difiere
+          y se infradiagnostica. Recomendamos monitorizar el rendimiento del modelo por
+          sexo y ajustar si se detectan disparidades.
+        </p>
+        <p>
+          <strong>Siguiente paso:</strong> incorporar datos de centros espanoles de atencion
+          primaria para reentrenar el modelo con poblacion local, y realizar un piloto
+          controlado comparando las derivaciones de TesTEA con las derivaciones manuales.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-left">TESTEA — DataScope Solutions — Modulo III</div>
+      <ul class="footer-links">
+        <li><a href="https://github.com/adrianaarang/tesTEA" target="_blank">GitHub</a></li>
+        <li><a href="#">Equipo</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
