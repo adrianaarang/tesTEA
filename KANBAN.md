@@ -8,10 +8,10 @@ Nadie hace solo codigo, solo revision o solo documentacion.
 | Tarea | Codifica | Revisa (PR) | Documenta |
 |---|---|---|---|
 | Preprocesamiento | Laura Silva | Adriana Aránguez | José Manuel Paredes|
-| Modelado | José Manuel Paredes | Laura Silva | Elizabeth Tena |
-| Evaluacion + SHAP | Elizabeth Tena | José Manuel Paredes | Isabela Tellez |
-| Front |Adriana Aránguez| Elizabeth Tena | Laura Silva |
-| README + marco etico + JSONs | Isabela Tellez | Adriana Aránguez| Elizabeth Tena |
+| Modelado | José Manuel Paredes | Laura Silva | Elizabeth Sena |
+| Evaluacion + SHAP | Elizabeth Sena | José Manuel Paredes | Isabela Tellez |
+| Front |Adriana Aránguez| Elizabeth Sena | Laura Silva |
+| README + marco etico + JSONs | Isabela Tellez | Adriana Aránguez| Elizabeth Sena |
 
 - **Codifica:** escribe el codigo y lo sube en su rama
 - **Revisa:** hace code review del PR antes de hacer merge a main
@@ -55,7 +55,7 @@ Nadie hace solo codigo, solo revision o solo documentacion.
 ### Modelado (dia 2-4)
 - **Codifica:** José Manuel Paredes
 - **Revisa:** Laura Silva
-- **Documenta:** Elizabeth Tena
+- **Documenta:** Elizabeth Sena
 - **Definicion de terminado:**
   - [ ] Notebook 03_modelado.ipynb completo
   - [ ] Baseline (predecir siempre la clase mayoritaria)
@@ -70,7 +70,7 @@ Nadie hace solo codigo, solo revision o solo documentacion.
   - [ ] Comentarios y celdas markdown escritos por Persona 3
 
 ### Evaluacion y analisis critico (dia 4-5)
-- **Codifica:** Elizabeth Tena
+- **Codifica:** Elizabeth Sena
 - **Revisa:** Juan Manuel Paredes
 - **Documenta:** Isabella Tellez
 - **Definicion de terminado:**
@@ -88,7 +88,7 @@ Nadie hace solo codigo, solo revision o solo documentacion.
 
 ### Front completo (dia 2-6)
 - **Codifica:** Adriana Aránguez
-- **Revisa:** Elizabeth Tena
+- **Revisa:** Elizabeth Sena
 - **Documenta:** Laura Silva
 - **Definicion de terminado:**
   - [ ] Estructura HTML en docs/index.html
@@ -108,7 +108,7 @@ Nadie hace solo codigo, solo revision o solo documentacion.
 ### README, marco etico y exportacion de JSONs (dia 3-6)
 - **Codifica:** Isabella Tellez 
 - **Revisa:** Adriana Aránguez
-- **Documenta:** Elizabeth Tena
+- **Documenta:** Elizabeth Sena
 - **Definicion de terminado:**
   - [ ] JSONs de metricas exportados a docs/assets/data/metrics.json
   - [ ] README completo: contexto de negocio, marco etico, metodologia, limitaciones, conclusiones
