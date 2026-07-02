@@ -7,11 +7,11 @@ Nadie hace solo codigo, solo revision o solo documentacion.
 
 | Tarea | Codifica | Revisa (PR) | Documenta |
 |---|---|---|---|
-| Preprocesamiento | Persona 1 | Persona 4 | Persona 2 |
-| Modelado | Persona 2 | Persona 1 | Persona 3 |
-| Evaluacion + SHAP | Persona 3 | Persona 2 | Persona 5 |
-| Front | Persona 4 | Persona 3 | Persona 1 |
-| README + marco etico + JSONs | Persona 5 | Persona 4 | Persona 3 |
+| Preprocesamiento | Laura Silva | Adriana Aránguez | José Manuel Paredes|
+| Modelado | José Manuel Paredes | Laura Silva | Elizabeth Tena |
+| Evaluacion + SHAP | Elizabeth Tena | José Manuel Paredes | Isabela Tellez |
+| Front |Adriana Aránguez| Elizabeth Tena | Laura Silva |
+| README + marco etico + JSONs | Isabela Tellez | Adriana Aránguez| Elizabeth Tena |
 
 - **Codifica:** escribe el codigo y lo sube en su rama
 - **Revisa:** hace code review del PR antes de hacer merge a main
@@ -36,9 +36,9 @@ Nadie hace solo codigo, solo revision o solo documentacion.
 ## Backlog
 
 ### Preprocesamiento (dia 1-2)
-- **Codifica:** Persona 1
-- **Revisa:** Persona 4
-- **Documenta:** Persona 2
+- **Codifica:** Laura Silva
+- **Revisa:** Adriana Aránguez
+- **Documenta:** José Manuela Paredes
 - **Definicion de terminado:**
   - [ ] Notebook 02_preprocesamiento.ipynb completo
   - [ ] Funciones reutilizables en src/preprocessing.py
@@ -53,9 +53,9 @@ Nadie hace solo codigo, solo revision o solo documentacion.
   - [ ] Comentarios y celdas markdown escritos por Persona 2
 
 ### Modelado (dia 2-4)
-- **Codifica:** Persona 2
-- **Revisa:** Persona 1
-- **Documenta:** Persona 3
+- **Codifica:** José Manuel Paredes
+- **Revisa:** Laura Silva
+- **Documenta:** Elizabeth Tena
 - **Definicion de terminado:**
   - [ ] Notebook 03_modelado.ipynb completo
   - [ ] Baseline (predecir siempre la clase mayoritaria)
@@ -70,9 +70,9 @@ Nadie hace solo codigo, solo revision o solo documentacion.
   - [ ] Comentarios y celdas markdown escritos por Persona 3
 
 ### Evaluacion y analisis critico (dia 4-5)
-- **Codifica:** Persona 3
-- **Revisa:** Persona 2
-- **Documenta:** Persona 5
+- **Codifica:** Elizabeth Tena
+- **Revisa:** Juan Manuel Paredes
+- **Documenta:** Isabella Tellez
 - **Definicion de terminado:**
   - [ ] Notebook 04_evaluacion_analisis.ipynb completo
   - [ ] Funciones reutilizables en src/evaluate.py
@@ -87,9 +87,9 @@ Nadie hace solo codigo, solo revision o solo documentacion.
   - [ ] Comentarios y celdas markdown escritos por Persona 5
 
 ### Front completo (dia 2-6)
-- **Codifica:** Persona 4
-- **Revisa:** Persona 3
-- **Documenta:** Persona 1
+- **Codifica:** Adriana Aránguez
+- **Revisa:** Elizabeth Tena
+- **Documenta:** Laura Silva
 - **Definicion de terminado:**
   - [ ] Estructura HTML en docs/index.html
   - [ ] Estilos en docs/css/base.css, theme.css, layout.css, components.css
@@ -106,9 +106,9 @@ Nadie hace solo codigo, solo revision o solo documentacion.
   - [ ] Comentarios en el codigo escritos por Persona 1
 
 ### README, marco etico y exportacion de JSONs (dia 3-6)
-- **Codifica:** Persona 5
-- **Revisa:** Persona 4
-- **Documenta:** Persona 3
+- **Codifica:** Isabella Tellez 
+- **Revisa:** Adriana Aránguez
+- **Documenta:** Elizabeth Tena
 - **Definicion de terminado:**
   - [ ] JSONs de metricas exportados a docs/assets/data/metrics.json
   - [ ] README completo: contexto de negocio, marco etico, metodologia, limitaciones, conclusiones
