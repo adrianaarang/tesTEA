@@ -3,7 +3,7 @@
 ## Terminado
 
 ### EDA
-- **Responsable:** todo el equipo
+- **Responsable:** Todo el equipo
 - **Definicion de terminado:**
   - [x] Datasets cargados y explorados (adults, combined, toddlers)
   - [x] Valores faltantes identificados (2 nulos en age de adults)
@@ -53,12 +53,8 @@
   - [ ] Recall priorizado como metrica principal (contexto de cribado medico)
   - [ ] Matriz de confusion visualizada para cada modelo
   - [ ] Curva ROC comparativa
-  - [ ] SHAP o importancia de variables para interpretar el mejor modelo
   - [ ] Comparacion de rendimiento entre grupos de edad
   - [ ] Analisis de falsos negativos (los mas criticos en cribado)
-  - [ ] JSONs de metricas exportados a docs/assets/data/
-  - [ ] Marco etico escrito en el README
-  - [ ] Secciones de Metodologia, Limitaciones y Conclusiones del README completas
 
 ### Front completo (dia 2-6)
 - **Responsable:** Persona 4
@@ -71,12 +67,22 @@
   - [ ] Matriz de confusion interactiva
   - [ ] Metricas explicadas para no tecnicos
   - [ ] Seccion de limitaciones/sesgos como bloque destacado
-  - [ ] Integracion de JSONs reales de docs/assets/data/ (cuando Persona 3 los exporte)
+  - [ ] Integracion de JSONs reales de docs/assets/data/ (cuando Persona 5 los exporte)
   - [ ] Responsive y accesible
   - [ ] Desplegable en GitHub Pages desde /docs
 
-### Slides, pitch y documentacion (dia 3-7)
+### Interpretabilidad, documentacion y datos del front (dia 3-6)
 - **Responsable:** Persona 5
+- **Definicion de terminado:**
+  - [ ] SHAP o importancia de variables para interpretar el mejor modelo
+  - [ ] JSONs de metricas exportados a docs/assets/data/
+  - [ ] README completo: marco etico, metodologia, limitaciones, conclusiones
+  - [ ] Comentarios y documentacion revisados en todos los notebooks
+  - [ ] Commits de todo el equipo verificados
+  - [ ] Estructura del repo limpia y coherente
+
+### Slides y pitch (dia 5-7)
+- **Responsable:** Todo el equipo
 - **Definicion de terminado:**
   - [ ] Slides con estructura del enunciado:
     - [ ] Quienes somos (equipo y rol en DataScope Solutions)
@@ -87,17 +93,17 @@
     - [ ] Limitaciones, sesgos y mejoras posibles
     - [ ] Conclusion: que le recomendamos al cliente
   - [ ] Marco etico integrado en la narrativa del pitch
-  - [ ] README final revisado y completo
-  - [ ] Pitch ensayado al menos 2 veces con el equipo
+  - [ ] Pitch ensayado al menos 2 veces
   - [ ] Duracion ajustada a 10-12 minutos
   - [ ] Feedback incorporado tras ensayos
 
 ## Dependencias entre tareas
 
 Persona 1 (preprocesamiento) desbloquea a Persona 2 (modelado)
-Persona 2 (modelado) desbloquea a Persona 3 (evaluacion)
-Persona 3 (evaluacion) desbloquea a Persona 4 (front, datos reales) y Persona 5 (slides con resultados)
+Persona 2 (modelado) desbloquea a Persona 3 (evaluacion) y Persona 5 (SHAP + JSONs)
+Persona 5 (JSONs) desbloquea a Persona 4 (front, datos reales)
 Persona 4 (front) puede empezar desde el dia 2 con datos dummy del EDA
+Slides (todo el equipo) empieza cuando hay resultados del modelado (dia 5)
 
 ## Contratos acordados (dia 1)
 
@@ -126,3 +132,4 @@ Persona 4 (front) puede empezar desde el dia 2 con datos dummy del EDA
   "best_model": "nombre_del_mejor_modelo"
 }
 ```
+
