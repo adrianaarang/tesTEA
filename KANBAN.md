@@ -9,9 +9,9 @@ Nadie hace solo codigo, solo revision o solo documentacion.
 |---|---|---|---|
 | Preprocesamiento | Laura Silva | Adriana Aránguez | José Manuel Paredes|
 | Modelado | José Manuel Paredes | Laura Silva | Elizabeth Sena |
-| Evaluacion + SHAP | Elizabeth Sena | José Manuel Paredes | Isabela Tellez |
+| Evaluacion + SHAP | Isabella Tellez | José Manuel Paredes | Elizabeth Sena |
 | Front |Adriana Aránguez| Elizabeth Sena | Laura Silva |
-| README + marco etico + JSONs | Isabela Tellez | Adriana Aránguez| Elizabeth Sena |
+| README + marco etico + JSONs | Elizabeth Sena | Adriana Aránguez| Isabella Tellez |
 
 - **Codifica:** escribe el codigo y lo sube en su rama
 - **Revisa:** hace code review del PR antes de hacer merge a main
@@ -70,9 +70,9 @@ Nadie hace solo codigo, solo revision o solo documentacion.
   - [ ] Comentarios y celdas markdown escritos por Persona 3
 
 ### Evaluacion y analisis critico (dia 4-5)
-- **Codifica:** Elizabeth Sena
+- **Codifica:** Isabella Tellez
 - **Revisa:** Juan Manuel Paredes
-- **Documenta:** Isabella Tellez
+- **Documenta:** Elizabeth Sena
 - **Definicion de terminado:**
   - [ ] Notebook 04_evaluacion_analisis.ipynb completo
   - [ ] Funciones reutilizables en src/evaluate.py
@@ -106,9 +106,9 @@ Nadie hace solo codigo, solo revision o solo documentacion.
   - [ ] Comentarios en el codigo escritos por Persona 1
 
 ### README, marco etico y exportacion de JSONs (dia 3-6)
-- **Codifica:** Isabella Tellez 
+- **Codifica:** Elizabeth Sena
 - **Revisa:** Adriana Aránguez
-- **Documenta:** Elizabeth Sena
+- **Documenta:**Isabella Tellez
 - **Definicion de terminado:**
   - [ ] JSONs de metricas exportados a docs/assets/data/metrics.json
   - [ ] README completo: contexto de negocio, marco etico, metodologia, limitaciones, conclusiones
