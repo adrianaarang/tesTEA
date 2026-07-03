@@ -15,7 +15,7 @@ const DUMMY_METRICS = {
       confusion_matrix: [[515, 0], [189, 0]]
     },
     {
-      name: "Regresion Logistica",
+      name: "Regresión Logística",
       accuracy: 0.92,
       precision: 0.88,
       recall: 0.85,
