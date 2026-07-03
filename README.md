@@ -84,11 +84,11 @@ testtea/
 
 | Nombre | Rol |
 |---|---|
-| | |
-| | |
-| | |
-| | |
-| | |
+| Isabella Tellez | Product Owner |
+| Adriana Aránguez | Scrum Master |
+| José Manuel Paredes| Desarrollador |
+| Laura Silva| Desarrollador |
+| Elizabeth Sena| Desarrollador |
 
 ## Licencia de datos
 
