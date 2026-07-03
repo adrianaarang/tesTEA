@@ -18,3 +18,6 @@ data/processed/*
 # Sistema
 .DS_Store
 .env
+
+# Modelos (Ignorar artefactos binarios)
+models/
