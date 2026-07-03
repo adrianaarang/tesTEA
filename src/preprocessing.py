@@ -1,7 +1,7 @@
 from pathlib import Path
 import numpy as np
 import pandas as pd
-import joblib  # CAMBIO: anadido para poder guardar el preprocessor entrenado
+import joblib
 
 from sklearn.model_selection import train_test_split
 from sklearn.compose import ColumnTransformer
@@ -36,7 +36,15 @@ DATASET_CONFIG = {
         "aq_cols": [
             "A1_Score", "A2_Score", "A3_Score", "A4_Score", "A5_Score",
             "A6_Score", "A7_Score", "A8_Score", "A9_Score", "A10_Score"
-        ]
+        ],
+        # CAMBIO: columnas con muchas categorias distintas (ethnicity y
+        # contry_of_res generan muchas columnas one-hot). Se agrupan las
+        # categorias poco frecuentes en "other" antes de codificar, para
+        # no disparar la dimensionalidad. En adults el ratio filas/columnas
+        # es tolerable (563 filas de train), pero se aplica igualmente por
+        # consistencia con adolescents y porque no hace dano.
+        "group_rare_cols": ["ethnicity", "contry_of_res", "relation"],
+        "rare_min_freq": 5
     },
 
     "combined": {
@@ -56,7 +64,13 @@ DATASET_CONFIG = {
         "aq_cols": [
             "A1", "A2", "A3", "A4", "A5",
             "A6", "A7", "A8", "A9", "A10"
-        ]
+        ],
+        # CAMBIO: combined no tiene columnas categoricas de alta cardinalidad
+        # (Sex, Jauundice y Family_ASD son todas binarias), asi que no
+        # necesita agrupacion. Se deja la lista vacia por consistencia
+        # de estructura entre configs.
+        "group_rare_cols": [],
+        "rare_min_freq": 5
     },
 
     "toddlers": {
@@ -78,12 +92,15 @@ DATASET_CONFIG = {
         "aq_cols": [
             "A1", "A2", "A3", "A4", "A5",
             "A6", "A7", "A8", "A9", "A10"
-        ]
+        ],
+        # CAMBIO: Ethnicity en toddlers tambien tiene bastantes categorias.
+        # Con 843 filas de train el ratio es mas holgado que en adolescents,
+        # pero se agrupa igualmente para mantener el mismo criterio en
+        # todos los datasets.
+        "group_rare_cols": ["Ethnicity"],
+        "rare_min_freq": 5
     },
 
-    # CAMBIO: anadida la configuracion que faltaba para el dataset de adolescentes.
-    # Viene del archivo Autism-Adolescent-Data.arff (UCI), con la misma estructura
-    # de columnas que el dataset de adultos (A1_Score...A10_Score, age, gender, etc.)
     "adolescents": {
         "target": "Class/ASD",
         "target_map": {
@@ -105,7 +122,19 @@ DATASET_CONFIG = {
         "aq_cols": [
             "A1_Score", "A2_Score", "A3_Score", "A4_Score", "A5_Score",
             "A6_Score", "A7_Score", "A8_Score", "A9_Score", "A10_Score"
-        ]
+        ],
+        # CAMBIO: este es el caso critico. Con solo 83 filas de train y
+        # columnas como ethnicity o contry_of_res con muchas categorias
+        # distintas, el one-hot encoding generaba 64 columnas finales
+        # (ratio filas/columnas de ~1.3:1), lo que favorece el sobreajuste
+        # sobre todo en modelos de arboles (Random Forest, XGBoost).
+        # Agrupamos las categorias poco frecuentes en "other" para reducir
+        # el numero de columnas resultantes.
+        "group_rare_cols": ["ethnicity", "contry_of_res", "relation"],
+        # CAMBIO: umbral mas alto que el resto (10 en vez de 5) porque el
+        # dataset es mucho mas pequeno; con min_freq=5 sobre 104 registros
+        # casi ninguna categoria se agruparia y el problema seguiria igual.
+        "rare_min_freq": 10
     }
 }
 
@@ -121,11 +150,6 @@ def load_dataset(path):
     return pd.read_csv(path)
 
 
-# CAMBIO: funcion nueva. Los archivos .arff (adolescentes) se leen con
-# scipy.io.arff, que devuelve las columnas de texto como bytes (b'YES', b'f'...)
-# en vez de strings normales. Si no se decodifican antes, ni el mapeo del target
-# ni la limpieza de '?' funcionan correctamente. Esta funcion se debe llamar
-# justo despues de cargar cualquier dataset que venga de un .arff.
 def decode_arff_bytes(df):
     """
     Decodifica a string las columnas de tipo bytes que vienen de un .arff.
@@ -133,7 +157,6 @@ def decode_arff_bytes(df):
     """
     df = df.copy()
     for col in df.select_dtypes([object]).columns:
-        # Solo decodificamos si el contenido es realmente bytes
         if df[col].apply(lambda x: isinstance(x, bytes)).any():
             df[col] = df[col].str.decode("utf-8")
     return df
@@ -145,6 +168,26 @@ def clean_question_marks(df):
     """
     df = df.copy()
     df.replace("?", np.nan, inplace=True)
+    return df
+
+
+# CAMBIO: funcion nueva. Agrupa en una categoria "other" los valores de
+# una columna categorica que aparecen menos de min_freq veces. Esto reduce
+# el numero de columnas que genera el OneHotEncoder despues, evitando que
+# datasets pequenos (como adolescents) terminen con mas columnas que filas.
+# Se aplica ANTES del split train/test porque es una operacion descriptiva
+# sobre los valores de la columna (no aprende nada del target), asi que no
+# introduce data leakage.
+def group_rare_categories(df, col, min_freq=5):
+    """
+    Reemplaza por 'other' las categorias de `col` que aparecen menos de
+    `min_freq` veces en el dataset. Los valores nulos o '?' no se tocan
+    aqui, se gestionan despues en la imputacion del pipeline.
+    """
+    df = df.copy()
+    counts = df[col].value_counts(dropna=True)
+    categorias_raras = counts[counts < min_freq].index
+    df[col] = df[col].apply(lambda x: "other" if x in categorias_raras else x)
     return df
 
 
@@ -166,13 +209,8 @@ def encode_target(df, target_col, target_map):
     df = df.copy()
     df[target_col] = df[target_col].map(target_map)
 
-    # CAMBIO: antes, si un valor del target no estaba en target_map, .map()
-    # lo convertia en NaN sin avisar. Eso podia colar registros invalidos
-    # o hacer fallar el stratify del train_test_split con un error confuso.
-    # Ahora lo comprobamos explicitamente y paramos con un mensaje claro.
     n_nulos = df[target_col].isnull().sum()
     if n_nulos > 0:
-        valores_no_reconocidos = df[df[target_col].isnull()][target_col].unique()
         raise ValueError(
             f"{n_nulos} valores de '{target_col}' no reconocidos en target_map. "
             f"Revisa el diccionario target_map o los datos originales."
@@ -224,36 +262,44 @@ def preprocess_single_dataset(df, config, test_size=0.2, random_state=42):
     Preprocesa un dataset completo segun su configuracion:
     1. decodifica bytes si vienen de un .arff
     2. limpia '?'
-    3. codifica target
-    4. elimina columnas no deseadas
-    5. separa X e y
-    6. hace train/test split
-    7. ajusta el preprocesador SOLO con train
-    8. transforma train y test
-    9. devuelve train_df, test_df y el preprocessor
+    3. agrupa categorias poco frecuentes en 'other'
+    4. codifica target
+    5. elimina columnas no deseadas
+    6. separa X e y
+    7. hace train/test split
+    8. ajusta el preprocesador SOLO con train
+    9. transforma train y test
+    10. devuelve train_df, test_df y el preprocessor
     """
 
     df = df.copy()
 
-    # CAMBIO: paso nuevo, decodificar bytes antes de nada si el dataset
-    # viene de un .arff (por ejemplo adolescentes). Si ya son strings
-    # normales (CSV), esta funcion no hace nada.
+    # 1) Decodificar bytes si el dataset viene de un .arff
     df = decode_arff_bytes(df)
 
-    # 1) Reemplazar '?' por NaN
+    # 2) Reemplazar '?' por NaN
     df = clean_question_marks(df)
 
-    # 2) Codificar target
+    # CAMBIO: paso nuevo. Agrupamos categorias poco frecuentes ANTES de
+    # separar target y hacer el split, usando la lista group_rare_cols
+    # y el umbral rare_min_freq definidos en la config de cada dataset.
+    # Si un dataset no tiene columnas configuradas para esto (lista vacia,
+    # como combined), este bucle simplemente no hace nada.
+    for col in config.get("group_rare_cols", []):
+        if col in df.columns:
+            df = group_rare_categories(df, col, min_freq=config.get("rare_min_freq", 5))
+
+    # 3) Codificar target
     target_col = config["target"]
     df = encode_target(df, target_col, config["target_map"])
 
-    # 3) Eliminar columnas no deseadas
+    # 4) Eliminar columnas no deseadas
     df = drop_existing_columns(df, config["drop_cols"])
 
-    # 4) Separar X e y
+    # 5) Separar X e y
     X, y = split_features_target(df, target_col)
 
-    # 5) Train/test split
+    # 6) Train/test split
     X_train, X_test, y_train, y_test = train_test_split(
         X,
         y,
@@ -262,28 +308,28 @@ def preprocess_single_dataset(df, config, test_size=0.2, random_state=42):
         stratify=y
     )
 
-    # 6) Construir preprocessor
+    # 7) Construir preprocessor
     preprocessor = build_preprocessor(
         numeric_cols=config["numeric_cols"],
         categorical_cols=config["categorical_cols"],
         passthrough_cols=config["aq_cols"]
     )
 
-    # 7) Ajustar SOLO con train y transformar train/test
+    # 8) Ajustar SOLO con train y transformar train/test
     X_train_processed = preprocessor.fit_transform(X_train)
     X_test_processed = preprocessor.transform(X_test)
 
-    # 8) Si el resultado es sparse matrix, convertirlo a array denso
+    # 9) Si el resultado es sparse matrix, convertirlo a array denso
     if hasattr(X_train_processed, "toarray"):
         X_train_processed = X_train_processed.toarray()
 
     if hasattr(X_test_processed, "toarray"):
         X_test_processed = X_test_processed.toarray()
 
-    # 9) Recuperar nombres de columnas transformadas
+    # 10) Recuperar nombres de columnas transformadas
     feature_names = preprocessor.get_feature_names_out()
 
-    # 10) Convertir a DataFrame
+    # 11) Convertir a DataFrame
     X_train_processed_df = pd.DataFrame(
         X_train_processed,
         columns=feature_names,
@@ -296,7 +342,7 @@ def preprocess_single_dataset(df, config, test_size=0.2, random_state=42):
         index=X_test.index
     )
 
-    # 11) Anadir target
+    # 12) Anadir target
     train_df = X_train_processed_df.copy()
     train_df["target"] = y_train.values
 
@@ -326,11 +372,6 @@ def save_processed_data(train_df, test_df, output_dir, prefix):
     print(f"Guardado: {test_path}")
 
 
-# CAMBIO: funcion nueva para persistir el preprocessor entrenado.
-# Antes preprocess_and_save_dataset devolvia el preprocessor pero no lo
-# guardaba en disco, asi que se perdia al cerrar el notebook. Lo necesitamos
-# para poder aplicar la misma transformacion en el notebook de modelado/evaluacion
-# sin tener que reentrenarlo, y para usarlo si el front simula predicciones.
 def save_preprocessor(preprocessor, output_dir, prefix):
     """
     Guarda el preprocessor entrenado con joblib.
@@ -349,7 +390,7 @@ def preprocess_and_save_dataset(df, dataset_name, output_dir, test_size=0.2, ran
     """
     Funcion de alto nivel:
     - busca la config del dataset
-    - lo preprocesa
+    - lo preprocesa (incluye agrupacion de categorias raras si aplica)
     - guarda train/test
     - guarda el preprocessor entrenado
     - devuelve train_df, test_df y preprocessor
@@ -373,7 +414,6 @@ def preprocess_and_save_dataset(df, dataset_name, output_dir, test_size=0.2, ran
         prefix=dataset_name
     )
 
-    # CAMBIO: ahora tambien se guarda el preprocessor, no solo se devuelve
     save_preprocessor(
         preprocessor=preprocessor,
         output_dir=output_dir,
@@ -404,7 +444,12 @@ def get_dataset_summary(df, dataset_name):
         "drop_cols": config["drop_cols"],
         "numeric_cols": config["numeric_cols"],
         "categorical_cols": config["categorical_cols"],
-        "aq_cols": config["aq_cols"]
+        "aq_cols": config["aq_cols"],
+        # CAMBIO: anadido al resumen para que quede visible en el notebook
+        # que columnas se agrupan y con que umbral, sin tener que ir a mirar
+        # el codigo de preprocessing.py
+        "group_rare_cols": config.get("group_rare_cols", []),
+        "rare_min_freq": config.get("rare_min_freq", 5)
     }
 
     return summary
