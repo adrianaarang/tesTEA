@@ -184,6 +184,119 @@
 }
 
 /* ============================================
+   DATA GROUP SELECTOR (importancia/matriz por franja de edad)
+   ============================================ */
+.data-group-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  justify-content: center;
+  margin-bottom: var(--space-sm);
+}
+
+.data-group-btn {
+  padding: 8px 18px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  background: var(--surface);
+  transition: all 0.2s;
+}
+
+.data-group-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.data-group-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+.data-group-label {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  margin-bottom: var(--space-xl);
+}
+
+/* ============================================
+   HEADLINE SUMMARY (resumen destacado en Resultados)
+   ============================================ */
+.headline-summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  background: var(--teal-light);
+  border: 1px solid rgba(58, 125, 123, 0.2);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  margin-bottom: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.headline-number {
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.headline-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.headline-sub {
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+.headline-note {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  max-width: 100%;
+  margin-bottom: var(--space-xl);
+  line-height: 1.6;
+}
+
+.results-table-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: var(--space-md);
+}
+
+/* Tabla completa: agrupacion visual por franja de edad */
+.metrics-table-full .group-cell {
+  font-weight: 600;
+  color: var(--text);
+  vertical-align: top;
+  border-right: 2px solid var(--border);
+  white-space: nowrap;
+}
+
+.metrics-table-full .group-meta {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--text-faint);
+}
+
+.metrics-table-full .row-baseline {
+  opacity: 0.55;
+  font-style: italic;
+}
+
+/* ============================================
    METRICS TABLE
    ============================================ */
 .metrics-table {

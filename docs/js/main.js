@@ -1,7 +1,7 @@
 /* main.js — Orquestador principal y lógica del cuestionario AQ-10 */
 
 import { loadMetrics, getDatasetStats } from "./data-loader.js";
-import { renderFeatureImportance, renderConfusionMatrix, renderMetricsTable } from "./charts.js";
+import { renderFeatureImportance, renderConfusionMatrix, renderFullMetricsTable, renderHeadlineSummary, GROUP_LABELS } from "./charts.js";
 import { initScrollReveal, animateCounters } from "./animations.js";
 
 // Preguntas del cuestionario AQ-10 por grupo de edad
@@ -211,19 +211,58 @@ function resetQuestionnaire() {
   renderQuestion();
 }
 
+// Estado del selector de grupo en la seccion "Los datos" (importancia + matriz)
+let currentDataGroup = "combined";
+let loadedMetrics = null;
+
+function renderGroupData(groupKey) {
+  if (!loadedMetrics || !loadedMetrics.groups[groupKey]) return;
+
+  const group = loadedMetrics.groups[groupKey];
+  const bestModel = group.models.find(m => m.name === group.best_model)
+    || group.models[group.models.length - 1];
+
+  renderFeatureImportance("feature-importance", group.feature_importance);
+  renderConfusionMatrix("confusion-matrix", bestModel.confusion_matrix);
+
+  const label = document.getElementById("data-group-label");
+  if (label) {
+    label.textContent = `${GROUP_LABELS[groupKey] || groupKey} · modelo ${group.best_model} · n test = ${group.n_test}`;
+  }
+}
+
+function initGroupSelector() {
+  document.querySelectorAll(".data-group-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      currentDataGroup = btn.dataset.group;
+      document.querySelectorAll(".data-group-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderGroupData(currentDataGroup);
+    });
+  });
+}
+
 // Inicialización general
 async function init() {
-  // Cargar métricas del modelo
-  const metrics = await loadMetrics();
+  // Cargar métricas reales del modelo (metrics.json, o dummy si aún no existe)
+  loadedMetrics = await loadMetrics();
 
-  // Renderizar gráficos con datos
-  renderFeatureImportance("feature-importance", metrics.feature_importance);
-  renderMetricsTable("metrics-table", metrics.models);
+  // Resumen destacado (cifra titular + nota de robustez)
+  renderHeadlineSummary("headline-summary", loadedMetrics.overall);
 
-  // Buscar el mejor modelo y renderizar su matriz de confusión
-  const bestModel = metrics.models.find(m => m.name === metrics.best_model)
-    || metrics.models[metrics.models.length - 1];
-  renderConfusionMatrix("confusion-matrix", bestModel.confusion_matrix);
+  // Stat card del hero: mismo recall titular que el resumen destacado
+  const heroStat = document.getElementById("hero-recall-stat");
+  if (heroStat) {
+    heroStat.textContent = Math.round(loadedMetrics.overall.recall * 100) + "%";
+  }
+
+  // Tabla completa: las 4 franjas de edad x los 4 modelos
+  renderFullMetricsTable("metrics-table", loadedMetrics.groups);
+
+  // Importancia de variables y matriz de confusión del grupo seleccionado
+  // (por defecto, "combined", el más robusto estadísticamente)
+  initGroupSelector();
+  renderGroupData(currentDataGroup);
 
   // Inicializar cuestionario interactivo
   initQuestionnaire();

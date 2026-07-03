@@ -99,7 +99,7 @@
           <div class="label">modelos entrenados</div>
         </div>
         <div class="stat-card">
-          <div class="num">91%</div>
+          <div class="num" id="hero-recall-stat">—</div>
           <div class="label">recall del mejor modelo</div>
         </div>
       </div>
@@ -116,15 +116,24 @@
           Trabajamos con datos de adultos (UCI), adolescentes (UCI), una colección
           agrupada de adultos, adolescentes y niños (Kaggle) y un dataset específico
           de toddlers (Kaggle). Todos basados en el cuestionario estandarizado
-          AQ-10/Q-CHAT-10.
+          AQ-10/Q-CHAT-10. Cada franja de edad tiene su propio modelo entrenado.
         </p>
       </div>
+
+      <!-- Selector de grupo para importancia de variables y matriz de confusión -->
+      <div class="data-group-selector reveal">
+        <button class="data-group-btn" data-group="adults">Adultos</button>
+        <button class="data-group-btn" data-group="adolescents">Adolescentes</button>
+        <button class="data-group-btn active" data-group="combined">Combinado</button>
+        <button class="data-group-btn" data-group="toddlers">Toddlers</button>
+      </div>
+      <p id="data-group-label" class="data-group-label reveal"></p>
 
       <div class="grid-2 reveal">
         <div class="data-card">
           <h3>Importancia de cada pregunta</h3>
           <p style="font-size:0.85rem; color:var(--text-faint); margin-bottom:var(--space-md);">
-            Qué preguntas del AQ-10 pesan más en la predicción del modelo.
+            Qué preguntas del AQ-10 pesan más en la predicción del modelo, para el grupo seleccionado.
           </p>
           <div id="feature-importance"></div>
         </div>
@@ -152,6 +161,10 @@
         </p>
       </div>
 
+      <!-- Resumen destacado: la cifra titular del proyecto -->
+      <div id="headline-summary" class="reveal"></div>
+
+      <h3 class="results-table-title reveal">Todos los modelos, las cuatro franjas de edad</h3>
       <div class="reveal" style="overflow-x: auto;">
         <div id="metrics-table"></div>
       </div>

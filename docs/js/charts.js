@@ -1,8 +1,18 @@
-/* charts.js — Renderizado de graficos: barras de importancia y matriz de confusion */
+/* charts.js — Renderizado de graficos: tabla completa, resumen destacado, importancia, matriz de confusion */
+
+const GROUP_LABELS = {
+  adults: "Adultos",
+  adolescents: "Adolescentes",
+  combined: "Combinado",
+  toddlers: "Toddlers"
+};
 
 function renderFeatureImportance(containerId, features) {
   const container = document.getElementById(containerId);
-  if (!container || !features) return;
+  if (!container || !features || features.length === 0) {
+    if (container) container.innerHTML = "<p style='color:var(--text-faint); font-size:0.85rem;'>No hay datos de importancia disponibles para este modelo.</p>";
+    return;
+  }
 
   const maxVal = Math.max(...features.map(f => f.importance));
 
@@ -18,6 +28,14 @@ function renderFeatureImportance(containerId, features) {
       </div>
     `;
   }).join("");
+
+  // Si el contenedor ya esta visible (no dentro de un .reveal pendiente),
+  // activamos las barras directamente
+  container.querySelectorAll(".fill[data-width]").forEach(fill => {
+    requestAnimationFrame(() => {
+      fill.style.width = fill.dataset.width + "%";
+    });
+  });
 }
 
 function renderConfusionMatrix(containerId, matrix, labels) {
@@ -45,16 +63,42 @@ function renderConfusionMatrix(containerId, matrix, labels) {
   `;
 }
 
-function renderMetricsTable(containerId, models) {
+// Tabla completa: todas las franjas de edad x todos los modelos.
+// Se excluye Baseline de la marca "mejor modelo" (es solo referencia minima),
+// y se resalta el modelo elegido como mejor de cada grupo (best_model del JSON).
+function renderFullMetricsTable(containerId, groups) {
   const container = document.getElementById(containerId);
-  if (!container || !models) return;
+  if (!container || !groups) return;
 
-  const bestRecall = Math.max(...models.map(m => m.recall));
+  const groupOrder = ["adults", "adolescents", "combined", "toddlers"];
+  let rows = "";
+
+  groupOrder.forEach(groupKey => {
+    const group = groups[groupKey];
+    if (!group) return;
+
+    group.models.forEach((m, idx) => {
+      const isBest = m.name === group.best_model;
+      const isBaseline = m.name === "Baseline";
+      rows += `
+        <tr class="${isBaseline ? 'row-baseline' : ''}">
+          ${idx === 0 ? `<td rowspan="${group.models.length}" class="group-cell">${GROUP_LABELS[groupKey] || groupKey}<br><span class="group-meta">n test = ${group.n_test}</span></td>` : ""}
+          <td>${m.name} ${isBest ? '<span class="tag">mejor</span>' : ''}</td>
+          <td class="metric-val">${m.accuracy.toFixed(3)}</td>
+          <td class="metric-val">${m.precision.toFixed(3)}</td>
+          <td class="metric-val ${isBest ? 'best' : ''}">${m.recall.toFixed(3)}</td>
+          <td class="metric-val">${m.f1.toFixed(3)}</td>
+          <td class="metric-val">${m.auc_roc !== null ? m.auc_roc.toFixed(3) : "—"}</td>
+        </tr>
+      `;
+    });
+  });
 
   container.innerHTML = `
-    <table class="metrics-table">
+    <table class="metrics-table metrics-table-full">
       <thead>
         <tr>
+          <th>Grupo</th>
           <th>Modelo</th>
           <th>Accuracy</th>
           <th>Precision</th>
@@ -64,19 +108,28 @@ function renderMetricsTable(containerId, models) {
         </tr>
       </thead>
       <tbody>
-        ${models.map(m => `
-          <tr>
-            <td>${m.name} ${m.recall === bestRecall && m.recall > 0 ? '<span class="tag">mejor recall</span>' : ''}</td>
-            <td class="metric-val">${m.accuracy.toFixed(3)}</td>
-            <td class="metric-val">${m.precision.toFixed(3)}</td>
-            <td class="metric-val ${m.recall === bestRecall && m.recall > 0 ? 'best' : ''}">${m.recall.toFixed(3)}</td>
-            <td class="metric-val">${m.f1.toFixed(3)}</td>
-            <td class="metric-val">${m.auc_roc.toFixed(3)}</td>
-          </tr>
-        `).join("")}
+        ${rows}
       </tbody>
     </table>
   `;
 }
 
-export { renderFeatureImportance, renderConfusionMatrix, renderMetricsTable };
+// Resumen destacado: la cifra titular que se muestra en la parte superior
+// de la seccion de resultados, con su aviso de contexto (nota de robustez).
+function renderHeadlineSummary(containerId, overall) {
+  const container = document.getElementById(containerId);
+  if (!container || !overall) return;
+
+  container.innerHTML = `
+    <div class="headline-summary">
+      <div class="headline-number">${(overall.recall * 100).toFixed(0)}%</div>
+      <div class="headline-text">
+        <div class="headline-title">Recall en ${overall.headline_group_label}</div>
+        <div class="headline-sub">Modelo ${overall.headline_model} · F1 ${overall.f1.toFixed(2)} · Precision ${overall.precision.toFixed(2)} · n test = ${overall.n_test}</div>
+      </div>
+    </div>
+    <p class="headline-note">${overall.note}</p>
+  `;
+}
+
+export { renderFeatureImportance, renderConfusionMatrix, renderFullMetricsTable, renderHeadlineSummary, GROUP_LABELS };
