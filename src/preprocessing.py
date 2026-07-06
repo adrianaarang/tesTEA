@@ -8,6 +8,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.impute import SimpleImputer
+from sklearn.base import BaseEstimator, TransformerMixin
 
 
 # ============================================================
@@ -171,24 +172,62 @@ def clean_question_marks(df):
     return df
 
 
-# CAMBIO: funcion nueva. Agrupa en una categoria "other" los valores de
-# una columna categorica que aparecen menos de min_freq veces. Esto reduce
-# el numero de columnas que genera el OneHotEncoder despues, evitando que
-# datasets pequenos (como adolescents) terminen con mas columnas que filas.
-# Se aplica ANTES del split train/test porque es una operacion descriptiva
-# sobre los valores de la columna (no aprende nada del target), asi que no
-# introduce data leakage.
-def group_rare_categories(df, col, min_freq=5):
+class RareCategoryGrouper(BaseEstimator, TransformerMixin):
     """
-    Reemplaza por 'other' las categorias de `col` que aparecen menos de
-    `min_freq` veces en el dataset. Los valores nulos o '?' no se tocan
-    aqui, se gestionan despues en la imputacion del pipeline.
+    Agrupa en 'other' las categorías poco frecuentes de determinadas
+    columnas categóricas, aprendiendo qué categorías son frecuentes
+    SOLO con los datos de entrenamiento.
     """
-    df = df.copy()
-    counts = df[col].value_counts(dropna=True)
-    categorias_raras = counts[counts < min_freq].index
-    df[col] = df[col].apply(lambda x: "other" if x in categorias_raras else x)
-    return df
+
+    def __init__(self, min_freq=5, columns=None):
+        self.min_freq = min_freq
+        self.columns = columns
+
+    def fit(self, X, y=None):
+        """
+        Aprende, a partir de X_train, qué categorías se consideran
+        frecuentes en cada columna.
+        """
+        X = pd.DataFrame(X).copy()
+
+        # Si no se especifican columnas, usamos todas las de X
+        self.columns_ = self.columns if self.columns is not None else X.columns.tolist()
+
+        # Diccionario: columna -> conjunto de categorías frecuentes
+        self.frequent_categories_ = {}
+
+        for col in self.columns_:
+            if col in X.columns:
+                counts = X[col].value_counts(dropna=True)
+                frequent = counts[counts >= self.min_freq].index.tolist()
+                self.frequent_categories_[col] = set(frequent)
+
+        return self
+
+    def transform(self, X):
+        """
+        Reemplaza por 'other' las categorías que no se aprendieron
+        como frecuentes en fit().
+        """
+        X = pd.DataFrame(X).copy()
+
+        for col, frequent_values in self.frequent_categories_.items():
+            if col in X.columns:
+                X[col] = X[col].apply(
+                    lambda x: x if pd.isna(x) or x in frequent_values else "other"
+                )
+
+        return X
+
+    def get_feature_names_out(self, input_features=None):
+        """
+        Devuelve los mismos nombres de columnas de entrada, porque este
+        transformer no crea ni elimina columnas: solo reemplaza valores
+        poco frecuentes por 'other'.
+        """
+        if input_features is None:
+            return np.array(self.columns_, dtype=object)
+        return np.array(input_features, dtype=object)
 
 
 def drop_existing_columns(df, columns_to_drop):
@@ -228,13 +267,31 @@ def split_features_target(df, target_col):
     return X, y
 
 
-def build_preprocessor(numeric_cols, categorical_cols, passthrough_cols):
+def build_preprocessor(
+    numeric_cols,
+    categorical_cols,
+    passthrough_cols,
+    rare_group_cols=None,
+    rare_min_freq=5
+    ):
     """
     Construye el preprocesador con:
-    - numericas: mediana + StandardScaler
-    - categoricas: unknown + OneHotEncoder
+    - numéricas: imputación por mediana + StandardScaler
+    - categóricas normales: imputación + OneHotEncoder
+    - categóricas con rare grouping: imputación + RareCategoryGrouper + OneHotEncoder
     - AQ cols: passthrough
+
+    rare_group_cols permite indicar qué columnas categóricas deben agrupar
+    categorías poco frecuentes en 'other'.
     """
+
+    rare_group_cols = rare_group_cols or []
+
+    # Separar categóricas en dos grupos:
+    # 1) las que sí llevan agrupación de raras
+    # 2) las que no
+    rare_categorical_cols = [col for col in categorical_cols if col in rare_group_cols]
+    normal_categorical_cols = [col for col in categorical_cols if col not in rare_group_cols]
 
     numeric_pipeline = Pipeline(steps=[
         ("imputer", SimpleImputer(strategy="median")),
@@ -246,28 +303,46 @@ def build_preprocessor(numeric_cols, categorical_cols, passthrough_cols):
         ("onehot", OneHotEncoder(handle_unknown="ignore"))
     ])
 
-    preprocessor = ColumnTransformer(
-        transformers=[
-            ("num", numeric_pipeline, numeric_cols),
-            ("cat", categorical_pipeline, categorical_cols),
-            ("aq", "passthrough", passthrough_cols)
-        ]
-    )
+    rare_categorical_pipeline = Pipeline(steps=[
+        ("imputer", SimpleImputer(strategy="constant", fill_value="unknown")),
+        ("rare_grouper", RareCategoryGrouper(min_freq=rare_min_freq)),
+        ("onehot", OneHotEncoder(handle_unknown="ignore"))
+    ])
+
+    transformers = [
+        ("num", numeric_pipeline, numeric_cols),
+        ("aq", "passthrough", passthrough_cols)
+    ]
+
+    # Solo añadimos el bloque de categóricas normales si hay columnas
+    if normal_categorical_cols:
+        transformers.append(
+            ("cat", categorical_pipeline, normal_categorical_cols)
+        )
+
+    # Solo añadimos el bloque de categóricas con rare grouping si hay columnas
+    if rare_categorical_cols:
+        transformers.append(
+            ("cat_rare", rare_categorical_pipeline, rare_categorical_cols)
+        )
+
+    preprocessor = ColumnTransformer(transformers=transformers)
 
     return preprocessor
 
 
 def preprocess_single_dataset(df, config, test_size=0.2, random_state=42):
     """
-    Preprocesa un dataset completo segun su configuracion:
+    Preprocesa un dataset completo según su configuración:
     1. decodifica bytes si vienen de un .arff
     2. limpia '?'
-    3. agrupa categorias poco frecuentes en 'other'
-    4. codifica target
-    5. elimina columnas no deseadas
-    6. separa X e y
-    7. hace train/test split
+    3. codifica el target
+    4. elimina columnas no deseadas
+    5. separa X e y
+    6. hace train/test split
+    7. construye el preprocesador
     8. ajusta el preprocesador SOLO con train
+    (incluyendo imputación, agrupación de categorías raras y codificación)
     9. transforma train y test
     10. devuelve train_df, test_df y el preprocessor
     """
@@ -279,15 +354,6 @@ def preprocess_single_dataset(df, config, test_size=0.2, random_state=42):
 
     # 2) Reemplazar '?' por NaN
     df = clean_question_marks(df)
-
-    # CAMBIO: paso nuevo. Agrupamos categorias poco frecuentes ANTES de
-    # separar target y hacer el split, usando la lista group_rare_cols
-    # y el umbral rare_min_freq definidos en la config de cada dataset.
-    # Si un dataset no tiene columnas configuradas para esto (lista vacia,
-    # como combined), este bucle simplemente no hace nada.
-    for col in config.get("group_rare_cols", []):
-        if col in df.columns:
-            df = group_rare_categories(df, col, min_freq=config.get("rare_min_freq", 5))
 
     # 3) Codificar target
     target_col = config["target"]
@@ -312,7 +378,9 @@ def preprocess_single_dataset(df, config, test_size=0.2, random_state=42):
     preprocessor = build_preprocessor(
         numeric_cols=config["numeric_cols"],
         categorical_cols=config["categorical_cols"],
-        passthrough_cols=config["aq_cols"]
+        passthrough_cols=config["aq_cols"],
+        rare_group_cols=config.get("group_rare_cols", []),
+        rare_min_freq=config.get("rare_min_freq", 5)
     )
 
     # 8) Ajustar SOLO con train y transformar train/test
