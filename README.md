@@ -1,50 +1,88 @@
-# TesTEA
+# 🧩 TesTEA
 
-Herramienta de cribado temprano de TEA (Trastorno del Espectro Autista) basada en Machine Learning. Predice nivel de riesgo a partir de cuestionarios conductuales para asistir a pediatras en decisiones de derivacion. Proyecto etico y open-source. No es una herramienta diagnostica.
+<div align="center">
 
-## Contexto de negocio
+**Herramienta de cribado temprano de TEA basada en Machine Learning**
 
-Nuestro cliente es una unidad de pediatria de atencion primaria que quiere una herramienta de apoyo al cribado temprano de TEA para optimizar derivaciones a neuropediatria. El objetivo es ahorrar dos consultas (dar el test y corregirlo) y citar directamente para diagnostico a los casos con mayor probabilidad.
+Proyecto I · Módulo III · Bootcamp IA & Big Data · Somos F5 / Saturno Academy · 2026
 
-## Pregunta de negocio
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+![scikit--learn](https://img.shields.io/badge/scikit--learn-ML-F7931E?logo=scikitlearn&logoColor=white)
+![License](https://img.shields.io/badge/Licencia-MIT-green)
 
-> Dado un cuestionario de cribado conductual (AQ-10) mas datos demograficos basicos, podemos predecir si un caso debe ser derivado a evaluacion clinica especializada?
+</div>
 
-Es un problema de **clasificacion binaria** (positivo en cribado / negativo en cribado).
+---
 
-## Datasets
+## 📋 Descripción del proyecto
 
-- **autism_screening.csv** — Adultos (704 registros, UCI)
-- **Autism_Screening_Data_Combined.csv** — Coleccion agrupada adultos + adolescentes + ninos (6075 registros, Kaggle)
-- **Toddler_Autism_dataset_July_2018.csv** — Toddlers (1054 registros, Kaggle)
+TesTEA es una herramienta de Business Intelligence y Machine Learning orientada a **unidades de pediatría de atención primaria** que quieren optimizar sus derivaciones a neuropediatría.
 
-Los datasets no se incluyen en el repositorio por licencia. Descargar y colocar en `data/raw/`.
+El proyecto transforma cuatro datasets públicos de cribado de autismo (basados en el cuestionario estandarizado **AQ-10 / Q-CHAT-10**) en un modelo predictivo y un front interactivo que responde preguntas clave:
 
-## Marco etico
+- ¿Podemos predecir, a partir del cuestionario AQ-10 y datos demográficos básicos, si un caso debe derivarse a evaluación clínica especializada?
+- ¿Qué preguntas del cuestionario tienen más poder discriminativo?
+- ¿Cómo varía el rendimiento del modelo entre franjas de edad (adultos, adolescentes, niños, toddlers)?
+- ¿Qué sesgos contienen los datos disponibles y qué impacto tendrían en un despliegue clínico real?
 
-TesTEA se posiciona como una herramienta de apoyo al cribado, no de diagnostico automatizado. Reconocemos los sesgos potenciales de los datos (sobrerrepresentacion de poblacion anglosajona, criterios DSM-5) y recomendamos validacion continua en multiples contextos. El bienestar y la autonomia de las personas evaluadas son nuestra prioridad.
+**No es una herramienta diagnóstica.** Es un apoyo al cribado inicial, pensado para ahorrar las dos consultas que hoy requiere administrar y corregir el test en papel.
 
-## Estructura del proyecto
+---
+
+## 🖥️ Demo
+
+[![▶ Ver demo en vivo](https://img.shields.io/badge/▶%20Ver%20demo%20en%20vivo-adrianaarang.github.io/tesTEA-222222?style=for-the-badge&logo=github)](https://adrianaarang.github.io/tesTEA/)
+
+El front incluye un cuestionario AQ-10 interactivo (elige tu grupo de edad y responde las 10 preguntas) y un panel de resultados con las métricas reales de los 4 modelos entrenados.
+
+---
+
+## 📊 Datasets
+
+| Campo | Detalle |
+|---|---|
+| **Fuente principal (adultos)** | [UCI · Autism Screening Adult](https://archive.ics.uci.edu/dataset/426) |
+| **Fuente (adolescentes)** | [UCI · Autistic Spectrum Disorder Screening Data for Adolescent](https://archive.ics.uci.edu/dataset/420) |
+| **Fuente (agrupado)** | [Kaggle · Autism Screening Data](https://www.kaggle.com/datasets/andrewmvd/autism-screening-data) |
+| **Fuente (toddlers)** | [Kaggle · Autism Screening for Toddlers](https://www.kaggle.com/datasets/fabdelja/autism-screening-for-toddlers) |
+| **Registros totales** | 7.937 (704 adultos + 104 adolescentes + 6.075 agrupado + 1.054 toddlers) |
+| **Cuestionario base** | AQ-10 (adultos/adolescentes/niños) y Q-CHAT-10 (toddlers) |
+| **Licencia** | Uso educativo, según licencia original de UCI/Kaggle |
+
+### Variables principales
+
+`A1`–`A10` (respuestas del cuestionario), `age`/`Age_Mons`, `gender`/`Sex`, `ethnicity`, `jundice`/`Jaundice`, `austim`/`Family_ASD` (antecedentes familiares), `contry_of_res`, `relation`
+
+Los datasets no se incluyen en el repositorio por licencia. Descargar de las fuentes de la tabla y colocar en `data/raw/`.
+
+---
+
+## 🏗️ Estructura del proyecto
 
 ```
 testtea/
+│
 ├── README.md
 ├── requirements.txt
 ├── .gitignore
 ├── KANBAN.md
+│
 ├── data/
-│   ├── raw/                          <- CSVs originales (no versionados)
-│   └── processed/                    <- Datos limpios tras preprocesamiento
+│   ├── raw/                          # CSVs/ARFF originales (excluidos de git)
+│   └── processed/                    # Datasets limpios + preprocessors .pkl (versionados)
+│
 ├── notebooks/
-│   ├── 01_eda.ipynb                  <- Exploracion y limpieza
-│   ├── 02_preprocesamiento.ipynb     <- Encoding, escalado, split
-│   ├── 03_modelado.ipynb             <- Baseline + Logistica + Random Forest + XGBoost
-│   └── 04_evaluacion_analisis.ipynb  <- Metricas, ROC, SHAP, analisis critico
+│   ├── 01_eda.ipynb                  # Exploracion de los 4 datasets
+│   ├── 02_preprocesamiento.ipynb     # Encoding, escalado, split, agrupacion de categorias
+│   ├── 03_modelado.ipynb             # Baseline + Logistica + Random Forest + XGBoost
+│   └── 04_evaluacion_analisis.ipynb  # Metricas, ROC, SHAP, analisis critico
+│
 ├── src/
 │   ├── __init__.py
-│   ├── preprocessing.py              <- Funciones de carga y preprocesamiento
-│   └── evaluate.py                   <- Funciones de metricas y comparacion
-└── docs/                             <- Front (GitHub Pages)
+│   ├── preprocessing.py              # Pipeline de preprocesamiento (config por dataset)
+│   └── evaluate.py                   # Funciones de metricas y comparacion
+│
+└── docs/                             # Front (GitHub Pages)
     ├── index.html
     ├── css/
     │   ├── base.css
@@ -52,44 +90,119 @@ testtea/
     │   ├── layout.css
     │   └── components.css
     ├── js/
-    │   ├── main.js
-    │   ├── data-loader.js
-    │   ├── charts.js
+    │   ├── main.js                   # Cuestionario AQ-10 interactivo por grupo de edad
+    │   ├── data-loader.js            # Carga metrics.json real
+    │   ├── charts.js                 # Tabla de resultados, importancia, matriz de confusion
     │   └── animations.js
     └── assets/
-        ├── data/                     <- JSONs con metricas del modelo
-        └── img/                      <- Graficos generados por los notebooks
+        ├── data/metrics.json         # Metricas reales exportadas desde el notebook 04
+        └── img/                      # Graficos generados por los notebooks
 ```
 
-## Como empezar
+---
 
-1. Clonar el repositorio:
-   ```bash
-   git clone https://github.com/adrianaarang/tesTEA.git
-   cd tesTEA
-   ```
+## 🛠️ Tecnologías utilizadas
 
-2. Crear entorno virtual e instalar dependencias:
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate  # Windows: .venv\Scripts\activate
-   pip install -r requirements.txt
-   ```
+| Tecnología | Uso | Justificación |
+|---|---|---|
+| **Python + pandas** | Carga y preprocesamiento | Estándar de facto para análisis tabular |
+| **scikit-learn** | Pipelines, encoding, modelos base | `ColumnTransformer` + `Pipeline` evitan data leakage de forma nativa |
+| **XGBoost** | Modelo de gradient boosting | Mejor rendimiento en 2 de los 4 grupos de edad |
+| **GridSearchCV + StratifiedKFold** | Validación y ajuste de hiperparámetros | Robusto en datasets pequeños (ej. adolescentes, 104 registros) sin sacrificar un validation set fijo |
+| **HTML/CSS/JS (vanilla)** | Front interactivo | Sin build, despliegue directo en GitHub Pages desde `/docs` |
+| **GitHub Pages** | Hosting del front | Gratuito, integrado con el repositorio |
 
-3. Descargar los datasets y colocarlos en `data/raw/`.
+### ¿Por qué un modelo por franja de edad y no uno único?
 
-4. Ejecutar los notebooks en orden (01 -> 02 -> 03 -> 04).
+Cada franja de edad usa una versión distinta del cuestionario (AQ-10 vs Q-CHAT-10) y columnas demográficas diferentes. Forzar un espacio de features común implicaría perder información o inventar valores. La validación clínica original del AQ-10 también se hizo por separado en cada franja, así que replicar esa separación en el modelado es fiel al diseño del instrumento.
 
-## Equipo — DataScope Solutions
+---
+
+## 🚀 Instalación y ejecución local
+
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/adrianaarang/tesTEA.git
+cd tesTEA
+
+# 2. Crear entorno virtual
+python -m venv .venv
+.venv\Scripts\activate      # Windows
+# source .venv/bin/activate # Mac/Linux
+
+# 3. Instalar dependencias
+pip install -r requirements.txt
+
+# 4. Descargar los datasets (ver sección Datasets)
+# Colocar los ficheros en data/raw/
+
+# 5. Ejecutar los notebooks en orden
+# 01_eda.ipynb -> 02_preprocesamiento.ipynb -> 03_modelado.ipynb -> 04_evaluacion_analisis.ipynb
+
+# 6. Servir el front localmente
+cd docs
+python -m http.server 8000
+```
+
+El front estará disponible en `http://localhost:8000`
+
+---
+
+## 📈 Secciones del front
+
+| Sección | Descripción |
+|---|---|
+| 🏠 Hero | Pitch del proyecto, encuadre ético desde la primera pantalla |
+| 📊 El proyecto | Contexto de negocio y estadísticas generales (registros, datasets, modelos) |
+| 🗂️ Los datos | Importancia de variables y matriz de confusión, seleccionables por franja de edad |
+| 📈 Resultados | Resumen destacado + tabla completa de las 4 franjas × 4 modelos |
+| ✅ Cuestionario | AQ-10/Q-CHAT-10 interactivo, con resultado de cribado en tiempo real |
+| 🎯 Conclusión | Recomendaciones al cliente y próximos pasos |
+
+---
+
+## 🔍 Hallazgos principales
+
+- El grupo **combinado** (adultos+adolescentes+niños) alcanza **recall = 1.00** con XGBoost sobre 1.215 registros de test, el resultado más robusto estadísticamente.
+- Las preguntas del AQ-10 con mayor poder discriminativo varían por franja de edad, pero A5, A6 y A9 aparecen consistentemente entre las más importantes.
+- El grupo de **adultos** alcanza recall = 0.97 con XGBoost; **adolescentes** y **toddlers** alcanzan recall = 1.00 con Regresión Logística, aunque sobre test sets mucho más pequeños (21 y 211 registros).
+- La puntuación total del cuestionario ya separa razonablemente bien las dos clases por sí sola, confirmando que hay señal predictiva real más allá del scoring fijo estándar.
+
+---
+
+## ⚠️ Sesgos y limitaciones documentadas
+
+| Sesgo | Nivel | Impacto |
+|---|---|---|
+| Sobrerrepresentación de población anglosajona | 🔴 Alto | El modelo debe validarse con población española antes de uso clínico real |
+| Muestra reducida en adolescentes (104 registros) | 🔴 Alto | Mayor incertidumbre en ese modelo; interpretar sus métricas con cautela |
+| Infradiagnóstico de TEA en mujeres (literatura clínica) | 🟡 Medio | El modelo puede heredar el mismo sesgo si no se monitoriza por sexo |
+| Criterios DSM-5 no siempre alineados con guías locales | 🟡 Medio | Revisar equivalencia clínica antes de un despliegue real |
+| Datos transversales, sin seguimiento longitudinal | 🟢 Bajo | No permite evaluar evolución del cribado en el tiempo |
+
+---
+
+## 🩺 Marco ético
+
+TesTEA se posiciona como una herramienta de **apoyo al cribado, no de diagnóstico automatizado**. Los resultados son orientativos y no sustituyen la evaluación clínica de un profesional especializado. El bienestar y la autonomía de las personas evaluadas son nuestra prioridad por encima de cualquier métrica.
+
+---
+
+## 👩‍💻 Equipo — DataScope Solutions
 
 | Nombre | Rol |
 |---|---|
 | Isabella Tellez | Product Owner |
 | Adriana Aránguez | Scrum Master |
-| José Manuel Paredes| Desarrollador |
-| Laura Silva| Desarrollador |
-| Elizabeth Sena| Desarrollador |
+| José Manuel Paredes | Desarrollador |
+| Laura Silva | Desarrollador |
+| Elizabeth Sena | Desarrollador |
 
-## Licencia de datos
+[![GitHub](https://img.shields.io/badge/GitHub-adrianaarang-181717?logo=github)](https://github.com/adrianaarang)
 
-Datasets de uso educativo segun licencia original de UCI/Kaggle.
+---
+
+## 📄 Licencia
+
+Datasets de uso educativo según licencia original de **UCI / Kaggle**.
+El código de este proyecto está disponible bajo licencia **MIT**.
