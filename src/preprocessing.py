@@ -38,12 +38,7 @@ DATASET_CONFIG = {
             "A1_Score", "A2_Score", "A3_Score", "A4_Score", "A5_Score",
             "A6_Score", "A7_Score", "A8_Score", "A9_Score", "A10_Score"
         ],
-        # CAMBIO: columnas con muchas categorias distintas (ethnicity y
-        # contry_of_res generan muchas columnas one-hot). Se agrupan las
-        # categorias poco frecuentes en "other" antes de codificar, para
-        # no disparar la dimensionalidad. En adults el ratio filas/columnas
-        # es tolerable (563 filas de train), pero se aplica igualmente por
-        # consistencia con adolescents y porque no hace dano.
+         # Estas columnas pueden generar muchas categorías tras one-hot
         "group_rare_cols": ["ethnicity", "contry_of_res", "relation"],
         "rare_min_freq": 5
     },
@@ -66,10 +61,7 @@ DATASET_CONFIG = {
             "A1", "A2", "A3", "A4", "A5",
             "A6", "A7", "A8", "A9", "A10"
         ],
-        # CAMBIO: combined no tiene columnas categoricas de alta cardinalidad
-        # (Sex, Jauundice y Family_ASD son todas binarias), asi que no
-        # necesita agrupacion. Se deja la lista vacia por consistencia
-        # de estructura entre configs.
+        # No necesita agrupación de raras
         "group_rare_cols": [],
         "rare_min_freq": 5
     },
@@ -124,17 +116,8 @@ DATASET_CONFIG = {
             "A1_Score", "A2_Score", "A3_Score", "A4_Score", "A5_Score",
             "A6_Score", "A7_Score", "A8_Score", "A9_Score", "A10_Score"
         ],
-        # CAMBIO: este es el caso critico. Con solo 83 filas de train y
-        # columnas como ethnicity o contry_of_res con muchas categorias
-        # distintas, el one-hot encoding generaba 64 columnas finales
-        # (ratio filas/columnas de ~1.3:1), lo que favorece el sobreajuste
-        # sobre todo en modelos de arboles (Random Forest, XGBoost).
-        # Agrupamos las categorias poco frecuentes en "other" para reducir
-        # el numero de columnas resultantes.
+        # En adolescents interesa agrupar más porque el dataset es pequeño
         "group_rare_cols": ["ethnicity", "contry_of_res", "relation"],
-        # CAMBIO: umbral mas alto que el resto (10 en vez de 5) porque el
-        # dataset es mucho mas pequeno; con min_freq=5 sobre 104 registros
-        # casi ninguna categoria se agruparia y el problema seguiria igual.
         "rare_min_freq": 10
     }
 }
@@ -176,7 +159,7 @@ class RareCategoryGrouper(BaseEstimator, TransformerMixin):
     """
     Agrupa en 'other' las categorías poco frecuentes de determinadas
     columnas categóricas, aprendiendo qué categorías son frecuentes
-    SOLO con los datos de entrenamiento.
+    SOLO con los datos de entrenamiento (train).
     """
 
     def __init__(self, min_freq=5, columns=None):
@@ -273,7 +256,8 @@ def build_preprocessor(
     passthrough_cols,
     rare_group_cols=None,
     rare_min_freq=5
-    ):
+):
+
     """
     Construye el preprocesador con:
     - numéricas: imputación por mediana + StandardScaler
@@ -410,7 +394,7 @@ def preprocess_single_dataset(df, config, test_size=0.2, random_state=42):
         index=X_test.index
     )
 
-    # 12) Anadir target
+    # 12) Añadir target
     train_df = X_train_processed_df.copy()
     train_df["target"] = y_train.values
 
@@ -498,6 +482,8 @@ def get_dataset_summary(df, dataset_name):
     - n filas y columnas originales
     - target
     - columnas que se van a dropear
+    - columnas numéricas, categóricas y AQ
+    - columnas con agrupación de raras y umbral usado
     """
     if dataset_name not in DATASET_CONFIG:
         raise ValueError(f"Dataset '{dataset_name}' no esta en DATASET_CONFIG.")
@@ -513,9 +499,7 @@ def get_dataset_summary(df, dataset_name):
         "numeric_cols": config["numeric_cols"],
         "categorical_cols": config["categorical_cols"],
         "aq_cols": config["aq_cols"],
-        # CAMBIO: anadido al resumen para que quede visible en el notebook
-        # que columnas se agrupan y con que umbral, sin tener que ir a mirar
-        # el codigo de preprocessing.py
+        # Información sobre agrupación de categorías raras
         "group_rare_cols": config.get("group_rare_cols", []),
         "rare_min_freq": config.get("rare_min_freq", 5)
     }
