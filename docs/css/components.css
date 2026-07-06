@@ -104,6 +104,78 @@
   color: var(--teal-deep);
 }
 
+.ethics-link {
+  display: inline-block;
+  margin-top: var(--space-sm);
+  margin-left: var(--space-xs);
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.ethics-link:hover {
+  color: var(--accent-hover);
+}
+
+/* ============================================
+   BIAS CARDS (sesgos y limitaciones)
+   ============================================ */
+.bias-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg);
+}
+
+.bias-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--positive);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.bias-card h3 {
+  font-size: 1rem;
+  color: var(--text);
+  margin: var(--space-sm) 0;
+}
+
+.bias-card p {
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.bias-level {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+}
+
+.bias-high {
+  background: var(--positive-bg);
+  color: var(--positive);
+}
+
+.bias-medium {
+  background: var(--amber-soft);
+  color: #8a6116;
+}
+
+@media (max-width: 768px) {
+  .bias-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ============================================
    STAT CARDS
    ============================================ */

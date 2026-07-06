@@ -38,6 +38,7 @@
         <li><a href="#datos">Los datos</a></li>
         <li><a href="#resultados">Resultados</a></li>
         <li><a href="#cuestionario">Cuestionario</a></li>
+        <li><a href="#sesgos">Limitaciones</a></li>
       </ul>
     </div>
   </nav>
@@ -65,6 +66,7 @@
           clínica por parte de un profesional especializado. Reconocemos los sesgos potenciales de los
           datos (sobrerrepresentación de población anglosajona, criterios DSM-5, posible infradiagnóstico
           en mujeres) y recomendamos validación continua en contextos diversos.
+          <a href="#sesgos" class="ethics-link">Ver detalle de sesgos y limitaciones ↓</a>
         </p>
       </div>
     </div>
@@ -225,6 +227,63 @@
     </div>
   </section>
 
+  <!-- SESGOS Y LIMITACIONES -->
+  <section id="sesgos">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="section-label">Limitaciones</div>
+        <h2>Sesgos y limitaciones documentadas</h2>
+        <p>
+          Estas limitaciones no invalidan el proyecto, pero delimitan claramente su alcance:
+          TesTEA es una prueba de concepto que demuestra viabilidad técnica, no un producto
+          listo para uso clínico sin validación adicional.
+        </p>
+      </div>
+
+      <div class="bias-grid reveal">
+        <div class="bias-card">
+          <div class="bias-level bias-high">Alto</div>
+          <h3>Sobrerrepresentación anglosajona</h3>
+          <p>
+            Los cuatro datasets (UCI y Kaggle) proceden mayoritariamente de estudios en
+            Reino Unido y Estados Unidos. El modelo puede no generalizar bien a otros
+            contextos culturales o lingüísticos, incluido el español, sin validación previa.
+          </p>
+        </div>
+
+        <div class="bias-card">
+          <div class="bias-level bias-medium">Medio</div>
+          <h3>Criterios DSM-5</h3>
+          <p>
+            El cuestionario y las etiquetas de cribado se basan en el DSM-5, usado
+            principalmente en EE. UU. Otros sistemas clínicos como la CIE-11 (más habitual
+            en España) pueden diferir en los criterios de derivación.
+          </p>
+        </div>
+
+        <div class="bias-card">
+          <div class="bias-level bias-high">Alto</div>
+          <h3>Infradiagnóstico en mujeres</h3>
+          <p>
+            El TEA se diagnostica con más frecuencia en hombres; en mujeres la presentación
+            conductual suele pasar más desapercibida. Si los datos heredan ese patrón, el
+            modelo puede reproducirlo. Recomendamos monitorizar el rendimiento por sexo.
+          </p>
+        </div>
+
+        <div class="bias-card">
+          <div class="bias-level bias-medium">Medio</div>
+          <h3>Muestra reducida en adolescentes</h3>
+          <p>
+            Solo 104 registros, muy por debajo de los otros tres grupos. El modelo para
+            esta franja tiene mayor incertidumbre y sus métricas deben interpretarse con
+            más cautela hasta ampliar los datos disponibles.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- CONCLUSION -->
   <section id="conclusion">
     <div class="wrap">
@@ -241,31 +300,15 @@
         </p>
         <p>
           Recomendamos desplegar TesTEA como herramienta complementaria (no sustitutiva)
-          en consultas de atención primaria, con las siguientes consideraciones:
-        </p>
-        <p>
-          <strong>Validación clínica:</strong> antes de su uso en producción, el modelo debe
-          ser validado con datos de población española para confirmar que los patrones
-          detectados en los datasets de entrenamiento (mayoritariamente anglosajones)
-          se mantienen en nuestro contexto clínico.
-        </p>
-        <p>
-          <strong>Sesgo de género:</strong> el TEA se diagnostica con mayor frecuencia en
-          hombres, pero hay evidencia de que en mujeres la presentación clínica difiere
-          y se infradiagnostica. Recomendamos monitorizar el rendimiento del modelo por
-          sexo y ajustar si se detectan disparidades.
-        </p>
-        <p>
-          <strong>Muestra reducida en adolescentes:</strong> el dataset de adolescentes
-          tiene solo 104 registros, muy por debajo de los otros tres grupos. El modelo
-          para esta franja de edad tiene mayor incertidumbre y debe interpretarse con
-          más cautela hasta ampliar los datos disponibles.
+          en consultas de atención primaria, teniendo en cuenta los sesgos y limitaciones
+          documentados <a href="#sesgos" class="ethics-link">más arriba</a> antes de cualquier
+          uso clínico real.
         </p>
         <p>
           <strong>Siguiente paso:</strong> incorporar datos de centros españoles de atención
           primaria para reentrenar el modelo con población local, ampliar la muestra de
-          adolescentes, y realizar un piloto controlado comparando las derivaciones de
-          TesTEA con las derivaciones manuales.
+          adolescentes, monitorizar el rendimiento por sexo, y realizar un piloto controlado
+          comparando las derivaciones de TesTEA con las derivaciones manuales.
         </p>
       </div>
     </div>
