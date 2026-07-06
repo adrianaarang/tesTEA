@@ -91,19 +91,19 @@ Nadie hace solo codigo, solo revision o solo documentacion.
 - **Revisa:** Elizabeth Sena
 - **Documenta:** Laura Silva
 - **Definicion de terminado:**
-  - [ ] Estructura HTML en docs/index.html
-  - [ ] Estilos en docs/css/base.css, theme.css, layout.css, components.css
-  - [ ] Scripts en docs/js/main.js, data-loader.js, charts.js, animations.js
-  - [ ] Seccion hero con encuadre etico desde la primera pantalla
-  - [ ] Visualizacion de importancia de cada pregunta AQ-10
-  - [ ] Matriz de confusion interactiva
-  - [ ] Metricas explicadas para no tecnicos
-  - [ ] Seccion de limitaciones/sesgos como bloque destacado
-  - [ ] Integracion de JSONs reales de docs/assets/data/
-  - [ ] Responsive y accesible
-  - [ ] Desplegable en GitHub Pages desde /docs
-  - [ ] PR revisado y aprobado por Persona 3
-  - [ ] Comentarios en el codigo escritos por Persona 1
+  - [x] Estructura HTML en docs/index.html
+  - [x] Estilos en docs/css/base.css, theme.css, layout.css, components.css
+  - [x] Scripts en docs/js/main.js, data-loader.js, charts.js, animations.js
+  - [x] Seccion hero con encuadre etico desde la primera pantalla
+  - [x] Visualizacion de importancia de cada pregunta AQ-10
+  - [x] Matriz de confusion interactiva
+  - [] Metricas explicadas para no tecnicos
+  - [] Seccion de limitaciones/sesgos como bloque destacado
+  - [x] Integracion de JSONs reales de docs/assets/data/
+  - [x] Responsive y accesible
+  - [] Desplegable en GitHub Pages desde /docs
+  - [] PR revisado y aprobado por Persona 3
+  - [x] Comentarios en el codigo escritos por Persona 1
 
 ### README, marco etico y exportacion de JSONs (dia 3-6)
 - **Codifica:** Elizabeth Sena
