@@ -38,36 +38,36 @@ Nadie hace solo codigo, solo revision o solo documentacion.
 ### Preprocesamiento (dia 1-2)
 - **Codifica:** Laura Silva
 - **Revisa:** Adriana Aránguez
-- **Documenta:** José Manuela Paredes
+- **Documenta:** José Manuel Paredes
 - **Definicion de terminado:**
-  - [ ] Notebook 02_preprocesamiento.ipynb completo
-  - [ ] Funciones reutilizables en src/preprocessing.py
-  - [ ] Valores faltantes imputados (mediana para age, moda o "unknown" para categoricas con ?)
-  - [ ] Variables categoricas codificadas (One-Hot Encoding)
-  - [ ] Variables numericas escaladas (StandardScaler)
-  - [ ] Columnas excluidas del feature set: result, Qchat-10-Score, score_total, age_desc, Case_No
-  - [ ] Split 80/20 train/test ANTES de ajustar transformaciones (sin data leakage)
-  - [ ] Pipeline de scikit-learn construido
-  - [ ] train.csv y test.csv guardados en data/processed/
-  - [ ] PR revisado y aprobado por Persona 4
-  - [ ] Comentarios y celdas markdown escritos por Persona 2
+  - [x] Notebook 02_preprocesamiento.ipynb completo
+  - [x] Funciones reutilizables en src/preprocessing.py
+  - [x] Valores faltantes imputados (mediana para age, moda o "unknown" para categoricas con ?)
+  - [x] Variables categoricas codificadas (One-Hot Encoding)
+  - [x] Variables numericas escaladas (StandardScaler)
+  - [x] Columnas excluidas del feature set: result, Qchat-10-Score, score_total, age_desc, Case_No
+  - [x] Split 80/20 train/test ANTES de ajustar transformaciones (sin data leakage)
+  - [x] Pipeline de scikit-learn construido
+  - [x] train.csv y test.csv guardados en data/processed/
+  - [x] PR revisado y aprobado por Persona 4
+  - [x] Comentarios y celdas markdown escritos por Persona 2
 
 ### Modelado (dia 2-4)
 - **Codifica:** José Manuel Paredes
 - **Revisa:** Laura Silva
 - **Documenta:** Elizabeth Sena
 - **Definicion de terminado:**
-  - [ ] Notebook 03_modelado.ipynb completo
-  - [ ] Baseline (predecir siempre la clase mayoritaria)
-  - [ ] Regresion Logistica entrenada y evaluada
-  - [ ] Random Forest entrenado y evaluado
-  - [ ] XGBoost entrenado y evaluado
-  - [ ] Validacion cruzada estratificada (5-fold) para cada modelo
-  - [ ] Hiperparametros optimizados con GridSearchCV o RandomizedSearchCV
-  - [ ] class_weight="balanced" aplicado para manejar desbalance
-  - [ ] Modelos guardados con pickle en data/processed/
-  - [ ] PR revisado y aprobado por Persona 1
-  - [ ] Comentarios y celdas markdown escritos por Persona 3
+  - [x] Notebook 03_modelado.ipynb completo
+  - [x] Baseline (predecir siempre la clase mayoritaria)
+  - [x] Regresion Logistica entrenada y evaluada
+  - [x] Random Forest entrenado y evaluado
+  - [x] XGBoost entrenado y evaluado
+  - [x] Validacion cruzada estratificada (5-fold) para cada modelo
+  - [x] Hiperparametros optimizados con GridSearchCV o RandomizedSearchCV
+  - [x] class_weight="balanced" aplicado para manejar desbalance
+  - [x] Modelos guardados con pickle en data/processed/
+  - [x] PR revisado y aprobado por Persona 1
+  - [x] Comentarios y celdas markdown escritos por Persona 3
 
 ### Evaluacion y analisis critico (dia 4-5)
 - **Codifica:** Isabella Tellez
