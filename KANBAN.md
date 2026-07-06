@@ -101,7 +101,7 @@ Nadie hace solo codigo, solo revision o solo documentacion.
   - [x] Seccion de limitaciones/sesgos como bloque destacado
   - [x] Integracion de JSONs reales de docs/assets/data/
   - [x] Responsive y accesible
-  - [ ] Desplegable en GitHub Pages desde /docs
+  - [x] Desplegable en GitHub Pages desde /docs
   - [x] PR revisado y aprobado por Isabella
   - [x] Comentarios en el codigo escritos por Persona 1
 
