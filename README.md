@@ -6,7 +6,6 @@
 
 Proyecto I · Módulo III · Bootcamp IA & Big Data · Somos F5 / Saturno Academy · 2026
 
-[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Demo-222222?logo=github&logoColor=white)](https://adrianaarang.github.io/tesTEA/)
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
 ![scikit--learn](https://img.shields.io/badge/scikit--learn-ML-F7931E?logo=scikitlearn&logoColor=white)
 ![License](https://img.shields.io/badge/Licencia-MIT-green)
