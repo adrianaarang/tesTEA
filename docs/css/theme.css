@@ -1,0 +1,60 @@
+/* theme.css — Tokens de color, espaciado y fuentes */
+
+:root {
+  /* Paleta principal — teal clinico + ambar calido */
+  --teal:         #3A7D7B;
+  --teal-deep:    #2B5E5C;
+  --teal-light:   #E8F4F3;
+  --amber:        #E8A838;
+  --amber-soft:   rgba(232, 168, 56, 0.12);
+  --honey:        #D4A574;
+
+  /* Indicadores de resultado */
+  --positive:     #C75B6A;
+  --positive-bg:  rgba(199, 91, 106, 0.08);
+  --negative:     #5B8C6A;
+  --negative-bg:  rgba(91, 140, 106, 0.08);
+
+  /* Neutros */
+  --bg:           #FAFAF8;
+  --bg-warm:      #F5F1EC;
+  --surface:      #FFFFFF;
+  --border:       #E2DDD6;
+  --border-light: #EEEBE6;
+  --text:         #1E293B;
+  --text-dim:     #64748B;
+  --text-faint:   #94A3B8;
+
+  /* Asignacion semantica */
+  --accent:       var(--teal);
+  --accent-hover: var(--teal-deep);
+  --highlight:    var(--amber);
+
+  /* Fuentes */
+  --font-display: 'Outfit', sans-serif;
+  --font-body:    'Source Sans 3', sans-serif;
+  --font-mono:    'IBM Plex Mono', monospace;
+
+  /* Escala de espaciado */
+  --space-xs:     4px;
+  --space-sm:     8px;
+  --space-md:     16px;
+  --space-lg:     24px;
+  --space-xl:     40px;
+  --space-2xl:    64px;
+  --space-3xl:    96px;
+
+  /* Bordes */
+  --radius-sm:    6px;
+  --radius-md:    10px;
+  --radius-lg:    16px;
+  --radius-full:  9999px;
+
+  /* Sombras */
+  --shadow-sm:    0 1px 3px rgba(30, 41, 59, 0.06);
+  --shadow-md:    0 4px 12px rgba(30, 41, 59, 0.08);
+  --shadow-lg:    0 8px 24px rgba(30, 41, 59, 0.10);
+
+  /* Ancho maximo del contenido */
+  --max-w:        1080px;
+}

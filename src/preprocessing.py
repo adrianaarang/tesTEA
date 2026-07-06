@@ -38,7 +38,7 @@ DATASET_CONFIG = {
             "A1_Score", "A2_Score", "A3_Score", "A4_Score", "A5_Score",
             "A6_Score", "A7_Score", "A8_Score", "A9_Score", "A10_Score"
         ],
-        # Estas columnas pueden generar muchas categorías tras one-hot
+         # Estas columnas pueden generar muchas categorías tras one-hot
         "group_rare_cols": ["ethnicity", "contry_of_res", "relation"],
         "rare_min_freq": 5
     },
@@ -86,6 +86,10 @@ DATASET_CONFIG = {
             "A1", "A2", "A3", "A4", "A5",
             "A6", "A7", "A8", "A9", "A10"
         ],
+        # CAMBIO: Ethnicity en toddlers tambien tiene bastantes categorias.
+        # Con 843 filas de train el ratio es mas holgado que en adolescents,
+        # pero se agrupa igualmente para mantener el mismo criterio en
+        # todos los datasets.
         "group_rare_cols": ["Ethnicity"],
         "rare_min_freq": 5
     },
@@ -144,7 +148,7 @@ def decode_arff_bytes(df):
 
 def clean_question_marks(df):
     """
-    Reemplaza '?' por NaN para poder imputar después.
+    Reemplaza '?' por NaN para poder imputar despues.
     """
     df = df.copy()
     df.replace("?", np.nan, inplace=True)
@@ -212,7 +216,7 @@ class RareCategoryGrouper(BaseEstimator, TransformerMixin):
 def drop_existing_columns(df, columns_to_drop):
     """
     Elimina solo las columnas que existan realmente en el dataframe.
-    Así evitamos errores si una columna no está en ese dataset.
+    Asi evitamos errores si una columna no esta en ese dataset.
     """
     df = df.copy()
     existing_cols = [col for col in columns_to_drop if col in df.columns]
@@ -435,15 +439,15 @@ def save_preprocessor(preprocessor, output_dir, prefix):
 
 def preprocess_and_save_dataset(df, dataset_name, output_dir, test_size=0.2, random_state=42):
     """
-    Función de alto nivel:
+    Funcion de alto nivel:
     - busca la config del dataset
-    - lo preprocesa
+    - lo preprocesa (incluye agrupacion de categorias raras si aplica)
     - guarda train/test
     - guarda el preprocessor entrenado
     - devuelve train_df, test_df y preprocessor
     """
     if dataset_name not in DATASET_CONFIG:
-        raise ValueError(f"Dataset '{dataset_name}' no está en DATASET_CONFIG.")
+        raise ValueError(f"Dataset '{dataset_name}' no esta en DATASET_CONFIG.")
 
     config = DATASET_CONFIG[dataset_name]
 
@@ -472,7 +476,7 @@ def preprocess_and_save_dataset(df, dataset_name, output_dir, test_size=0.2, ran
 
 def get_dataset_summary(df, dataset_name):
     """
-    Devuelve un pequeño resumen útil para el notebook:
+    Devuelve un pequeno resumen util para el notebook:
     - nombre del dataset
     - n filas y columnas originales
     - target
@@ -481,7 +485,7 @@ def get_dataset_summary(df, dataset_name):
     - columnas con agrupación de raras y umbral usado
     """
     if dataset_name not in DATASET_CONFIG:
-        raise ValueError(f"Dataset '{dataset_name}' no está en DATASET_CONFIG.")
+        raise ValueError(f"Dataset '{dataset_name}' no esta en DATASET_CONFIG.")
 
     config = DATASET_CONFIG[dataset_name]
 
@@ -494,6 +498,7 @@ def get_dataset_summary(df, dataset_name):
         "numeric_cols": config["numeric_cols"],
         "categorical_cols": config["categorical_cols"],
         "aq_cols": config["aq_cols"],
+        # Información sobre agrupación de categorías raras
         "group_rare_cols": config.get("group_rare_cols", []),
         "rare_min_freq": config.get("rare_min_freq", 5)
     }
