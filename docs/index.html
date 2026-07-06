@@ -166,6 +166,33 @@
       <!-- Resumen destacado: la cifra titular del proyecto -->
       <div id="headline-summary" class="reveal"></div>
 
+      <!-- Glosario de metricas en lenguaje llano -->
+      <details class="metrics-glossary reveal">
+        <summary>¿Qué significa cada métrica? <span class="glossary-hint">(clic para ver)</span></summary>
+        <div class="glossary-grid">
+          <div class="glossary-item">
+            <div class="glossary-term">Accuracy <span class="glossary-alias">(exactitud)</span></div>
+            <p>De cada 100 casos, cuántos clasifica bien el modelo en total (positivos y negativos juntos). Puede engañar si hay muchos más casos de un tipo que de otro.</p>
+          </div>
+          <div class="glossary-item">
+            <div class="glossary-term">Precision <span class="glossary-alias">(precisión)</span></div>
+            <p>De todos los casos que el modelo marca como positivos, cuántos lo son de verdad. Precisión alta = pocas falsas alarmas.</p>
+          </div>
+          <div class="glossary-item">
+            <div class="glossary-term">Recall <span class="glossary-alias">(sensibilidad)</span></div>
+            <p>De todos los casos que realmente son positivos, cuántos detecta el modelo. Es la métrica más importante aquí: recall alto significa que casi ningún caso se escapa sin ser derivado.</p>
+          </div>
+          <div class="glossary-item">
+            <div class="glossary-term">F1</div>
+            <p>Un único número que resume el equilibrio entre precisión y recall. Útil para comparar modelos de un vistazo.</p>
+          </div>
+          <div class="glossary-item">
+            <div class="glossary-term">AUC-ROC</div>
+            <p>Qué tan bien distingue el modelo entre positivos y negativos en general. 1.0 = distinción casi perfecta, 0.5 = equivalente a tirar una moneda al aire.</p>
+          </div>
+        </div>
+      </details>
+
       <h3 class="results-table-title reveal">Todos los modelos, las cuatro franjas de edad</h3>
       <div class="reveal" style="overflow-x: auto;">
         <div id="metrics-table"></div>

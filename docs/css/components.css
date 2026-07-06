@@ -256,6 +256,88 @@
 }
 
 /* ============================================
+   METRICS GLOSSARY (explicacion en lenguaje llano)
+   ============================================ */
+.metrics-glossary {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md) var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+
+.metrics-glossary summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--accent);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.metrics-glossary summary::-webkit-details-marker {
+  display: none;
+}
+
+.metrics-glossary summary::before {
+  content: "▸";
+  transition: transform 0.2s;
+  color: var(--text-faint);
+}
+
+.metrics-glossary[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.glossary-hint {
+  font-weight: 400;
+  font-size: 0.8rem;
+  color: var(--text-faint);
+}
+
+.glossary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+.glossary-item {
+  padding: var(--space-md);
+  background: var(--bg-warm);
+  border-radius: var(--radius-sm);
+}
+
+.glossary-term {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.glossary-alias {
+  font-weight: 400;
+  color: var(--text-faint);
+  font-family: var(--font-body);
+}
+
+.glossary-item p {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .glossary-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ============================================
    DATA GROUP SELECTOR (importancia/matriz por franja de edad)
    ============================================ */
 .data-group-selector {
