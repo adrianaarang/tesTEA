@@ -97,12 +97,12 @@ Nadie hace solo codigo, solo revision o solo documentacion.
   - [x] Seccion hero con encuadre etico desde la primera pantalla
   - [x] Visualizacion de importancia de cada pregunta AQ-10
   - [x] Matriz de confusion interactiva
-  - [] Metricas explicadas para no tecnicos
-  - [] Seccion de limitaciones/sesgos como bloque destacado
+  - [ ] Metricas explicadas para no tecnicos
+  - [ ] Seccion de limitaciones/sesgos como bloque destacado
   - [x] Integracion de JSONs reales de docs/assets/data/
   - [x] Responsive y accesible
-  - [] Desplegable en GitHub Pages desde /docs
-  - [] PR revisado y aprobado por Persona 3
+  - [ ] Desplegable en GitHub Pages desde /docs
+  - [ ] PR revisado y aprobado por Persona 3
   - [x] Comentarios en el codigo escritos por Persona 1
 
 ### README, marco etico y exportacion de JSONs (dia 3-6)
@@ -110,13 +110,13 @@ Nadie hace solo codigo, solo revision o solo documentacion.
 - **Revisa:** Adriana Aránguez
 - **Documenta:**Isabella Tellez
 - **Definicion de terminado:**
-  - [ ] JSONs de metricas exportados a docs/assets/data/metrics.json
-  - [ ] README completo: contexto de negocio, marco etico, metodologia, limitaciones, conclusiones
+  - [x] JSONs de metricas exportados a docs/assets/data/metrics.json
+  - [x] README completo: contexto de negocio, marco etico, metodologia, limitaciones, conclusiones
   - [ ] Marco etico con sesgos del dataset documentados (poblacion anglosajona, DSM-5, infradiagnostico en mujeres)
-  - [ ] Instrucciones de instalacion y uso actualizadas
-  - [ ] Tabla de equipo completada
-  - [ ] PR revisado y aprobado por Persona 4
-  - [ ] Redaccion final revisada por Persona 3
+  - [x] Instrucciones de instalacion y uso actualizadas
+  - [x] Tabla de equipo completada
+  - [x] PR revisado y aprobado por Persona 4
+  - [x] Redaccion final revisada por Persona 3
 
 ### Slides y pitch (dia 5-7)
 - **Responsable:** Todo el equipo
