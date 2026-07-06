@@ -28,7 +28,7 @@
           "precision": 0.9487,
           "recall": 0.9737,
           "f1": 0.961,
-          "auc_roc": 0.9982,
+          "auc_roc": 0.9985,
           "confusion_matrix": [
             [
               101,
@@ -42,33 +42,33 @@
         },
         {
           "name": "Random Forest",
-          "accuracy": 0.9504,
-          "precision": 0.8974,
-          "recall": 0.9211,
-          "f1": 0.9091,
-          "auc_roc": 0.9872,
+          "accuracy": 0.9433,
+          "precision": 0.9167,
+          "recall": 0.8684,
+          "f1": 0.8919,
+          "auc_roc": 0.9875,
           "confusion_matrix": [
             [
-              99,
-              4
+              100,
+              3
             ],
             [
-              3,
-              35
+              5,
+              33
             ]
           ]
         },
         {
           "name": "XGBoost",
-          "accuracy": 0.9858,
-          "precision": 0.9737,
+          "accuracy": 0.9787,
+          "precision": 0.9487,
           "recall": 0.9737,
-          "f1": 0.9737,
+          "f1": 0.961,
           "auc_roc": 0.9992,
           "confusion_matrix": [
             [
-              102,
-              1
+              101,
+              2
             ],
             [
               1,
@@ -77,47 +77,47 @@
           ]
         }
       ],
-      "best_model": "XGBoost",
+      "best_model": "Regresion Logistica",
       "feature_importance": [
         {
           "feature": "A9_Score",
-          "importance": 0.236
+          "importance": 0.0861
         },
         {
           "feature": "A5_Score",
-          "importance": 0.1165
-        },
-        {
-          "feature": "A6_Score",
-          "importance": 0.0772
-        },
-        {
-          "feature": "contry_of_res_Canada",
-          "importance": 0.0564
-        },
-        {
-          "feature": "A4_Score",
-          "importance": 0.0495
+          "importance": 0.0748
         },
         {
           "feature": "A1_Score",
-          "importance": 0.0439
+          "importance": 0.0714
         },
         {
-          "feature": "austim_no",
-          "importance": 0.0385
+          "feature": "A7_Score",
+          "importance": 0.0703
         },
         {
-          "feature": "A3_Score",
-          "importance": 0.0383
+          "feature": "A6_Score",
+          "importance": 0.0672
+        },
+        {
+          "feature": "A4_Score",
+          "importance": 0.0671
         },
         {
           "feature": "A10_Score",
-          "importance": 0.0383
+          "importance": 0.0656
         },
         {
-          "feature": "ethnicity_Middle Eastern ",
-          "importance": 0.035
+          "feature": "A8_Score",
+          "importance": 0.0628
+        },
+        {
+          "feature": "A3_Score",
+          "importance": 0.0619
+        },
+        {
+          "feature": "A2_Score",
+          "importance": 0.0513
         }
       ]
     },
@@ -163,10 +163,10 @@
         },
         {
           "name": "Random Forest",
-          "accuracy": 0.9524,
+          "accuracy": 1.0,
           "precision": 1.0,
-          "recall": 0.9231,
-          "f1": 0.96,
+          "recall": 1.0,
+          "f1": 1.0,
           "auc_roc": 1.0,
           "confusion_matrix": [
             [
@@ -174,17 +174,17 @@
               0
             ],
             [
-              1,
-              12
+              0,
+              13
             ]
           ]
         },
         {
           "name": "XGBoost",
-          "accuracy": 0.9048,
+          "accuracy": 0.8571,
           "precision": 1.0,
-          "recall": 0.8462,
-          "f1": 0.9167,
+          "recall": 0.7692,
+          "f1": 0.8696,
           "auc_roc": 1.0,
           "confusion_matrix": [
             [
@@ -192,8 +192,8 @@
               0
             ],
             [
-              2,
-              11
+              3,
+              10
             ]
           ]
         }
@@ -202,43 +202,43 @@
       "feature_importance": [
         {
           "feature": "A5_Score",
-          "importance": 0.0846
+          "importance": 0.0949
         },
         {
           "feature": "A10_Score",
-          "importance": 0.0832
+          "importance": 0.0918
         },
         {
           "feature": "A3_Score",
-          "importance": 0.0817
+          "importance": 0.0884
         },
         {
           "feature": "A8_Score",
-          "importance": 0.0755
+          "importance": 0.0838
         },
         {
           "feature": "A6_Score",
-          "importance": 0.0655
+          "importance": 0.0724
         },
         {
           "feature": "A4_Score",
-          "importance": 0.0613
+          "importance": 0.0681
         },
         {
           "feature": "A2_Score",
-          "importance": 0.0538
+          "importance": 0.0598
         },
         {
           "feature": "A7_Score",
-          "importance": 0.0528
-        },
-        {
-          "feature": "contry_of_res_other",
-          "importance": 0.0508
+          "importance": 0.0587
         },
         {
           "feature": "A1_Score",
-          "importance": 0.047
+          "importance": 0.0497
+        },
+        {
+          "feature": "age",
+          "importance": 0.0435
         }
       ]
     },
@@ -284,19 +284,19 @@
         },
         {
           "name": "Random Forest",
-          "accuracy": 0.9333,
-          "precision": 0.8333,
-          "recall": 0.9695,
-          "f1": 0.8963,
-          "auc_roc": 0.9913,
+          "accuracy": 0.9424,
+          "precision": 0.8506,
+          "recall": 0.9778,
+          "f1": 0.9098,
+          "auc_roc": 0.992,
           "confusion_matrix": [
             [
-              784,
-              70
+              792,
+              62
             ],
             [
-              11,
-              350
+              8,
+              353
             ]
           ]
         },
@@ -409,7 +409,7 @@
           "precision": 0.9861,
           "recall": 0.9726,
           "f1": 0.9793,
-          "auc_roc": 0.9945,
+          "auc_roc": 0.9942,
           "confusion_matrix": [
             [
               63,
@@ -444,43 +444,43 @@
       "feature_importance": [
         {
           "feature": "A2",
-          "importance": 0.0996
+          "importance": 0.0998
         },
         {
           "feature": "A9",
-          "importance": 0.0975
+          "importance": 0.0977
         },
         {
           "feature": "A8",
-          "importance": 0.0919
+          "importance": 0.0921
         },
         {
           "feature": "A7",
-          "importance": 0.0907
+          "importance": 0.091
         },
         {
           "feature": "A10",
-          "importance": 0.0897
+          "importance": 0.0899
         },
         {
           "feature": "A6",
-          "importance": 0.0894
+          "importance": 0.0895
         },
         {
           "feature": "A5",
-          "importance": 0.0878
+          "importance": 0.088
         },
         {
           "feature": "A4",
-          "importance": 0.0877
+          "importance": 0.0878
         },
         {
           "feature": "A3",
-          "importance": 0.0851
+          "importance": 0.0853
         },
         {
           "feature": "A1",
-          "importance": 0.0844
+          "importance": 0.0846
         }
       ]
     }
@@ -493,6 +493,6 @@
     "f1": 0.9904,
     "precision": 0.981,
     "n_test": 1215,
-    "note": "Se destaca el grupo 'combined' por ser el mas robusto estadisticamente (1215 registros de test). Los grupos de adolescents y toddlers alcanzan recall perfecto pero con muestras de test mucho menores (21 y 211 registros), por lo que esas cifras deben interpretarse con mas cautela."
+    "note": "Se destaca el grupo 'combined' por ser el mas robusto estadisticamente (1215 registros de test). Los grupos de adolescents y toddlers alcanzan recall alto pero con muestras de test mucho menores (21 y 211 registros), por lo que esas cifras deben interpretarse con mas cautela."
   }
 }

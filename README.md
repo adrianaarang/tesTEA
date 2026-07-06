@@ -6,6 +6,7 @@
 
 Proyecto I · Módulo III · Bootcamp IA & Big Data · Somos F5 / Saturno Academy · 2026
 
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Demo-222222?logo=github&logoColor=white)](https://adrianaarang.github.io/tesTEA/)
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
 ![scikit--learn](https://img.shields.io/badge/scikit--learn-ML-F7931E?logo=scikitlearn&logoColor=white)
 ![License](https://img.shields.io/badge/Licencia-MIT-green)
@@ -107,7 +108,7 @@ testtea/
 |---|---|---|
 | **Python + pandas** | Carga y preprocesamiento | Estándar de facto para análisis tabular |
 | **scikit-learn** | Pipelines, encoding, modelos base | `ColumnTransformer` + `Pipeline` evitan data leakage de forma nativa |
-| **XGBoost** | Modelo de gradient boosting | Mejor rendimiento en 2 de los 4 grupos de edad |
+| **XGBoost** | Modelo de gradient boosting | Mejor rendimiento en el grupo combinado (el mas robusto estadisticamente) |
 | **GridSearchCV + StratifiedKFold** | Validación y ajuste de hiperparámetros | Robusto en datasets pequeños (ej. adolescentes, 104 registros) sin sacrificar un validation set fijo |
 | **HTML/CSS/JS (vanilla)** | Front interactivo | Sin build, despliegue directo en GitHub Pages desde `/docs` |
 | **GitHub Pages** | Hosting del front | Gratuito, integrado con el repositorio |
@@ -165,7 +166,7 @@ El front estará disponible en `http://localhost:8000`
 
 - El grupo **combinado** (adultos+adolescentes+niños) alcanza **recall = 1.00** con XGBoost sobre 1.215 registros de test, el resultado más robusto estadísticamente.
 - Las preguntas del AQ-10 con mayor poder discriminativo varían por franja de edad, pero A5, A6 y A9 aparecen consistentemente entre las más importantes.
-- El grupo de **adultos** alcanza recall = 0.97 con XGBoost; **adolescentes** y **toddlers** alcanzan recall = 1.00 con Regresión Logística, aunque sobre test sets mucho más pequeños (21 y 211 registros).
+- El grupo de **adultos** alcanza recall = 0.97 con Regresión Logística; **adolescentes** y **toddlers** alcanzan recall = 1.00, también con Regresión Logística, aunque sobre test sets mucho más pequeños (21 y 211 registros).
 - La puntuación total del cuestionario ya separa razonablemente bien las dos clases por sí sola, confirmando que hay señal predictiva real más allá del scoring fijo estándar.
 
 ---
