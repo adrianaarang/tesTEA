@@ -156,8 +156,9 @@ El front estará disponible en `http://localhost:8000`
 | 🏠 Hero | Pitch del proyecto, encuadre ético desde la primera pantalla |
 | 📊 El proyecto | Contexto de negocio y estadísticas generales (registros, datasets, modelos) |
 | 🗂️ Los datos | Importancia de variables y matriz de confusión, seleccionables por franja de edad |
-| 📈 Resultados | Resumen destacado + tabla completa de las 4 franjas × 4 modelos |
+| 📈 Resultados | Resumen destacado + glosario de métricas en lenguaje llano + tabla completa de las 4 franjas × 4 modelos |
 | ✅ Cuestionario | AQ-10/Q-CHAT-10 interactivo, con resultado de cribado en tiempo real |
+| ⚠️ Limitaciones | Sesgos documentados en 4 tarjetas destacadas (anglosajón, DSM-5, infradiagnóstico en mujeres, muestra reducida en adolescentes) |
 | 🎯 Conclusión | Recomendaciones al cliente y próximos pasos |
 
 ---
