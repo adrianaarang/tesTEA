@@ -18,9 +18,16 @@ def calculate_metrics(y_true, y_pred, y_proba):
     """
     return {
         "accuracy": accuracy_score(y_true, y_pred),
-        "precision": precision_score(y_true, y_pred),
-        "recall": recall_score(y_true, y_pred), # Métrica crítica: Falsos negativos importan más
-        "f1": f1_score(y_true, y_pred),
+        # CAMBIO: se anade zero_division=0 explicito. Sin esto, cuando un
+        # modelo (por ejemplo el Baseline) nunca predice la clase positiva,
+        # sklearn devuelve 0.0 igualmente pero lanza un UserWarning cada vez
+        # ("Precision is ill-defined..."). Con 4 datasets x 4 modelos son
+        # hasta 16 warnings ensuciando la salida del notebook. Al ponerlo
+        # explicito, el comportamiento es el mismo (0.0) pero sin el aviso,
+        # y queda claro que es una decision consciente, no un descuido.
+        "precision": precision_score(y_true, y_pred, zero_division=0),
+        "recall": recall_score(y_true, y_pred, zero_division=0), # Métrica crítica: Falsos negativos importan más
+        "f1": f1_score(y_true, y_pred, zero_division=0),
         "auc_roc": roc_auc_score(y_true, y_proba)
     }
 
@@ -63,10 +70,22 @@ def analyze_false_negatives(X_test, y_true, y_pred):
     Extrae y devuelve las filas correspondientes a los Falsos Negativos.
     Casos donde el paciente tenía TEA pero el modelo predijo que no (Los más críticos).
     """
-    # Corrección: pd.DataFrame con 'F' mayúscula
-    df_analysis = pd.DataFrame(X_test).copy()
-    df_analysis['actual'] = y_true
-    df_analysis['predicted'] = y_pred
+    # CAMBIO: antes se hacia pd.DataFrame(X_test).copy() y luego se asignaban
+    # y_true/y_pred directamente como columnas nuevas. El problema: cuando
+    # pandas asigna una Serie a una columna, alinea por INDICE, no por
+    # posicion. Si X_test conserva el indice original del train_test_split
+    # pero y_true (o y_pred) viene con el indice reseteado -o al reves-,
+    # las filas se desalinean SIN ningun error ni aviso: la columna 'actual'
+    # se llena de NaN o con el valor de otra fila distinta. Lo comprobamos
+    # con un caso de prueba antes de corregirlo.
+    #
+    # La solucion es forzar que las tres piezas (X_test, y_true, y_pred) se
+    # combinen por POSICION, reseteando el indice de las tres antes de
+    # juntarlas. Asi, la fila 0 de X_test siempre se empareja con la fila 0
+    # de y_true y de y_pred, sin importar que indice tuvieran originalmente.
+    df_analysis = pd.DataFrame(X_test).reset_index(drop=True)
+    df_analysis['actual'] = pd.Series(y_true).reset_index(drop=True)
+    df_analysis['predicted'] = pd.Series(y_pred).reset_index(drop=True)
 
     # Filtro: Real = 1 (TEA) y Predicho = 0 (No TEA)
     false_negatives = df_analysis[(df_analysis['actual'] == 1) & (df_analysis['predicted'] == 0)]
