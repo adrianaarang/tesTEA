@@ -156,8 +156,9 @@ El front estará disponible en `http://localhost:8000`
 | 🏠 Hero | Pitch del proyecto, encuadre ético desde la primera pantalla |
 | 📊 El proyecto | Contexto de negocio y estadísticas generales (registros, datasets, modelos) |
 | 🗂️ Los datos | Importancia de variables y matriz de confusión, seleccionables por franja de edad |
-| 📈 Resultados | Resumen destacado + tabla completa de las 4 franjas × 4 modelos |
+| 📈 Resultados | Resumen destacado + glosario de métricas en lenguaje llano + tabla completa de las 4 franjas × 4 modelos |
 | ✅ Cuestionario | AQ-10/Q-CHAT-10 interactivo, con resultado de cribado en tiempo real |
+| ⚠️ Limitaciones | Sesgos documentados en 4 tarjetas destacadas (anglosajón, DSM-5, infradiagnóstico en mujeres, muestra reducida en adolescentes) |
 | 🎯 Conclusión | Recomendaciones al cliente y próximos pasos |
 
 ---
@@ -186,6 +187,16 @@ El front estará disponible en `http://localhost:8000`
 ## 🩺 Marco ético
 
 TesTEA se posiciona como una herramienta de **apoyo al cribado, no de diagnóstico automatizado**. Los resultados son orientativos y no sustituyen la evaluación clínica de un profesional especializado. El bienestar y la autonomía de las personas evaluadas son nuestra prioridad por encima de cualquier métrica.
+
+Documentamos explícitamente los siguientes sesgos de los datos, porque afectan directamente a la validez del modelo fuera del contexto en el que fue entrenado:
+
+- **Sobrerrepresentación de población anglosajona**: los cuatro datasets (UCI y Kaggle) proceden mayoritariamente de estudios en Reino Unido y Estados Unidos. Un modelo entrenado sobre esta población puede no generalizar bien a otros contextos culturales o lingüísticos, incluido el español, sin una validación previa.
+
+- **Criterios DSM-5**: el cuestionario AQ-10/Q-CHAT-10 y las etiquetas de cribado se basan en el Manual Diagnóstico y Estadístico de los Trastornos Mentales (DSM-5), usado principalmente en Estados Unidos. Otros sistemas clínicos (como la CIE-11, más habitual en España) pueden diferir ligeramente en los criterios de derivación, lo que debe tenerse en cuenta antes de un uso clínico real.
+
+- **Infradiagnóstico de TEA en mujeres**: existe evidencia clínica de que el TEA se diagnostica con mayor frecuencia en hombres, mientras que en mujeres la presentación conductual suele ser distinta y pasar más desapercibida. Si los datos de entrenamiento heredan ese patrón de infradiagnóstico, el modelo puede reproducirlo, siendo menos sensible al detectar casos en mujeres. Recomendamos monitorizar el rendimiento del modelo desglosado por sexo antes de cualquier despliegue.
+
+Estas limitaciones no invalidan el proyecto, pero delimitan claramente su alcance: TesTEA es una prueba de concepto que demuestra viabilidad técnica, no un producto listo para uso clínico sin validación adicional.
 
 ---
 

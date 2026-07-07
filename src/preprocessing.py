@@ -257,6 +257,7 @@ def build_preprocessor(
     rare_group_cols=None,
     rare_min_freq=5
 ):
+
     """
     Construye el preprocesador con:
     - numéricas: imputación por mediana + StandardScaler
@@ -325,7 +326,7 @@ def preprocess_single_dataset(df, config, test_size=0.2, random_state=42):
     6. hace train/test split
     7. construye el preprocesador
     8. ajusta el preprocesador SOLO con train
-       (incluyendo imputación, agrupación de categorías raras y codificación)
+    (incluyendo imputación, agrupación de categorías raras y codificación)
     9. transforma train y test
     10. devuelve train_df, test_df y el preprocessor
     """
