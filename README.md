@@ -4,7 +4,7 @@
 
 **Herramienta de cribado temprano de TEA basada en Machine Learning**
 
-Proyecto I · Módulo III · Bootcamp IA & Big Data · Somos F5 / Saturno Academy · 2026
+Proyecto I · Módulo III · Bootcamp IA & Big Data · Somos F5 / 2026
 
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Demo-222222?logo=github&logoColor=white)](https://adrianaarang.github.io/tesTEA/)
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
