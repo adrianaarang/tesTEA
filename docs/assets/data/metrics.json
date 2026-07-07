@@ -13,12 +13,10 @@
           "auc_roc": 0.5,
           "confusion_matrix": [
             [
-              103,
-              0
+              103
             ],
             [
-              38,
-              0
+              38
             ]
           ]
         },
@@ -42,19 +40,19 @@
         },
         {
           "name": "Random Forest",
-          "accuracy": 0.9433,
-          "precision": 0.9167,
-          "recall": 0.8684,
-          "f1": 0.8919,
-          "auc_roc": 0.9875,
+          "accuracy": 0.9574,
+          "precision": 0.9,
+          "recall": 0.9474,
+          "f1": 0.9231,
+          "auc_roc": 0.987,
           "confusion_matrix": [
             [
-              100,
-              3
+              99,
+              4
             ],
             [
-              5,
-              33
+              2,
+              36
             ]
           ]
         },
@@ -80,44 +78,44 @@
       "best_model": "Regresion Logistica",
       "feature_importance": [
         {
-          "feature": "A9_Score",
-          "importance": 0.0861
-        },
-        {
           "feature": "A5_Score",
-          "importance": 0.0748
+          "importance": 0.1204
         },
         {
-          "feature": "A1_Score",
-          "importance": 0.0714
+          "feature": "A9_Score",
+          "importance": 0.1199
         },
         {
           "feature": "A7_Score",
-          "importance": 0.0703
-        },
-        {
-          "feature": "A6_Score",
-          "importance": 0.0672
+          "importance": 0.1109
         },
         {
           "feature": "A4_Score",
-          "importance": 0.0671
+          "importance": 0.1075
         },
         {
           "feature": "A10_Score",
-          "importance": 0.0656
-        },
-        {
-          "feature": "A8_Score",
-          "importance": 0.0628
+          "importance": 0.1037
         },
         {
           "feature": "A3_Score",
-          "importance": 0.0619
+          "importance": 0.0997
+        },
+        {
+          "feature": "A1_Score",
+          "importance": 0.0898
+        },
+        {
+          "feature": "A6_Score",
+          "importance": 0.0862
+        },
+        {
+          "feature": "A8_Score",
+          "importance": 0.0852
         },
         {
           "feature": "A2_Score",
-          "importance": 0.0513
+          "importance": 0.0767
         }
       ]
     },
@@ -134,11 +132,9 @@
           "auc_roc": 0.5,
           "confusion_matrix": [
             [
-              0,
               8
             ],
             [
-              0,
               13
             ]
           ]
@@ -201,44 +197,44 @@
       "best_model": "Regresion Logistica",
       "feature_importance": [
         {
-          "feature": "A5_Score",
-          "importance": 0.0949
-        },
-        {
           "feature": "A10_Score",
-          "importance": 0.0918
+          "importance": 0.1348
         },
         {
           "feature": "A3_Score",
-          "importance": 0.0884
-        },
-        {
-          "feature": "A8_Score",
-          "importance": 0.0838
-        },
-        {
-          "feature": "A6_Score",
-          "importance": 0.0724
-        },
-        {
-          "feature": "A4_Score",
-          "importance": 0.0681
-        },
-        {
-          "feature": "A2_Score",
-          "importance": 0.0598
-        },
-        {
-          "feature": "A7_Score",
-          "importance": 0.0587
-        },
-        {
-          "feature": "A1_Score",
-          "importance": 0.0497
+          "importance": 0.1275
         },
         {
           "feature": "age",
-          "importance": 0.0435
+          "importance": 0.1248
+        },
+        {
+          "feature": "A5_Score",
+          "importance": 0.114
+        },
+        {
+          "feature": "A8_Score",
+          "importance": 0.1008
+        },
+        {
+          "feature": "A4_Score",
+          "importance": 0.0945
+        },
+        {
+          "feature": "A6_Score",
+          "importance": 0.087
+        },
+        {
+          "feature": "A7_Score",
+          "importance": 0.0847
+        },
+        {
+          "feature": "A2_Score",
+          "importance": 0.0782
+        },
+        {
+          "feature": "A9_Score",
+          "importance": 0.0536
         }
       ]
     },
@@ -255,12 +251,10 @@
           "auc_roc": 0.5,
           "confusion_matrix": [
             [
-              854,
-              0
+              854
             ],
             [
-              361,
-              0
+              361
             ]
           ]
         },
@@ -284,19 +278,19 @@
         },
         {
           "name": "Random Forest",
-          "accuracy": 0.9424,
-          "precision": 0.8506,
-          "recall": 0.9778,
-          "f1": 0.9098,
-          "auc_roc": 0.992,
+          "accuracy": 0.9753,
+          "precision": 0.9276,
+          "recall": 0.9945,
+          "f1": 0.9599,
+          "auc_roc": 0.9985,
           "confusion_matrix": [
             [
-              792,
-              62
+              826,
+              28
             ],
             [
-              8,
-              353
+              2,
+              359
             ]
           ]
         },
@@ -323,43 +317,43 @@
       "feature_importance": [
         {
           "feature": "A6",
-          "importance": 0.1769
-        },
-        {
-          "feature": "Age",
-          "importance": 0.1528
-        },
-        {
-          "feature": "A5",
-          "importance": 0.1507
-        },
-        {
-          "feature": "A3",
-          "importance": 0.0991
+          "importance": 0.1174
         },
         {
           "feature": "A9",
-          "importance": 0.0929
+          "importance": 0.1077
         },
         {
-          "feature": "A10",
-          "importance": 0.0876
+          "feature": "A5",
+          "importance": 0.1076
+        },
+        {
+          "feature": "Age",
+          "importance": 0.1074
         },
         {
           "feature": "A4",
-          "importance": 0.0788
+          "importance": 0.0992
         },
         {
-          "feature": "A1",
-          "importance": 0.0546
+          "feature": "A3",
+          "importance": 0.0981
         },
         {
           "feature": "A7",
-          "importance": 0.0414
+          "importance": 0.0969
+        },
+        {
+          "feature": "A2",
+          "importance": 0.0938
         },
         {
           "feature": "A8",
-          "importance": 0.0377
+          "importance": 0.0896
+        },
+        {
+          "feature": "A10",
+          "importance": 0.0823
         }
       ]
     },
@@ -376,11 +370,9 @@
           "auc_roc": 0.5,
           "confusion_matrix": [
             [
-              0,
               65
             ],
             [
-              0,
               146
             ]
           ]
@@ -406,18 +398,18 @@
         {
           "name": "Random Forest",
           "accuracy": 0.9716,
-          "precision": 0.9861,
-          "recall": 0.9726,
-          "f1": 0.9793,
-          "auc_roc": 0.9942,
+          "precision": 0.993,
+          "recall": 0.9658,
+          "f1": 0.9792,
+          "auc_roc": 0.9953,
           "confusion_matrix": [
             [
-              63,
-              2
+              64,
+              1
             ],
             [
-              4,
-              142
+              5,
+              141
             ]
           ]
         },
@@ -444,43 +436,43 @@
       "feature_importance": [
         {
           "feature": "A2",
-          "importance": 0.0998
+          "importance": 0.1108
         },
         {
           "feature": "A9",
-          "importance": 0.0977
+          "importance": 0.1096
         },
         {
           "feature": "A8",
-          "importance": 0.0921
+          "importance": 0.1038
         },
         {
           "feature": "A7",
-          "importance": 0.091
-        },
-        {
-          "feature": "A10",
-          "importance": 0.0899
-        },
-        {
-          "feature": "A6",
-          "importance": 0.0895
-        },
-        {
-          "feature": "A5",
-          "importance": 0.088
+          "importance": 0.0988
         },
         {
           "feature": "A4",
-          "importance": 0.0878
+          "importance": 0.0982
         },
         {
-          "feature": "A3",
-          "importance": 0.0853
+          "feature": "A10",
+          "importance": 0.0982
+        },
+        {
+          "feature": "A6",
+          "importance": 0.0979
+        },
+        {
+          "feature": "A5",
+          "importance": 0.0961
         },
         {
           "feature": "A1",
-          "importance": 0.0846
+          "importance": 0.0934
+        },
+        {
+          "feature": "A3",
+          "importance": 0.0932
         }
       ]
     }
