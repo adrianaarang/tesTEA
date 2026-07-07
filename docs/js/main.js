@@ -242,6 +242,104 @@ function initGroupSelector() {
   });
 }
 
+/* ============================================
+   ANALISIS TECNICO: pestanas + lightbox con navegacion
+   ============================================ */
+
+let lightboxImages = [];
+let lightboxIndex = 0;
+
+function initAnalysisTabs() {
+  const tabs = document.querySelectorAll(".analysis-tab-btn");
+  const panels = document.querySelectorAll(".analysis-panel");
+
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      const target = tab.dataset.tab;
+
+      tabs.forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+
+      panels.forEach(panel => {
+        panel.style.display = panel.dataset.panel === target ? "" : "none";
+      });
+    });
+  });
+}
+
+function collectPanelImages(panelEl) {
+  return Array.from(panelEl.querySelectorAll(".analysis-thumb")).map(btn => ({
+    src: btn.dataset.src,
+    caption: btn.dataset.caption || ""
+  }));
+}
+
+function openLightbox(panelEl, clickedIndex) {
+  lightboxImages = collectPanelImages(panelEl);
+  lightboxIndex = clickedIndex;
+  renderLightboxImage();
+
+  document.getElementById("lightbox").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeLightbox() {
+  document.getElementById("lightbox").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+function renderLightboxImage() {
+  const item = lightboxImages[lightboxIndex];
+  if (!item) return;
+
+  const img = document.getElementById("lightbox-img");
+  const caption = document.getElementById("lightbox-caption");
+
+  img.src = item.src;
+  img.alt = item.caption;
+  caption.textContent = `${item.caption}  ·  ${lightboxIndex + 1} / ${lightboxImages.length}`;
+}
+
+function lightboxNext() {
+  lightboxIndex = (lightboxIndex + 1) % lightboxImages.length;
+  renderLightboxImage();
+}
+
+function lightboxPrev() {
+  lightboxIndex = (lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length;
+  renderLightboxImage();
+}
+
+function initLightbox() {
+  document.querySelectorAll(".analysis-thumb").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const panel = btn.closest(".analysis-panel");
+      const allThumbs = Array.from(panel.querySelectorAll(".analysis-thumb"));
+      const idx = allThumbs.indexOf(btn);
+      openLightbox(panel, idx);
+    });
+  });
+
+  document.getElementById("lightbox-close").addEventListener("click", closeLightbox);
+  document.getElementById("lightbox-next").addEventListener("click", lightboxNext);
+  document.getElementById("lightbox-prev").addEventListener("click", lightboxPrev);
+
+  // Cerrar al hacer clic fuera de la imagen (en el fondo oscuro)
+  document.getElementById("lightbox").addEventListener("click", (e) => {
+    if (e.target.id === "lightbox") closeLightbox();
+  });
+
+  // Navegacion con teclado: flechas y Escape
+  document.addEventListener("keydown", (e) => {
+    const lightbox = document.getElementById("lightbox");
+    if (!lightbox.classList.contains("open")) return;
+
+    if (e.key === "Escape") closeLightbox();
+    if (e.key === "ArrowRight") lightboxNext();
+    if (e.key === "ArrowLeft") lightboxPrev();
+  });
+}
+
 // Inicialización general
 async function init() {
   // Cargar métricas reales del modelo (metrics.json, o dummy si aún no existe)
@@ -266,6 +364,10 @@ async function init() {
 
   // Inicializar cuestionario interactivo
   initQuestionnaire();
+
+  // Inicializar pestañas de análisis y el lightbox
+  initAnalysisTabs();
+  initLightbox();
 
   // Inicializar animaciones
   initScrollReveal();

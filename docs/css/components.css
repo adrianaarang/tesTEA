@@ -338,6 +338,191 @@
 
 
 /* ============================================
+   ANALISIS TECNICO (pestanas + galeria + lightbox)
+   ============================================ */
+.analysis-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xl);
+}
+
+.analysis-tab-btn {
+  padding: 10px 22px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  background: var(--surface);
+  transition: all 0.2s;
+}
+
+.analysis-tab-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.analysis-tab-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+  box-shadow: var(--shadow-md);
+}
+
+.analysis-panel {
+  animation: fadeIn 0.35s ease;
+}
+
+.analysis-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg);
+}
+
+.analysis-grid-wide {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.analysis-thumb {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--surface);
+  cursor: zoom-in;
+  transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.3, 1), box-shadow 0.25s;
+  text-align: left;
+}
+
+.analysis-thumb:hover {
+  transform: translateY(-4px) scale(1.015);
+  box-shadow: var(--shadow-lg);
+}
+
+.analysis-thumb:hover img {
+  transform: scale(1.03);
+}
+
+.analysis-thumb img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+  transition: transform 0.4s ease;
+  background: var(--bg-warm);
+}
+
+.analysis-thumb-label {
+  display: block;
+  padding: 10px 14px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text);
+  border-top: 1px solid var(--border-light);
+}
+
+@media (max-width: 768px) {
+  .analysis-grid, .analysis-grid-wide {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Lightbox */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(20, 24, 22, 0.92);
+  backdrop-filter: blur(4px);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  animation: fadeIn 0.2s ease;
+}
+
+.lightbox.open {
+  display: flex;
+}
+
+.lightbox-img {
+  max-width: min(90vw, 1100px);
+  max-height: 78vh;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  background: white;
+}
+
+.lightbox-caption {
+  margin-top: var(--space-md);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.9rem;
+  max-width: 700px;
+  text-align: center;
+  padding: 0 var(--space-lg);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 24px;
+  right: 28px;
+  font-size: 1.4rem;
+  color: white;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  transition: background 0.2s;
+}
+
+.lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2.2rem;
+  color: white;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  transition: background 0.2s;
+  line-height: 1;
+}
+
+.lightbox-nav:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.lightbox-prev {
+  left: 20px;
+}
+
+.lightbox-next {
+  right: 20px;
+}
+
+@media (max-width: 640px) {
+  .lightbox-nav {
+    width: 44px;
+    height: 44px;
+    font-size: 1.8rem;
+  }
+  .lightbox-close {
+    top: 12px;
+    right: 12px;
+  }
+}
+
+
+/* ============================================
    DATA GROUP SELECTOR (importancia/matriz por franja de edad)
    ============================================ */
 .data-group-selector {
@@ -376,6 +561,26 @@
   font-size: 0.75rem;
   color: var(--text-faint);
   margin-bottom: var(--space-xl);
+}
+
+.detail-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-lg);
+  margin-top: var(--space-lg);
+}
+
+.detail-link {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--accent);
+  transition: color 0.2s;
+}
+
+.detail-link:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
 }
 
 /* ============================================

@@ -39,6 +39,7 @@
         <li><a href="#resultados">Resultados</a></li>
         <li><a href="#cuestionario">Cuestionario</a></li>
         <li><a href="#sesgos">Limitaciones</a></li>
+        <li><a href="#analisis">Análisis</a></li>
       </ul>
     </div>
   </nav>
@@ -146,6 +147,12 @@
           </p>
           <div id="confusion-matrix"></div>
         </div>
+      </div>
+
+      <div class="detail-links reveal">
+        <a href="#analisis" class="detail-link">
+          📊 Ver análisis técnico completo (matrices, SHAP y comparativas) →
+        </a>
       </div>
     </div>
   </section>
@@ -310,6 +317,91 @@
       </div>
     </div>
   </section>
+
+  <!-- ANALISIS TECNICO COMPLETO -->
+  <section id="analisis">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="section-label">Para quien quiera mirar bajo el capó</div>
+        <h2>Análisis técnico completo</h2>
+        <p>
+          Las 16 combinaciones de modelo × grupo de edad, la interpretabilidad
+          SHAP de cada franja, y las comparativas agregadas. Haz clic en
+          cualquier imagen para verla en grande.
+        </p>
+      </div>
+
+      <div class="analysis-tabs reveal">
+        <button class="analysis-tab-btn active" data-tab="confusion">Matrices de confusión</button>
+        <button class="analysis-tab-btn" data-tab="shap">Interpretabilidad SHAP</button>
+        <button class="analysis-tab-btn" data-tab="comparativas">Comparativas</button>
+      </div>
+
+      <div class="analysis-panel reveal" data-panel="confusion">
+        <div class="analysis-grid">
+          <button class="analysis-thumb" data-src="assets/img/confusion_matrices_adults.png" data-caption="Matrices de confusión — Adultos (Baseline, Regresión Logística, Random Forest, XGBoost)">
+            <img src="assets/img/confusion_matrices_adults.png" alt="Matrices de confusión Adultos">
+            <span class="analysis-thumb-label">Adultos</span>
+          </button>
+          <button class="analysis-thumb" data-src="assets/img/confusion_matrices_adolescents.png" data-caption="Matrices de confusión — Adolescentes (Baseline, Regresión Logística, Random Forest, XGBoost)">
+            <img src="assets/img/confusion_matrices_adolescents.png" alt="Matrices de confusión Adolescentes">
+            <span class="analysis-thumb-label">Adolescentes</span>
+          </button>
+          <button class="analysis-thumb" data-src="assets/img/confusion_matrices_combined.png" data-caption="Matrices de confusión — Combinado (Baseline, Regresión Logística, Random Forest, XGBoost)">
+            <img src="assets/img/confusion_matrices_combined.png" alt="Matrices de confusión Combinado">
+            <span class="analysis-thumb-label">Combinado</span>
+          </button>
+          <button class="analysis-thumb" data-src="assets/img/confusion_matrices_toddlers.png" data-caption="Matrices de confusión — Toddlers (Baseline, Regresión Logística, Random Forest, XGBoost)">
+            <img src="assets/img/confusion_matrices_toddlers.png" alt="Matrices de confusión Toddlers">
+            <span class="analysis-thumb-label">Toddlers</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="analysis-panel" data-panel="shap" style="display:none;">
+        <div class="analysis-grid">
+          <button class="analysis-thumb" data-src="assets/img/shap_adults.png" data-caption="SHAP — Adultos (mejor modelo: Regresión Logística)">
+            <img src="assets/img/shap_adults.png" alt="SHAP Adultos">
+            <span class="analysis-thumb-label">Adultos</span>
+          </button>
+          <button class="analysis-thumb" data-src="assets/img/shap_adolescents.png" data-caption="SHAP — Adolescentes (mejor modelo: Regresión Logística)">
+            <img src="assets/img/shap_adolescents.png" alt="SHAP Adolescentes">
+            <span class="analysis-thumb-label">Adolescentes</span>
+          </button>
+          <button class="analysis-thumb" data-src="assets/img/shap_combined.png" data-caption="SHAP — Combinado (mejor modelo: XGBoost)">
+            <img src="assets/img/shap_combined.png" alt="SHAP Combinado">
+            <span class="analysis-thumb-label">Combinado</span>
+          </button>
+          <button class="analysis-thumb" data-src="assets/img/shap_toddlers.png" data-caption="SHAP — Toddlers (mejor modelo: Regresión Logística)">
+            <img src="assets/img/shap_toddlers.png" alt="SHAP Toddlers">
+            <span class="analysis-thumb-label">Toddlers</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="analysis-panel" data-panel="comparativas" style="display:none;">
+        <div class="analysis-grid analysis-grid-wide">
+          <button class="analysis-thumb" data-src="assets/img/comparativa_metricas_por_grupo.png" data-caption="Comparativa de métricas (accuracy, precisión, recall, F1, AUC-ROC) del mejor modelo por grupo">
+            <img src="assets/img/comparativa_metricas_por_grupo.png" alt="Comparativa de métricas por grupo">
+            <span class="analysis-thumb-label">Métricas por grupo de edad</span>
+          </button>
+          <button class="analysis-thumb" data-src="assets/img/comparativa_recall.png" data-caption="Comparativa de recall por modelo y grupo de edad">
+            <img src="assets/img/comparativa_recall.png" alt="Comparativa de recall">
+            <span class="analysis-thumb-label">Recall por modelo y grupo</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox: visor de imagenes a pantalla completa -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Cerrar">✕</button>
+    <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Anterior">‹</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="">
+    <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Siguiente">›</button>
+    <p class="lightbox-caption" id="lightbox-caption"></p>
+  </div>
 
   <!-- CONCLUSION -->
   <section id="conclusion">
