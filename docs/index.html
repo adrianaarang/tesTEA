@@ -11,6 +11,15 @@
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/components.css">
+  <script>
+    // Se aplica ANTES de pintar la pagina, para evitar el parpadeo
+    // (cargar en claro y luego cambiar a oscuro de golpe).
+    (function () {
+      var saved = localStorage.getItem("testtea-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      if (theme === "dark") document.documentElement.setAttribute("data-theme", "dark");
+    })();
+  </script>
 </head>
 <body>
 
@@ -33,35 +42,43 @@
         </svg>
         TesTEA
       </div>
-      <ul class="nav-links">
-        <li><a href="#proyecto">El proyecto</a></li>
-        <li><a href="#datos">Los datos</a></li>
-        <li><a href="#resultados">Resultados</a></li>
-        <li><a href="#cuestionario">Cuestionario</a></li>
-        <li><a href="#sesgos">Limitaciones</a></li>
-        <li><a href="#analisis">Análisis</a></li>
-      </ul>
+      <div class="nav-right">
+        <ul class="nav-links">
+          <li><a href="#proyecto" data-i18n="nav.proyecto">El proyecto</a></li>
+          <li><a href="#datos" data-i18n="nav.datos">Los datos</a></li>
+          <li><a href="#resultados" data-i18n="nav.resultados">Resultados</a></li>
+          <li><a href="#cuestionario" data-i18n="nav.cuestionario">Cuestionario</a></li>
+          <li><a href="#simulador" data-i18n="nav.simulador">Simulador</a></li>
+          <li><a href="#sesgos" data-i18n="nav.sesgos">Limitaciones</a></li>
+          <li><a href="#analisis" data-i18n="nav.analisis">Análisis</a></li>
+        </ul>
+        <button id="theme-toggle" class="theme-toggle" data-i18n-aria="theme.toDark" aria-label="Cambiar a modo oscuro">
+          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.6"/><path d="M12 3v2M12 19v2M5 5l1.4 1.4M17.6 17.6L19 19M3 12h2M19 12h2M5 19l1.4-1.4M17.6 6.4L19 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="lang-switch">
+          <button class="lang-btn active" data-lang="es">ES</button>
+          <button class="lang-btn" data-lang="en">EN</button>
+        </div>
+      </div>
     </div>
   </nav>
 
   <!-- HERO -->
   <header class="hero" id="hero">
+    <canvas id="neural-bg" class="neural-bg"></canvas>
     <div class="wrap">
-      <div class="section-label">DataScope Solutions / Proyecto de clasificación / Módulo III</div>
-      <h1>Dos consultas menos.<br>Una derivación <em>mejor</em>.</h1>
-      <p class="hero-subtitle">
-        TesTEA es una herramienta de cribado temprano de TEA basada en machine learning.
-        Analiza las respuestas del cuestionario AQ-10 y asiste a profesionales de atención
-        primaria en la decisión de derivar a evaluación especializada.
-      </p>
+      <div class="section-label" data-i18n="hero.label">DataScope Solutions / Proyecto de clasificación / Módulo III</div>
+      <h1 data-i18n="hero.title">Dos consultas menos.<br>Una derivación <em>mejor</em>.</h1>
+      <p class="hero-subtitle" data-i18n="hero.subtitle">TesTEA es una herramienta de cribado temprano de TEA basada en machine learning. Analiza las respuestas del cuestionario AQ-10 y asiste a profesionales de atención primaria en la decisión de derivar a evaluación especializada.</p>
       <div class="hero-badges">
-        <span class="badge"><span class="badge-dot"></span>Cribado, no diagnóstico</span>
-        <span class="badge"><span class="badge-dot"></span>7.937 registros analizados</span>
-        <span class="badge"><span class="badge-dot"></span>Recall como métrica prioritaria</span>
+        <span class="badge"><span class="badge-dot"></span><span data-i18n="hero.badge1">Cribado, no diagnóstico</span></span>
+        <span class="badge"><span class="badge-dot"></span><span data-i18n="hero.badge2">7.937 registros analizados</span></span>
+        <span class="badge"><span class="badge-dot"></span><span data-i18n="hero.badge3">Recall como métrica prioritaria</span></span>
       </div>
 
       <div class="ethics-banner">
-        <p>
+        <p data-i18n="hero.ethics">
           <strong>Marco ético:</strong> TesTEA es una herramienta de apoyo al cribado, no un sistema
           de diagnóstico automatizado. Los resultados son orientativos y no sustituyen la evaluación
           clínica por parte de un profesional especializado. Reconocemos los sesgos potenciales de los
@@ -77,33 +94,27 @@
   <section id="proyecto">
     <div class="wrap">
       <div class="section-head reveal">
-        <div class="section-label">El proyecto</div>
-        <h2>El problema que resuelve TesTEA</h2>
-        <p>
-          Una unidad de pediatría de atención primaria quiere optimizar las derivaciones
-          a neuropediatría. Actualmente, el proceso de cribado con el cuestionario AQ-10
-          requiere dos consultas: una para administrar el test y otra para corregirlo e
-          interpretar los resultados. TesTEA reduce ese proceso a una sola interacción
-          digital, derivando directamente a diagnóstico los casos con mayor probabilidad.
-        </p>
+        <div class="section-label" data-i18n="proyecto.label">El proyecto</div>
+        <h2 data-i18n="proyecto.title">El problema que resuelve TesTEA</h2>
+        <p data-i18n="proyecto.body">Una unidad de pediatría de atención primaria quiere optimizar las derivaciones a neuropediatría. Actualmente, el proceso de cribado con el cuestionario AQ-10 requiere dos consultas: una para administrar el test y otra para corregirlo e interpretar los resultados. TesTEA reduce ese proceso a una sola interacción digital, derivando directamente a diagnóstico los casos con mayor probabilidad.</p>
       </div>
 
       <div class="grid-4 reveal">
         <div class="stat-card">
           <div class="num" data-count="7937">0</div>
-          <div class="label">registros analizados</div>
+          <div class="label" data-i18n="stat.records">registros analizados</div>
         </div>
         <div class="stat-card">
           <div class="num" data-count="4">0</div>
-          <div class="label">datasets combinados</div>
+          <div class="label" data-i18n="stat.datasets">datasets combinados</div>
         </div>
         <div class="stat-card">
           <div class="num" data-count="4">0</div>
-          <div class="label">modelos entrenados</div>
+          <div class="label" data-i18n="stat.models">modelos entrenados</div>
         </div>
         <div class="stat-card">
           <div class="num" id="hero-recall-stat">—</div>
-          <div class="label">recall del mejor modelo</div>
+          <div class="label" data-i18n="stat.recall">recall del mejor modelo</div>
         </div>
       </div>
     </div>
@@ -113,46 +124,35 @@
   <section id="datos">
     <div class="wrap">
       <div class="section-head reveal">
-        <div class="section-label">Los datos</div>
-        <h2>Cuatro datasets, cuatro franjas de edad</h2>
-        <p>
-          Trabajamos con datos de adultos (UCI), adolescentes (UCI), una colección
-          agrupada de adultos, adolescentes y niños (Kaggle) y un dataset específico
-          de toddlers (Kaggle). Todos basados en el cuestionario estandarizado
-          AQ-10/Q-CHAT-10. Cada franja de edad tiene su propio modelo entrenado.
-        </p>
+        <div class="section-label" data-i18n="datos.label">Los datos</div>
+        <h2 data-i18n="datos.title">Cuatro datasets, cuatro franjas de edad</h2>
+        <p data-i18n="datos.body">Trabajamos con datos de adultos (UCI), adolescentes (UCI), una colección agrupada de adultos, adolescentes y niños (Kaggle) y un dataset específico de toddlers (Kaggle). Todos basados en el cuestionario estandarizado AQ-10/Q-CHAT-10. Cada franja de edad tiene su propio modelo entrenado.</p>
       </div>
 
       <!-- Selector de grupo para importancia de variables y matriz de confusión -->
       <div class="data-group-selector reveal">
-        <button class="data-group-btn" data-group="adults">Adultos</button>
-        <button class="data-group-btn" data-group="adolescents">Adolescentes</button>
-        <button class="data-group-btn active" data-group="combined">Combinado</button>
-        <button class="data-group-btn" data-group="toddlers">Toddlers</button>
+        <button class="data-group-btn" data-group="adults" data-i18n="group.adults">Adultos</button>
+        <button class="data-group-btn" data-group="adolescents" data-i18n="group.adolescents">Adolescentes</button>
+        <button class="data-group-btn active" data-group="combined" data-i18n="group.combined">Combinado</button>
+        <button class="data-group-btn" data-group="toddlers" data-i18n="group.toddlers">Toddlers</button>
       </div>
       <p id="data-group-label" class="data-group-label reveal"></p>
 
       <div class="grid-2 reveal">
         <div class="data-card">
-          <h3>Importancia de cada pregunta</h3>
-          <p style="font-size:0.85rem; color:var(--text-faint); margin-bottom:var(--space-md);">
-            Qué preguntas del AQ-10 pesan más en la predicción del modelo, para el grupo seleccionado.
-          </p>
+          <h3 data-i18n="datacard1.title">Importancia de cada pregunta</h3>
+          <p style="font-size:0.85rem; color:var(--text-faint); margin-bottom:var(--space-md);" data-i18n="datacard1.body">Qué preguntas del AQ-10 pesan más en la predicción del modelo, para el grupo seleccionado.</p>
           <div id="feature-importance"></div>
         </div>
         <div class="data-card">
-          <h3>Matriz de confusión del mejor modelo</h3>
-          <p style="font-size:0.85rem; color:var(--text-faint); margin-bottom:var(--space-md);">
-            Falsos negativos (abajo-izquierda) son los más críticos en cribado.
-          </p>
+          <h3 data-i18n="datacard2.title">Matriz de confusión del mejor modelo</h3>
+          <p style="font-size:0.85rem; color:var(--text-faint); margin-bottom:var(--space-md);" data-i18n="datacard2.body">Falsos negativos (abajo-izquierda) son los más críticos en cribado.</p>
           <div id="confusion-matrix"></div>
         </div>
       </div>
 
       <div class="detail-links reveal">
-        <a href="#analisis" class="detail-link">
-          📊 Ver análisis técnico completo (matrices, SHAP y comparativas) →
-        </a>
+        <a href="#analisis" class="detail-link" data-i18n="detail.link">📊 Ver análisis técnico completo (matrices, SHAP y comparativas) →</a>
       </div>
     </div>
   </section>
@@ -161,46 +161,46 @@
   <section id="resultados">
     <div class="wrap">
       <div class="section-head reveal">
-        <div class="section-label">Resultados</div>
-        <h2>Comparación de modelos</h2>
-        <p>
-          Priorizamos el recall (sensibilidad) porque en un contexto de cribado médico,
-          un falso negativo (no derivar a alguien que lo necesita) es mucho más grave
-          que un falso positivo (derivar a alguien que al final no lo necesita).
-        </p>
+        <div class="section-label" data-i18n="resultados.label">Resultados</div>
+        <h2 data-i18n="resultados.title">Comparación de modelos</h2>
+        <p data-i18n="resultados.body">Priorizamos el recall (sensibilidad) porque en un contexto de cribado médico, un falso negativo (no derivar a alguien que lo necesita) es mucho más grave que un falso positivo (derivar a alguien que al final no lo necesita).</p>
       </div>
 
       <!-- Resumen destacado: la cifra titular del proyecto -->
       <div id="headline-summary" class="reveal"></div>
 
+      <div class="pdf-export-row reveal">
+        <button id="btn-download-pdf" class="btn btn-secondary btn-pdf" data-i18n="pdf.button">📄 Descargar resumen técnico (PDF)</button>
+      </div>
+
       <!-- Glosario de metricas en lenguaje llano -->
       <details class="metrics-glossary reveal">
-        <summary>¿Qué significa cada métrica? <span class="glossary-hint">(clic para ver)</span></summary>
+        <summary><span data-i18n="glossary.summary">¿Qué significa cada métrica?</span> <span class="glossary-hint" data-i18n="glossary.hint">(clic para ver)</span></summary>
         <div class="glossary-grid">
           <div class="glossary-item">
-            <div class="glossary-term">Accuracy <span class="glossary-alias">(exactitud)</span></div>
-            <p>De cada 100 casos, cuántos clasifica bien el modelo en total (positivos y negativos juntos). Puede engañar si hay muchos más casos de un tipo que de otro.</p>
+            <div class="glossary-term"><span data-i18n="glossary.accuracy.term">Accuracy</span> <span class="glossary-alias" data-i18n="glossary.accuracy.alias">(exactitud)</span></div>
+            <p data-i18n="glossary.accuracy.body">De cada 100 casos, cuántos clasifica bien el modelo en total (positivos y negativos juntos). Puede engañar si hay muchos más casos de un tipo que de otro.</p>
           </div>
           <div class="glossary-item">
-            <div class="glossary-term">Precision <span class="glossary-alias">(precisión)</span></div>
-            <p>De todos los casos que el modelo marca como positivos, cuántos lo son de verdad. Precisión alta = pocas falsas alarmas.</p>
+            <div class="glossary-term"><span data-i18n="glossary.precision.term">Precision</span> <span class="glossary-alias" data-i18n="glossary.precision.alias">(precisión)</span></div>
+            <p data-i18n="glossary.precision.body">De todos los casos que el modelo marca como positivos, cuántos lo son de verdad. Precisión alta = pocas falsas alarmas.</p>
           </div>
           <div class="glossary-item">
-            <div class="glossary-term">Recall <span class="glossary-alias">(sensibilidad)</span></div>
-            <p>De todos los casos que realmente son positivos, cuántos detecta el modelo. Es la métrica más importante aquí: recall alto significa que casi ningún caso se escapa sin ser derivado.</p>
+            <div class="glossary-term"><span data-i18n="glossary.recall.term">Recall</span> <span class="glossary-alias" data-i18n="glossary.recall.alias">(sensibilidad)</span></div>
+            <p data-i18n="glossary.recall.body">De todos los casos que realmente son positivos, cuántos detecta el modelo. Es la métrica más importante aquí: recall alto significa que casi ningún caso se escapa sin ser derivado.</p>
           </div>
           <div class="glossary-item">
-            <div class="glossary-term">F1</div>
-            <p>Un único número que resume el equilibrio entre precisión y recall. Útil para comparar modelos de un vistazo.</p>
+            <div class="glossary-term" data-i18n="glossary.f1.term">F1</div>
+            <p data-i18n="glossary.f1.body">Un único número que resume el equilibrio entre precisión y recall. Útil para comparar modelos de un vistazo.</p>
           </div>
           <div class="glossary-item">
-            <div class="glossary-term">AUC-ROC</div>
-            <p>Qué tan bien distingue el modelo entre positivos y negativos en general. 1.0 = distinción casi perfecta, 0.5 = equivalente a tirar una moneda al aire.</p>
+            <div class="glossary-term" data-i18n="glossary.auc.term">AUC-ROC</div>
+            <p data-i18n="glossary.auc.body">Qué tan bien distingue el modelo entre positivos y negativos en general. 1.0 = distinción casi perfecta, 0.5 = equivalente a tirar una moneda al aire.</p>
           </div>
         </div>
       </details>
 
-      <h3 class="results-table-title reveal">Todos los modelos, las cuatro franjas de edad</h3>
+      <h3 class="results-table-title reveal" data-i18n="results.table.title">Todos los modelos, las cuatro franjas de edad</h3>
       <div class="reveal" style="overflow-x: auto;">
         <div id="metrics-table"></div>
       </div>
@@ -211,21 +211,30 @@
   <section id="cuestionario" style="background: var(--bg-warm);">
     <div class="wrap">
       <div class="section-head reveal" style="text-align: center; max-width: 600px; margin: 0 auto var(--space-xl);">
-        <div class="section-label">Prueba el cuestionario</div>
-        <h2>Cribado AQ-10 interactivo</h2>
-        <p style="margin: var(--space-sm) auto 0;">
-          Elige el grupo de edad, responde las 10 preguntas y obtendrás el resultado
-          del cribado. Recuerda: esto no es un diagnóstico.
-        </p>
+        <div class="section-label" data-i18n="cuestionario.label">Prueba el cuestionario</div>
+        <h2 data-i18n="cuestionario.title">Cribado AQ-10 interactivo</h2>
+        <p style="margin: var(--space-sm) auto 0;" data-i18n="cuestionario.body">Elige el grupo de edad, responde las 10 preguntas y obtendrás el resultado del cribado. Recuerda: esto no es un diagnóstico.</p>
       </div>
 
       <div class="questionnaire reveal">
         <!-- Selector de grupo de edad -->
         <div class="age-selector">
-          <button class="age-btn active" data-group="adults">Adulto</button>
-          <button class="age-btn" data-group="adolescents">Adolescente</button>
-          <button class="age-btn" data-group="children">Niño/a</button>
-          <button class="age-btn" data-group="toddlers">Bebé/Toddler</button>
+          <button class="age-btn active" data-group="adults">
+            <svg class="age-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="7" r="3.2" stroke="currentColor" stroke-width="1.6"/><path d="M5 20c0-3.8 3.1-6.5 7-6.5s7 2.7 7 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <span data-i18n="age.adult">Adulto</span>
+          </button>
+          <button class="age-btn" data-group="adolescents">
+            <svg class="age-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3.5" y="9" width="4" height="6.5" rx="2" stroke="currentColor" stroke-width="1.6"/><rect x="16.5" y="9" width="4" height="6.5" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M7.5 10.5a4.5 4.5 0 0 1 9 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <span data-i18n="age.adolescent">Adolescente</span>
+          </button>
+          <button class="age-btn" data-group="children">
+            <svg class="age-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 4v3.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="10.5" r="6" stroke="currentColor" stroke-width="1.6"/><path d="M9.2 10.2c.6.8 1.6 1.2 2.8 1.2s2.2-.4 2.8-1.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            <span data-i18n="age.child">Niño/a</span>
+          </button>
+          <button class="age-btn" data-group="toddlers">
+            <svg class="age-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="9" r="5" stroke="currentColor" stroke-width="1.6"/><path d="M9.3 9.2c.5.6 1.5.9 2.7.9s2.2-.3 2.7-.9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M9.5 16.5c0-.9.9-1.6 2.5-1.6s2.5.7 2.5 1.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <span data-i18n="age.toddler">Bebé/Toddler</span>
+          </button>
         </div>
 
         <div id="questionnaire-form">
@@ -239,9 +248,9 @@
 
           <!-- Navegación -->
           <div class="question-nav">
-            <button class="btn btn-secondary" id="btn-prev" disabled>Anterior</button>
-            <button class="btn btn-primary" id="btn-next">Siguiente</button>
-            <button class="btn btn-primary" id="btn-result" style="display:none">Ver resultado</button>
+            <button class="btn btn-secondary" id="btn-prev" disabled data-i18n="btn.prev">Anterior</button>
+            <button class="btn btn-primary" id="btn-next" data-i18n="btn.next">Siguiente</button>
+            <button class="btn btn-primary" id="btn-result" style="display:none" data-i18n="btn.result">Ver resultado</button>
           </div>
         </div>
 
@@ -250,13 +259,86 @@
           <div class="result-score" id="result-score-value"></div>
           <div class="result-label" id="result-label"></div>
           <p class="result-detail" id="result-detail"></p>
-          <div class="result-disclaimer">
-            Este resultado es orientativo y no constituye un diagnóstico clínico.
-            Si el resultado sugiere derivación, consulte con un profesional
-            especializado para una evaluación completa.
+
+          <div class="ml-comparison">
+            <div class="ml-comparison-label" data-i18n="ml.label">¿Y qué dice el modelo de Machine Learning?</div>
+            <div class="ml-prob-bar-track">
+              <div class="ml-prob-bar-fill" id="ml-prob-fill"></div>
+            </div>
+            <div class="ml-prob-value" id="ml-prob-value">—</div>
+            <p class="ml-comparison-note"><span data-i18n="ml.note">Predicción de la Regresión Logística entrenada en este proyecto (aproximada: usa solo tus 10 respuestas, sin edad ni otros datos demográficos que el modelo real también considera). Modelo:</span> <span id="ml-model-name"></span>.</p>
           </div>
-          <button class="btn btn-secondary btn-reset" id="btn-reset">Repetir cuestionario</button>
+
+          <div class="result-disclaimer" data-i18n="result.disclaimer">Este resultado es orientativo y no constituye un diagnóstico clínico. Si el resultado sugiere derivación, consulte con un profesional especializado para una evaluación completa.</div>
+          <button class="btn btn-secondary btn-reset" id="btn-reset" data-i18n="btn.reset">Repetir cuestionario</button>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIMULADOR DE UMBRAL DE DECISION -->
+  <section id="simulador">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="section-label" data-i18n="simulador.label">Juega con el modelo</div>
+        <h2 data-i18n="simulador.title">Simulador de umbral de decisión</h2>
+        <p data-i18n="simulador.body">El modelo no da un "sí" o un "no": da una probabilidad. Alguien tiene que decidir a partir de qué probabilidad se deriva a un paciente -eso es el <strong>umbral de decisión</strong>-. Mueve el control y mira en tiempo real cómo cambia el recall (sensibilidad) y la precisión según dónde pongas el corte, con datos reales del test set.</p>
+      </div>
+
+      <div class="simulator-box reveal">
+        <div class="sim-group-selector">
+          <button class="sim-group-btn active" data-group="adults" data-i18n="group.adults">Adultos</button>
+          <button class="sim-group-btn" data-group="adolescents" data-i18n="group.adolescents">Adolescentes</button>
+          <button class="sim-group-btn" data-group="combined" data-i18n="group.combined">Combinado</button>
+          <button class="sim-group-btn" data-group="toddlers" data-i18n="group.toddlers">Toddlers</button>
+        </div>
+        <p id="sim-model-label" class="sim-model-label"></p>
+
+        <div class="sim-slider-row">
+          <span class="sim-slider-label" data-i18n="sim.threshold">Umbral</span>
+          <input type="range" id="sim-slider" min="0" max="100" value="50" class="sim-slider">
+          <span class="sim-slider-value" id="sim-threshold-value">0.50</span>
+        </div>
+
+        <div class="sim-body">
+          <div class="sim-metrics">
+            <div class="sim-metric">
+              <div class="sim-metric-label"><span data-i18n="sim.recall">Recall</span> <span class="sim-metric-hint" data-i18n="sim.recall.hint">(prioritario)</span></div>
+              <div class="sim-metric-bar-track">
+                <div class="sim-metric-bar-fill sim-recall-fill" id="sim-recall-fill"></div>
+              </div>
+              <div class="sim-metric-value" id="sim-recall-value">—</div>
+            </div>
+            <div class="sim-metric">
+              <div class="sim-metric-label" data-i18n="sim.precision">Precisión</div>
+              <div class="sim-metric-bar-track">
+                <div class="sim-metric-bar-fill sim-precision-fill" id="sim-precision-fill"></div>
+              </div>
+              <div class="sim-metric-value" id="sim-precision-value">—</div>
+            </div>
+          </div>
+
+          <div class="sim-confusion">
+            <div class="sim-confusion-cell sim-tp">
+              <div class="sim-confusion-count" id="sim-tp">—</div>
+              <div class="sim-confusion-label" data-i18n="sim.tp.label">Verdaderos positivos<br>(detectados bien)</div>
+            </div>
+            <div class="sim-confusion-cell sim-fp">
+              <div class="sim-confusion-count" id="sim-fp">—</div>
+              <div class="sim-confusion-label" data-i18n="sim.fp.label">Falsos positivos<br>(derivación de más)</div>
+            </div>
+            <div class="sim-confusion-cell sim-fn">
+              <div class="sim-confusion-count" id="sim-fn">—</div>
+              <div class="sim-confusion-label" data-i18n="sim.fn.label">Falsos negativos<br>(casos que se escapan)</div>
+            </div>
+            <div class="sim-confusion-cell sim-tn">
+              <div class="sim-confusion-count" id="sim-tn">—</div>
+              <div class="sim-confusion-label" data-i18n="sim.tn.label">Verdaderos negativos<br>(descartados bien)</div>
+            </div>
+          </div>
+        </div>
+
+        <p class="sim-note" data-i18n="sim.note">Fíjate qué pasa si subes mucho el umbral: la precisión mejora, pero los falsos negativos empiezan a subir. Por eso, en cribado médico, preferimos un umbral que mantenga el recall alto aunque sacrifique algo de precisión.</p>
       </div>
     </div>
   </section>
@@ -265,54 +347,34 @@
   <section id="sesgos">
     <div class="wrap">
       <div class="section-head reveal">
-        <div class="section-label">Limitaciones</div>
-        <h2>Sesgos y limitaciones documentadas</h2>
-        <p>
-          Estas limitaciones no invalidan el proyecto, pero delimitan claramente su alcance:
-          TesTEA es una prueba de concepto que demuestra viabilidad técnica, no un producto
-          listo para uso clínico sin validación adicional.
-        </p>
+        <div class="section-label" data-i18n="sesgos.label">Limitaciones</div>
+        <h2 data-i18n="sesgos.title">Sesgos y limitaciones documentadas</h2>
+        <p data-i18n="sesgos.body">Estas limitaciones no invalidan el proyecto, pero delimitan claramente su alcance: TesTEA es una prueba de concepto que demuestra viabilidad técnica, no un producto listo para uso clínico sin validación adicional.</p>
       </div>
 
       <div class="bias-grid reveal">
         <div class="bias-card">
-          <div class="bias-level bias-high">Alto</div>
-          <h3>Sobrerrepresentación anglosajona</h3>
-          <p>
-            Los cuatro datasets (UCI y Kaggle) proceden mayoritariamente de estudios en
-            Reino Unido y Estados Unidos. El modelo puede no generalizar bien a otros
-            contextos culturales o lingüísticos, incluido el español, sin validación previa.
-          </p>
+          <div class="bias-level bias-high" data-i18n="bias.high">Alto</div>
+          <h3 data-i18n="bias1.title">Sobrerrepresentación anglosajona</h3>
+          <p data-i18n="bias1.body">Los cuatro datasets (UCI y Kaggle) proceden mayoritariamente de estudios en Reino Unido y Estados Unidos. El modelo puede no generalizar bien a otros contextos culturales o lingüísticos, incluido el español, sin validación previa.</p>
         </div>
 
         <div class="bias-card">
-          <div class="bias-level bias-medium">Medio</div>
-          <h3>Criterios DSM-5</h3>
-          <p>
-            El cuestionario y las etiquetas de cribado se basan en el DSM-5, usado
-            principalmente en EE. UU. Otros sistemas clínicos como la CIE-11 (más habitual
-            en España) pueden diferir en los criterios de derivación.
-          </p>
+          <div class="bias-level bias-medium" data-i18n="bias.medium">Medio</div>
+          <h3 data-i18n="bias2.title">Criterios DSM-5</h3>
+          <p data-i18n="bias2.body">El cuestionario y las etiquetas de cribado se basan en el DSM-5, usado principalmente en EE. UU. Otros sistemas clínicos como la CIE-11 (más habitual en España) pueden diferir en los criterios de derivación.</p>
         </div>
 
         <div class="bias-card">
-          <div class="bias-level bias-high">Alto</div>
-          <h3>Infradiagnóstico en mujeres</h3>
-          <p>
-            El TEA se diagnostica con más frecuencia en hombres; en mujeres la presentación
-            conductual suele pasar más desapercibida. Si los datos heredan ese patrón, el
-            modelo puede reproducirlo. Recomendamos monitorizar el rendimiento por sexo.
-          </p>
+          <div class="bias-level bias-high" data-i18n="bias.high">Alto</div>
+          <h3 data-i18n="bias3.title">Infradiagnóstico en mujeres</h3>
+          <p data-i18n="bias3.body">El TEA se diagnostica con más frecuencia en hombres; en mujeres la presentación conductual suele pasar más desapercibida. Si los datos heredan ese patrón, el modelo puede reproducirlo. Recomendamos monitorizar el rendimiento por sexo.</p>
         </div>
 
         <div class="bias-card">
-          <div class="bias-level bias-medium">Medio</div>
-          <h3>Muestra reducida en adolescentes</h3>
-          <p>
-            Solo 104 registros, muy por debajo de los otros tres grupos. El modelo para
-            esta franja tiene mayor incertidumbre y sus métricas deben interpretarse con
-            más cautela hasta ampliar los datos disponibles.
-          </p>
+          <div class="bias-level bias-medium" data-i18n="bias.medium">Medio</div>
+          <h3 data-i18n="bias4.title">Muestra reducida en adolescentes</h3>
+          <p data-i18n="bias4.body">Solo 104 registros, muy por debajo de los otros tres grupos. El modelo para esta franja tiene mayor incertidumbre y sus métricas deben interpretarse con más cautela hasta ampliar los datos disponibles.</p>
         </div>
       </div>
     </div>
@@ -322,38 +384,34 @@
   <section id="analisis">
     <div class="wrap">
       <div class="section-head reveal">
-        <div class="section-label">Para quien quiera mirar bajo el capó</div>
-        <h2>Análisis técnico completo</h2>
-        <p>
-          Las 16 combinaciones de modelo × grupo de edad, la interpretabilidad
-          SHAP de cada franja, y las comparativas agregadas. Haz clic en
-          cualquier imagen para verla en grande.
-        </p>
+        <div class="section-label" data-i18n="analisis.label">Para quien quiera mirar bajo el capó</div>
+        <h2 data-i18n="analisis.title">Análisis técnico completo</h2>
+        <p data-i18n="analisis.body">Las 16 combinaciones de modelo × grupo de edad (agrupadas en 4 imágenes), la interpretabilidad SHAP de cada franja, y las comparativas agregadas. Haz clic en cualquier imagen para verla en grande.</p>
       </div>
 
       <div class="analysis-tabs reveal">
-        <button class="analysis-tab-btn active" data-tab="confusion">Matrices de confusión</button>
-        <button class="analysis-tab-btn" data-tab="shap">Interpretabilidad SHAP</button>
-        <button class="analysis-tab-btn" data-tab="comparativas">Comparativas</button>
+        <button class="analysis-tab-btn active" data-tab="confusion" data-i18n="tab.confusion">Matrices de confusión</button>
+        <button class="analysis-tab-btn" data-tab="shap" data-i18n="tab.shap">Interpretabilidad SHAP</button>
+        <button class="analysis-tab-btn" data-tab="comparativas" data-i18n="tab.comparativas">Comparativas</button>
       </div>
 
       <div class="analysis-panel reveal" data-panel="confusion">
         <div class="analysis-grid">
           <button class="analysis-thumb" data-src="assets/img/confusion_matrices_adults.png" data-caption="Matrices de confusión — Adultos (Baseline, Regresión Logística, Random Forest, XGBoost)">
             <img src="assets/img/confusion_matrices_adults.png" alt="Matrices de confusión Adultos">
-            <span class="analysis-thumb-label">Adultos</span>
+            <span class="analysis-thumb-label" data-i18n="group.adults">Adultos</span>
           </button>
           <button class="analysis-thumb" data-src="assets/img/confusion_matrices_adolescents.png" data-caption="Matrices de confusión — Adolescentes (Baseline, Regresión Logística, Random Forest, XGBoost)">
             <img src="assets/img/confusion_matrices_adolescents.png" alt="Matrices de confusión Adolescentes">
-            <span class="analysis-thumb-label">Adolescentes</span>
+            <span class="analysis-thumb-label" data-i18n="group.adolescents">Adolescentes</span>
           </button>
           <button class="analysis-thumb" data-src="assets/img/confusion_matrices_combined.png" data-caption="Matrices de confusión — Combinado (Baseline, Regresión Logística, Random Forest, XGBoost)">
             <img src="assets/img/confusion_matrices_combined.png" alt="Matrices de confusión Combinado">
-            <span class="analysis-thumb-label">Combinado</span>
+            <span class="analysis-thumb-label" data-i18n="group.combined">Combinado</span>
           </button>
           <button class="analysis-thumb" data-src="assets/img/confusion_matrices_toddlers.png" data-caption="Matrices de confusión — Toddlers (Baseline, Regresión Logística, Random Forest, XGBoost)">
             <img src="assets/img/confusion_matrices_toddlers.png" alt="Matrices de confusión Toddlers">
-            <span class="analysis-thumb-label">Toddlers</span>
+            <span class="analysis-thumb-label" data-i18n="group.toddlers">Toddlers</span>
           </button>
         </div>
       </div>
@@ -362,19 +420,19 @@
         <div class="analysis-grid">
           <button class="analysis-thumb" data-src="assets/img/shap_adults.png" data-caption="SHAP — Adultos (mejor modelo: Regresión Logística)">
             <img src="assets/img/shap_adults.png" alt="SHAP Adultos">
-            <span class="analysis-thumb-label">Adultos</span>
+            <span class="analysis-thumb-label" data-i18n="group.adults">Adultos</span>
           </button>
           <button class="analysis-thumb" data-src="assets/img/shap_adolescents.png" data-caption="SHAP — Adolescentes (mejor modelo: Regresión Logística)">
             <img src="assets/img/shap_adolescents.png" alt="SHAP Adolescentes">
-            <span class="analysis-thumb-label">Adolescentes</span>
+            <span class="analysis-thumb-label" data-i18n="group.adolescents">Adolescentes</span>
           </button>
           <button class="analysis-thumb" data-src="assets/img/shap_combined.png" data-caption="SHAP — Combinado (mejor modelo: XGBoost)">
             <img src="assets/img/shap_combined.png" alt="SHAP Combinado">
-            <span class="analysis-thumb-label">Combinado</span>
+            <span class="analysis-thumb-label" data-i18n="group.combined">Combinado</span>
           </button>
           <button class="analysis-thumb" data-src="assets/img/shap_toddlers.png" data-caption="SHAP — Toddlers (mejor modelo: Regresión Logística)">
             <img src="assets/img/shap_toddlers.png" alt="SHAP Toddlers">
-            <span class="analysis-thumb-label">Toddlers</span>
+            <span class="analysis-thumb-label" data-i18n="group.toddlers">Toddlers</span>
           </button>
         </div>
       </div>
@@ -383,11 +441,11 @@
         <div class="analysis-grid analysis-grid-wide">
           <button class="analysis-thumb" data-src="assets/img/comparativa_metricas_por_grupo.png" data-caption="Comparativa de métricas (accuracy, precisión, recall, F1, AUC-ROC) del mejor modelo por grupo">
             <img src="assets/img/comparativa_metricas_por_grupo.png" alt="Comparativa de métricas por grupo">
-            <span class="analysis-thumb-label">Métricas por grupo de edad</span>
+            <span class="analysis-thumb-label" data-i18n="analysis.metrics_label">Métricas por grupo de edad</span>
           </button>
           <button class="analysis-thumb" data-src="assets/img/comparativa_recall.png" data-caption="Comparativa de recall por modelo y grupo de edad">
             <img src="assets/img/comparativa_recall.png" alt="Comparativa de recall">
-            <span class="analysis-thumb-label">Recall por modelo y grupo</span>
+            <span class="analysis-thumb-label" data-i18n="analysis.recall_label">Recall por modelo y grupo</span>
           </button>
         </div>
       </div>
@@ -407,28 +465,24 @@
   <section id="conclusion">
     <div class="wrap">
       <div class="section-head reveal">
-        <div class="section-label">Conclusión</div>
-        <h2>Lo que le recomendamos al cliente</h2>
+        <div class="section-label" data-i18n="conclusion.label">Conclusión</div>
+        <h2 data-i18n="conclusion.title">Lo que le recomendamos al cliente</h2>
       </div>
       <div class="conclusion-box reveal">
-        <p>
-          <strong>TesTEA demuestra que es posible automatizar el cribado AQ-10 con un nivel
-          de recall suficiente para uso como herramienta de apoyo en atención primaria.</strong>
-          El modelo identifica correctamente más del 90% de los casos positivos, reduciendo
-          significativamente el riesgo de falsos negativos.
-        </p>
-        <p>
-          Recomendamos desplegar TesTEA como herramienta complementaria (no sustitutiva)
-          en consultas de atención primaria, teniendo en cuenta los sesgos y limitaciones
-          documentados <a href="#sesgos" class="ethics-link">más arriba</a> antes de cualquier
-          uso clínico real.
-        </p>
-        <p>
-          <strong>Siguiente paso:</strong> incorporar datos de centros españoles de atención
-          primaria para reentrenar el modelo con población local, ampliar la muestra de
-          adolescentes, monitorizar el rendimiento por sexo, y realizar un piloto controlado
-          comparando las derivaciones de TesTEA con las derivaciones manuales.
-        </p>
+        <p data-i18n="conclusion.p1"><strong>TesTEA demuestra que es posible automatizar el cribado AQ-10 con un nivel de recall suficiente para uso como herramienta de apoyo en atención primaria.</strong> El modelo identifica correctamente más del 90% de los casos positivos, reduciendo significativamente el riesgo de falsos negativos.</p>
+        <p data-i18n="conclusion.p2">Recomendamos desplegar TesTEA como herramienta complementaria (no sustitutiva) en consultas de atención primaria, teniendo en cuenta los sesgos y limitaciones documentados <a href="#sesgos" class="ethics-link">más arriba</a> antes de cualquier uso clínico real.</p>
+        <p data-i18n="conclusion.p3"><strong>Siguiente paso:</strong> incorporar datos de centros españoles de atención primaria para reentrenar el modelo con población local, ampliar la muestra de adolescentes, monitorizar el rendimiento por sexo, y realizar un piloto controlado comparando las derivaciones de TesTEA con las derivaciones manuales.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOTA PERSONAL DEL EQUIPO -->
+  <section id="nota-personal" class="team-note-section">
+    <div class="wrap">
+      <div class="team-note reveal">
+        <p class="team-note-label" data-i18n="team.label">Por qué hicimos esto</p>
+        <p data-i18n="team.note">TesTEA empezó como el proyecto final de un módulo de Machine Learning, pero se convirtió en algo que nos importaba de verdad. Cuando una familia espera meses para una primera cita de neuropediatría, cada semana cuenta. Si un modelo entrenado con datos públicos puede ayudar a priorizar quién necesita esa cita antes, merece la pena intentarlo -con toda la humildad que exige trabajar con datos de salud, y sin perder de vista que esto es un prototipo académico, no un producto clínico terminado.</p>
+        <p class="team-note-signature" data-i18n="team.signature">— El equipo de DataScope Solutions</p>
       </div>
     </div>
   </section>
@@ -436,14 +490,24 @@
   <!-- FOOTER -->
   <footer class="footer">
     <div class="wrap">
-      <div class="footer-left">TESTEA — DataScope Solutions — Módulo III</div>
-      <ul class="footer-links">
-        <li><a href="https://github.com/adrianaarang/tesTEA" target="_blank">GitHub</a></li>
-        <li><a href="#">Equipo</a></li>
+      <div class="footer-top">
+        <div class="footer-left" data-i18n="footer.title">TESTEA — DataScope Solutions — Módulo III</div>
+        <ul class="footer-links">
+          <li><a href="https://github.com/adrianaarang/tesTEA" target="_blank">GitHub</a></li>
+          <li><a href="#nota-personal" data-i18n="footer.team">Equipo</a></li>
+        </ul>
+      </div>
+      <ul class="team-list">
+        <li><span class="team-name">Isabella Tellez</span><span class="team-role">Product Owner</span></li>
+        <li><span class="team-name">Adriana Aránguez</span><span class="team-role">Scrum Master</span></li>
+        <li><span class="team-name">José Manuel Paredes</span><span class="team-role">Desarrollador</span></li>
+        <li><span class="team-name">Laura Silva</span><span class="team-role">Desarrolladora</span></li>
+        <li><span class="team-name">Elizabeth Sena</span><span class="team-role">Desarrolladora</span></li>
       </ul>
     </div>
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script type="module" src="js/main.js"></script>
 </body>
 </html>

@@ -1,16 +1,22 @@
 /* charts.js — Renderizado de graficos: tabla completa, resumen destacado, importancia, matriz de confusion */
 
-const GROUP_LABELS = {
-  adults: "Adultos",
-  adolescents: "Adolescentes",
-  combined: "Combinado",
-  toddlers: "Toddlers"
-};
+import { t } from "./i18n.js";
+
+function groupLabel(key) {
+  return t(`group.${key}`) || key;
+}
+
+// Se mantiene GROUP_LABELS como getter dinamico (compatibilidad con main.js,
+// que lo usa como diccionario). Al ser un Proxy, siempre devuelve la
+// traduccion actual segun el idioma activo.
+const GROUP_LABELS = new Proxy({}, {
+  get: (_, key) => groupLabel(key)
+});
 
 function renderFeatureImportance(containerId, features) {
   const container = document.getElementById(containerId);
   if (!container || !features || features.length === 0) {
-    if (container) container.innerHTML = "<p style='color:var(--text-faint); font-size:0.85rem;'>No hay datos de importancia disponibles para este modelo.</p>";
+    if (container) container.innerHTML = `<p style='color:var(--text-faint); font-size:0.85rem;'>${t("chart.no_importance")}</p>`;
     return;
   }
 
@@ -42,21 +48,23 @@ function renderConfusionMatrix(containerId, matrix, labels) {
   const container = document.getElementById(containerId);
   if (!container || !matrix) return;
 
-  const predLabels = labels || ["NO TEA", "TEA"];
+  const predLabels = labels || [t("chart.no_condition"), t("chart.condition")];
   const tn = matrix[0][0];
   const fp = matrix[0][1];
   const fn = matrix[1][0];
   const tp = matrix[1][1];
+  const predWord = t("chart.pred");
+  const realWord = t("chart.real");
 
   container.innerHTML = `
     <div class="confusion-grid">
       <div class="corner"></div>
-      <div class="header">Pred: ${predLabels[0]}</div>
-      <div class="header">Pred: ${predLabels[1]}</div>
-      <div class="header" style="writing-mode: vertical-lr; transform: rotate(180deg);">Real: ${predLabels[0]}</div>
+      <div class="header">${predWord}: ${predLabels[0]}</div>
+      <div class="header">${predWord}: ${predLabels[1]}</div>
+      <div class="header" style="writing-mode: vertical-lr; transform: rotate(180deg);">${realWord}: ${predLabels[0]}</div>
       <div class="cell tn">${tn}</div>
       <div class="cell fp">${fp}</div>
-      <div class="header" style="writing-mode: vertical-lr; transform: rotate(180deg);">Real: ${predLabels[1]}</div>
+      <div class="header" style="writing-mode: vertical-lr; transform: rotate(180deg);">${realWord}: ${predLabels[1]}</div>
       <div class="cell fn">${fn}</div>
       <div class="cell tp">${tp}</div>
     </div>
@@ -82,8 +90,8 @@ function renderFullMetricsTable(containerId, groups) {
       const isBaseline = m.name === "Baseline";
       rows += `
         <tr class="${isBaseline ? 'row-baseline' : ''}">
-          ${idx === 0 ? `<td rowspan="${group.models.length}" class="group-cell">${GROUP_LABELS[groupKey] || groupKey}<br><span class="group-meta">n test = ${group.n_test}</span></td>` : ""}
-          <td>${m.name} ${isBest ? '<span class="tag">mejor</span>' : ''}</td>
+          ${idx === 0 ? `<td rowspan="${group.models.length}" class="group-cell">${groupLabel(groupKey)}<br><span class="group-meta">n test = ${group.n_test}</span></td>` : ""}
+          <td>${m.name} ${isBest ? `<span class="tag">${t("chart.best")}</span>` : ''}</td>
           <td class="metric-val">${m.accuracy.toFixed(3)}</td>
           <td class="metric-val">${m.precision.toFixed(3)}</td>
           <td class="metric-val ${isBest ? 'best' : ''}">${m.recall.toFixed(3)}</td>
@@ -98,8 +106,8 @@ function renderFullMetricsTable(containerId, groups) {
     <table class="metrics-table metrics-table-full">
       <thead>
         <tr>
-          <th>Grupo</th>
-          <th>Modelo</th>
+          <th>${t("chart.group")}</th>
+          <th>${t("chart.model")}</th>
           <th>Accuracy</th>
           <th>Precision</th>
           <th>Recall</th>
@@ -116,6 +124,10 @@ function renderFullMetricsTable(containerId, groups) {
 
 // Resumen destacado: la cifra titular que se muestra en la parte superior
 // de la seccion de resultados, con su aviso de contexto (nota de robustez).
+// NOTA: "headline_group_label" y "note" vienen ya redactados en espanol
+// desde metrics.json (generado por el notebook 04), asi que se muestran
+// tal cual incluso en modo ingles. El resto del texto de alrededor si
+// esta traducido.
 function renderHeadlineSummary(containerId, overall) {
   const container = document.getElementById(containerId);
   if (!container || !overall) return;
@@ -124,8 +136,8 @@ function renderHeadlineSummary(containerId, overall) {
     <div class="headline-summary">
       <div class="headline-number">${(overall.recall * 100).toFixed(0)}%</div>
       <div class="headline-text">
-        <div class="headline-title">Recall en ${overall.headline_group_label}</div>
-        <div class="headline-sub">Modelo ${overall.headline_model} · F1 ${overall.f1.toFixed(2)} · Precision ${overall.precision.toFixed(2)} · n test = ${overall.n_test}</div>
+        <div class="headline-title">${t("chart.recall_in")} ${overall.headline_group_label}</div>
+        <div class="headline-sub">${t("chart.model")} ${overall.headline_model} · F1 ${overall.f1.toFixed(2)} · Precision ${overall.precision.toFixed(2)} · n test = ${overall.n_test}</div>
       </div>
     </div>
     <p class="headline-note">${overall.note}</p>

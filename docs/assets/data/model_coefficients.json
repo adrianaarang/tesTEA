@@ -1,0 +1,184 @@
+{
+  "groups": {
+    "adults": {
+      "intercept": -12.47135,
+      "aq_coefficients": [
+        {
+          "feature": "aq__A1_Score",
+          "coef": 2.12457
+        },
+        {
+          "feature": "aq__A2_Score",
+          "coef": 1.52693
+        },
+        {
+          "feature": "aq__A3_Score",
+          "coef": 1.84363
+        },
+        {
+          "feature": "aq__A4_Score",
+          "coef": 1.99652
+        },
+        {
+          "feature": "aq__A5_Score",
+          "coef": 2.22658
+        },
+        {
+          "feature": "aq__A6_Score",
+          "coef": 2.00048
+        },
+        {
+          "feature": "aq__A7_Score",
+          "coef": 2.09307
+        },
+        {
+          "feature": "aq__A8_Score",
+          "coef": 1.86804
+        },
+        {
+          "feature": "aq__A9_Score",
+          "coef": 2.5623
+        },
+        {
+          "feature": "aq__A10_Score",
+          "coef": 1.95256
+        }
+      ]
+    },
+    "adolescents": {
+      "intercept": -2.51457,
+      "aq_coefficients": [
+        {
+          "feature": "aq__A1_Score",
+          "coef": 0.26321
+        },
+        {
+          "feature": "aq__A2_Score",
+          "coef": 0.31652
+        },
+        {
+          "feature": "aq__A3_Score",
+          "coef": 0.46814
+        },
+        {
+          "feature": "aq__A4_Score",
+          "coef": 0.36033
+        },
+        {
+          "feature": "aq__A5_Score",
+          "coef": 0.50228
+        },
+        {
+          "feature": "aq__A6_Score",
+          "coef": 0.38318
+        },
+        {
+          "feature": "aq__A7_Score",
+          "coef": 0.31103
+        },
+        {
+          "feature": "aq__A8_Score",
+          "coef": 0.44378
+        },
+        {
+          "feature": "aq__A9_Score",
+          "coef": 0.20411
+        },
+        {
+          "feature": "aq__A10_Score",
+          "coef": 0.48576
+        }
+      ]
+    },
+    "combined": {
+      "intercept": -5.02624,
+      "aq_coefficients": [
+        {
+          "feature": "aq__A1",
+          "coef": 0.6288
+        },
+        {
+          "feature": "aq__A2",
+          "coef": 0.56238
+        },
+        {
+          "feature": "aq__A3",
+          "coef": 0.94326
+        },
+        {
+          "feature": "aq__A4",
+          "coef": 0.77568
+        },
+        {
+          "feature": "aq__A5",
+          "coef": 0.99438
+        },
+        {
+          "feature": "aq__A6",
+          "coef": 1.01502
+        },
+        {
+          "feature": "aq__A7",
+          "coef": 0.5397
+        },
+        {
+          "feature": "aq__A8",
+          "coef": 0.66497
+        },
+        {
+          "feature": "aq__A9",
+          "coef": 0.86902
+        },
+        {
+          "feature": "aq__A10",
+          "coef": 0.91707
+        }
+      ]
+    },
+    "toddlers": {
+      "intercept": -17.93583,
+      "aq_coefficients": [
+        {
+          "feature": "aq__A1",
+          "coef": 4.91908
+        },
+        {
+          "feature": "aq__A2",
+          "coef": 5.79937
+        },
+        {
+          "feature": "aq__A3",
+          "coef": 4.95791
+        },
+        {
+          "feature": "aq__A4",
+          "coef": 5.10554
+        },
+        {
+          "feature": "aq__A5",
+          "coef": 5.11258
+        },
+        {
+          "feature": "aq__A6",
+          "coef": 5.20042
+        },
+        {
+          "feature": "aq__A7",
+          "coef": 5.28931
+        },
+        {
+          "feature": "aq__A8",
+          "coef": 5.35313
+        },
+        {
+          "feature": "aq__A9",
+          "coef": 5.67838
+        },
+        {
+          "feature": "aq__A10",
+          "coef": 5.22362
+        }
+      ]
+    }
+  }
+}

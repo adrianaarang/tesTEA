@@ -3,60 +3,121 @@
 import { loadMetrics, getDatasetStats } from "./data-loader.js";
 import { renderFeatureImportance, renderConfusionMatrix, renderFullMetricsTable, renderHeadlineSummary, GROUP_LABELS } from "./charts.js";
 import { initScrollReveal, animateCounters } from "./animations.js";
+import { initNeuralBackground } from "./neural-bg.js";
+import { initThresholdSimulator } from "./threshold-simulator.js";
+import { initThemeToggle } from "./theme-toggle.js";
+import { initPdfExport } from "./pdf-export.js";
+import { t, getLang, initI18n } from "./i18n.js";
 
-// Preguntas del cuestionario AQ-10 por grupo de edad
+// Preguntas del cuestionario AQ-10 por grupo de edad y por idioma.
 // adults y adolescents comparten el mismo cuestionario AQ-10 (misma fuente UCI)
 // children usa una adaptación del AQ-10, toddlers usa el Q-CHAT-10
 const QUESTIONS = {
-  adults: [
-    "Frecuentemente noto pequeños sonidos que otras personas no perciben.",
-    "Suelo concentrarme más en el panorama general que en los pequeños detalles.",
-    "Me resulta fácil hacer más de una cosa a la vez.",
-    "Si hay una interrupción, puedo volver a lo que estaba haciendo rápidamente.",
-    "Me resulta fácil leer entre líneas cuando alguien me habla.",
-    "Sé cuando alguien que habla conmigo se aburre o pierde interés.",
-    "Cuando leo una historia, me cuesta imaginar cómo se ven los personajes.",
-    "Me resulta fácil averiguar las intenciones y sentimientos de las personas.",
-    "Me resulta fácil imaginar cómo sería estar en la situación de otra persona.",
-    "Me resulta difícil hacer nuevas amistades."
-  ],
-  adolescents: [
-    "Frecuentemente noto pequeños sonidos que otras personas no perciben.",
-    "Suelo concentrarme más en el panorama general que en los pequeños detalles.",
-    "Me resulta fácil hacer más de una cosa a la vez.",
-    "Si hay una interrupción, puedo volver a lo que estaba haciendo rápidamente.",
-    "Me resulta fácil leer entre líneas cuando alguien me habla.",
-    "Sé cuando alguien que habla conmigo se aburre o pierde interés.",
-    "Cuando leo una historia, me cuesta imaginar cómo se ven los personajes.",
-    "Me resulta fácil averiguar las intenciones y sentimientos de las personas.",
-    "Me resulta fácil imaginar cómo sería estar en la situación de otra persona.",
-    "Me resulta difícil hacer nuevas amistades."
-  ],
-  children: [
-    "Nota sonidos que otros no perciben.",
-    "Se concentra más en el panorama general que en los detalles.",
-    "Puede hacer varias cosas a la vez fácilmente.",
-    "Vuelve a su actividad rápidamente tras una interrupción.",
-    "Entiende cuando alguien le habla con doble sentido.",
-    "Se da cuenta cuando alguien se aburre hablando con él/ella.",
-    "Le cuesta imaginar cómo son los personajes de un cuento.",
-    "Entiende fácilmente cómo se sienten los demás.",
-    "Se pone fácilmente en el lugar de otra persona.",
-    "Le cuesta hacer nuevos amigos."
-  ],
-  toddlers: [
-    "Mira cuando le señalan algo.",
-    "Cree que su hijo/a es sordo/a.",
-    "Hace juego imaginativo (fingir cosas).",
-    "Le gusta subirse a las cosas (muebles, columpios).",
-    "Hace movimientos inusuales con los dedos cerca de los ojos.",
-    "Señala con el dedo para pedir algo.",
-    "Señala con el dedo para mostrar interés en algo.",
-    "Se interesa por otros niños de su edad.",
-    "Le trae objetos para mostrarle algo.",
-    "Responde cuando le llaman por su nombre."
-  ]
+  es: {
+    adults: [
+      "Frecuentemente noto pequeños sonidos que otras personas no perciben.",
+      "Suelo concentrarme más en el panorama general que en los pequeños detalles.",
+      "Me resulta fácil hacer más de una cosa a la vez.",
+      "Si hay una interrupción, puedo volver a lo que estaba haciendo rápidamente.",
+      "Me resulta fácil leer entre líneas cuando alguien me habla.",
+      "Sé cuando alguien que habla conmigo se aburre o pierde interés.",
+      "Cuando leo una historia, me cuesta imaginar cómo se ven los personajes.",
+      "Me resulta fácil averiguar las intenciones y sentimientos de las personas.",
+      "Me resulta fácil imaginar cómo sería estar en la situación de otra persona.",
+      "Me resulta difícil hacer nuevas amistades."
+    ],
+    adolescents: [
+      "Frecuentemente noto pequeños sonidos que otras personas no perciben.",
+      "Suelo concentrarme más en el panorama general que en los pequeños detalles.",
+      "Me resulta fácil hacer más de una cosa a la vez.",
+      "Si hay una interrupción, puedo volver a lo que estaba haciendo rápidamente.",
+      "Me resulta fácil leer entre líneas cuando alguien me habla.",
+      "Sé cuando alguien que habla conmigo se aburre o pierde interés.",
+      "Cuando leo una historia, me cuesta imaginar cómo se ven los personajes.",
+      "Me resulta fácil averiguar las intenciones y sentimientos de las personas.",
+      "Me resulta fácil imaginar cómo sería estar en la situación de otra persona.",
+      "Me resulta difícil hacer nuevas amistades."
+    ],
+    children: [
+      "Nota sonidos que otros no perciben.",
+      "Se concentra más en el panorama general que en los detalles.",
+      "Puede hacer varias cosas a la vez fácilmente.",
+      "Vuelve a su actividad rápidamente tras una interrupción.",
+      "Entiende cuando alguien le habla con doble sentido.",
+      "Se da cuenta cuando alguien se aburre hablando con él/ella.",
+      "Le cuesta imaginar cómo son los personajes de un cuento.",
+      "Entiende fácilmente cómo se sienten los demás.",
+      "Se pone fácilmente en el lugar de otra persona.",
+      "Le cuesta hacer nuevos amigos."
+    ],
+    toddlers: [
+      "Mira cuando le señalan algo.",
+      "Cree que su hijo/a es sordo/a.",
+      "Hace juego imaginativo (fingir cosas).",
+      "Le gusta subirse a las cosas (muebles, columpios).",
+      "Hace movimientos inusuales con los dedos cerca de los ojos.",
+      "Señala con el dedo para pedir algo.",
+      "Señala con el dedo para mostrar interés en algo.",
+      "Se interesa por otros niños de su edad.",
+      "Le trae objetos para mostrarle algo.",
+      "Responde cuando le llaman por su nombre."
+    ]
+  },
+  en: {
+    adults: [
+      "I often notice small sounds that other people don't.",
+      "I tend to focus more on the big picture than on small details.",
+      "I find it easy to do more than one thing at once.",
+      "If there's an interruption, I can quickly get back to what I was doing.",
+      "I find it easy to read between the lines when someone talks to me.",
+      "I can tell when someone talking to me is getting bored or losing interest.",
+      "When I read a story, I find it hard to picture what the characters look like.",
+      "I find it easy to figure out people's intentions and feelings.",
+      "I find it easy to imagine what it would be like to be in someone else's situation.",
+      "I find it difficult to make new friends."
+    ],
+    adolescents: [
+      "I often notice small sounds that other people don't.",
+      "I tend to focus more on the big picture than on small details.",
+      "I find it easy to do more than one thing at once.",
+      "If there's an interruption, I can quickly get back to what I was doing.",
+      "I find it easy to read between the lines when someone talks to me.",
+      "I can tell when someone talking to me is getting bored or losing interest.",
+      "When I read a story, I find it hard to picture what the characters look like.",
+      "I find it easy to figure out people's intentions and feelings.",
+      "I find it easy to imagine what it would be like to be in someone else's situation.",
+      "I find it difficult to make new friends."
+    ],
+    children: [
+      "Notices sounds that others don't.",
+      "Focuses more on the big picture than on details.",
+      "Can easily do several things at once.",
+      "Quickly returns to an activity after an interruption.",
+      "Understands when someone speaks to them with a double meaning.",
+      "Notices when someone gets bored talking to them.",
+      "Finds it hard to picture what characters in a story look like.",
+      "Easily understands how others feel.",
+      "Easily puts themselves in someone else's shoes.",
+      "Finds it hard to make new friends."
+    ],
+    toddlers: [
+      "Looks when something is pointed at.",
+      "There's a suspicion their child might be deaf.",
+      "Engages in imaginative play (pretending).",
+      "Likes climbing on things (furniture, swings).",
+      "Makes unusual finger movements near their eyes.",
+      "Points to ask for something.",
+      "Points to show interest in something.",
+      "Shows interest in other children their age.",
+      "Brings you objects to show you something.",
+      "Responds when called by name."
+    ]
+  }
 };
+
+function getQuestions() {
+  return QUESTIONS[getLang()] || QUESTIONS.es;
+}
 
 // Las preguntas donde "De acuerdo" puntua 1 (el resto puntua al reves)
 const SCORING_DIRECT = {
@@ -73,6 +134,56 @@ const THRESHOLDS = {
   children: 6,
   toddlers: 4
 };
+
+// Coeficientes del modelo de Regresion Logistica, cargados de model_coefficients.json
+let modelCoefficients = null;
+
+// El grupo "children" del cuestionario no tiene un dataset propio entrenado
+// (los datos de ninos estan dentro del dataset "combined"), asi que para la
+// demo de prediccion ML usamos el modelo de "combined" en ese caso.
+function mapGroupToCoefKey(group) {
+  return group === "children" ? "combined" : group;
+}
+
+async function loadModelCoefficients() {
+  try {
+    const response = await fetch("assets/data/model_coefficients.json");
+    if (response.ok) {
+      return await response.json();
+    }
+  } catch (e) {
+    // no disponible
+  }
+  return null;
+}
+
+function sigmoid(x) {
+  return 1 / (1 + Math.exp(-x));
+}
+
+// Calcula la probabilidad segun el modelo de Regresion Logistica real,
+// usando SOLO las 10 respuestas del cuestionario (sin edad ni otros datos
+// demograficos que el modelo completo tambien usa). Es una aproximacion:
+// en los datos de test, esta aproximacion correlaciona 0.96-0.99 con la
+// prediccion real completa del modelo.
+function computeMlPrediction() {
+  if (!modelCoefficients) return null;
+
+  const coefKey = mapGroupToCoefKey(currentGroup);
+  const groupCoefs = modelCoefficients.groups[coefKey];
+  if (!groupCoefs) return null;
+
+  let score = groupCoefs.intercept;
+  groupCoefs.aq_coefficients.forEach((item, i) => {
+    const respuesta = answers[i] ?? 0;
+    score += item.coef * respuesta;
+  });
+
+  return {
+    probability: sigmoid(score),
+    modelName: t("ml.model_name", { group: t(`group.${coefKey}`) })
+  };
+}
 
 let currentGroup = "adults";
 let currentQuestion = 0;
@@ -116,20 +227,20 @@ function initQuestionnaire() {
 
 function renderQuestion() {
   const container = document.getElementById("questions-container");
-  const questions = QUESTIONS[currentGroup];
+  const questions = getQuestions()[currentGroup];
   const progress = ((currentQuestion + 1) / 10) * 100;
 
   document.querySelector(".progress-fill").style.width = progress + "%";
 
   container.innerHTML = `
     <div class="question active">
-      <div class="question-number">Pregunta ${currentQuestion + 1} de 10</div>
+      <div class="question-number">${t("q.number", { n: currentQuestion + 1 })}</div>
       <div class="question-text">${questions[currentQuestion]}</div>
       <div class="answer-options">
         <button class="answer-btn ${answers[currentQuestion] === 1 ? 'selected' : ''}"
-                onclick="selectAnswer(1)">De acuerdo</button>
+                onclick="selectAnswer(1)">${t("q.agree")}</button>
         <button class="answer-btn ${answers[currentQuestion] === 0 ? 'selected' : ''}"
-                onclick="selectAnswer(0)">En desacuerdo</button>
+                onclick="selectAnswer(0)">${t("q.disagree")}</button>
       </div>
     </div>
   `;
@@ -142,7 +253,7 @@ function renderQuestion() {
   const btnResult = document.getElementById("btn-result");
   btnResult.style.display = currentQuestion === 9 ? "" : "none";
   btnResult.disabled = !allAnswered;
-  btnResult.title = allAnswered ? "" : "Responde todas las preguntas para ver el resultado";
+  btnResult.title = allAnswered ? "" : t("q.answer_all");
 }
 
 // Función global para los botones de respuesta
@@ -191,14 +302,23 @@ function showResult() {
     "result-score " + (isHighRisk ? "risk-high" : "risk-low");
 
   document.getElementById("result-label").textContent =
-    isHighRisk
-      ? "Resultado: se recomienda derivación a evaluación especializada"
-      : "Resultado: no se detectan indicadores significativos de TEA";
+    isHighRisk ? t("result.high.label") : t("result.low.label");
 
   document.getElementById("result-detail").textContent =
     isHighRisk
-      ? `La puntuación obtenida (${score}/10) está por encima del umbral de cribado (${threshold}/10). Esto NO es un diagnóstico, sino una indicación de que sería conveniente realizar una evaluación clínica más detallada con un profesional especializado.`
-      : `La puntuación obtenida (${score}/10) está por debajo del umbral de cribado (${threshold}/10). Esto sugiere que no hay indicadores significativos de TEA en las respuestas. Si persisten preocupaciones, consulte con un profesional.`;
+      ? t("result.high.detail", { score, threshold })
+      : t("result.low.detail", { score, threshold });
+
+  // Prediccion del modelo ML real (aproximada, ver computeMlPrediction)
+  const mlResult = computeMlPrediction();
+  if (mlResult) {
+    const pct = (mlResult.probability * 100).toFixed(1);
+    document.getElementById("ml-prob-value").textContent = t("ml.probability", { pct });
+    document.getElementById("ml-prob-fill").style.width = pct + "%";
+    document.getElementById("ml-prob-fill").className =
+      "ml-prob-bar-fill " + (mlResult.probability >= 0.5 ? "ml-prob-high" : "ml-prob-low");
+    document.getElementById("ml-model-name").textContent = mlResult.modelName;
+  }
 }
 
 function resetQuestionnaire() {
@@ -227,7 +347,11 @@ function renderGroupData(groupKey) {
 
   const label = document.getElementById("data-group-label");
   if (label) {
-    label.textContent = `${GROUP_LABELS[groupKey] || groupKey} · modelo ${group.best_model} · n test = ${group.n_test}`;
+    label.textContent = t("data.group_label", {
+      group: GROUP_LABELS[groupKey] || groupKey,
+      model: group.best_model,
+      n: group.n_test
+    });
   }
 }
 
@@ -342,6 +466,9 @@ function initLightbox() {
 
 // Inicialización general
 async function init() {
+  initI18n();
+  initThemeToggle();
+
   // Cargar métricas reales del modelo (metrics.json, o dummy si aún no existe)
   loadedMetrics = await loadMetrics();
 
@@ -363,15 +490,71 @@ async function init() {
   renderGroupData(currentDataGroup);
 
   // Inicializar cuestionario interactivo
+  modelCoefficients = await loadModelCoefficients();
   initQuestionnaire();
 
   // Inicializar pestañas de análisis y el lightbox
   initAnalysisTabs();
   initLightbox();
 
+  // Inicializar la exportacion a PDF (usa los datos ya cargados)
+  initPdfExport(() => loadedMetrics);
+
+  // Inicializar el fondo animado del hero y el simulador de umbral
+  initNeuralBackground();
+  await initThresholdSimulator();
+
   // Inicializar animaciones
   initScrollReveal();
   animateCounters();
+
+  // Saludo para quien inspeccione la consola
+  printConsoleEasterEgg();
+
+  // Al cambiar de idioma, volvemos a renderizar todo el contenido dinamico
+  // que no se actualiza solo via los atributos data-i18n (preguntas del
+  // cuestionario, tabla de resultados, resumen destacado, panel de datos).
+  document.addEventListener("testtea:langchange", () => {
+    // Cuestionario: si estamos viendo una pregunta, se re-renderiza;
+    // si estamos viendo el resultado, se recalcula y se re-muestra.
+    const resultPanel = document.getElementById("result-panel");
+    if (resultPanel && resultPanel.classList.contains("visible")) {
+      showResult();
+    } else {
+      renderQuestion();
+    }
+
+    // Tabla completa y resumen destacado
+    if (loadedMetrics) {
+      renderFullMetricsTable("metrics-table", loadedMetrics.groups);
+      renderHeadlineSummary("headline-summary", loadedMetrics.overall);
+    }
+
+    // Panel de "Los datos" (importancia + matriz) del grupo seleccionado
+    renderGroupData(currentDataGroup);
+  });
+}
+
+/* ============================================
+   EASTER EGG: mensaje para quien mire la consola
+   ============================================ */
+function printConsoleEasterEgg() {
+  console.log(
+    "%c🍵 TesTEA",
+    "font-size: 20px; font-weight: bold; color: #3A7D7B;"
+  );
+  console.log(
+    "%cHola! Si estas viendo esto, probablemente eres desarrollador/a (o muy curioso/a).",
+    "font-size: 13px; color: #64748B;"
+  );
+  console.log(
+    "%cEste proyecto lo hizo el equipo de DataScope Solutions como parte de un bootcamp de IA & Big Data. Repo: https://github.com/adrianaarang/tesTEA",
+    "font-size: 12px; color: #64748B;"
+  );
+  console.log(
+    "%cGracias por mirar bajo el capo 👀",
+    "font-size: 12px; color: #E8A838;"
+  );
 }
 
 document.addEventListener("DOMContentLoaded", init);

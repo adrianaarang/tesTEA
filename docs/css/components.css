@@ -523,6 +523,495 @@
 
 
 /* ============================================
+   NEURAL BACKGROUND (canvas animado en el hero)
+   ============================================ */
+.hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.neural-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero .wrap {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================
+   SIMULADOR DE UMBRAL
+   ============================================ */
+.simulator-box {
+  max-width: 720px;
+  margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-md);
+}
+
+.sim-group-selector {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.sim-group-btn {
+  padding: 8px 18px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  background: var(--bg);
+  transition: all 0.2s;
+}
+
+.sim-group-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.sim-group-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+.sim-model-label {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  margin-bottom: var(--space-xl);
+}
+
+.sim-slider-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.sim-slider-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.sim-slider {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(to right, var(--negative) 0%, var(--amber) 50%, var(--positive) 100%);
+  outline: none;
+}
+
+.sim-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 3px solid var(--accent);
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.sim-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+.sim-slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 3px solid var(--accent);
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+}
+
+.sim-slider-value {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--accent);
+  min-width: 48px;
+  text-align: right;
+}
+
+.sim-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  margin-bottom: var(--space-lg);
+}
+
+.sim-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  justify-content: center;
+}
+
+.sim-metric-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.sim-metric-hint {
+  font-weight: 400;
+  font-size: 0.75rem;
+  color: var(--text-faint);
+}
+
+.sim-metric-bar-track {
+  height: 10px;
+  background: var(--bg-warm);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.sim-metric-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.25s ease;
+  width: 0%;
+}
+
+.sim-recall-fill {
+  background: var(--teal);
+}
+
+.sim-precision-fill {
+  background: var(--amber);
+}
+
+.sim-metric-value {
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--text);
+}
+
+.sim-confusion {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.sim-confusion-cell {
+  padding: var(--space-sm);
+  border-radius: var(--radius-sm);
+  text-align: center;
+}
+
+.sim-confusion-count {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+.sim-confusion-label {
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  line-height: 1.3;
+  margin-top: 2px;
+}
+
+.sim-tp, .sim-tn {
+  background: var(--negative-bg);
+}
+.sim-tp .sim-confusion-count, .sim-tn .sim-confusion-count {
+  color: var(--negative);
+}
+
+.sim-fp, .sim-fn {
+  background: var(--positive-bg);
+}
+.sim-fp .sim-confusion-count, .sim-fn .sim-confusion-count {
+  color: var(--positive);
+}
+
+.sim-note {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+  border-top: 1px solid var(--border-light);
+  padding-top: var(--space-md);
+}
+
+@media (max-width: 640px) {
+  .sim-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+.pdf-export-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--space-xl);
+}
+
+.btn-pdf {
+  font-size: 0.85rem;
+}
+
+
+.lang-switch {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.lang-btn {
+  padding: 6px 12px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  background: var(--surface);
+  transition: all 0.2s;
+}
+
+.lang-btn:hover {
+  color: var(--accent);
+}
+
+.lang-btn.active {
+  background: var(--accent);
+  color: white;
+}
+
+
+/* ============================================
+   THEME TOGGLE (modo oscuro)
+   ============================================ */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-dim);
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.theme-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.theme-icon-moon {
+  display: none;
+}
+
+[data-theme="dark"] .theme-icon-sun {
+  display: none;
+}
+
+[data-theme="dark"] .theme-icon-moon {
+  display: block;
+}
+
+
+/* ============================================
+   ML COMPARISON (prediccion real del modelo en el cuestionario)
+   ============================================ */
+.ml-comparison {
+  margin-top: var(--space-lg);
+  padding: var(--space-lg);
+  background: var(--bg-warm);
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--border);
+}
+
+.ml-comparison-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: var(--space-sm);
+}
+
+.ml-prob-bar-track {
+  height: 14px;
+  background: var(--surface);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.ml-prob-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.6s cubic-bezier(0.2, 0.7, 0.3, 1);
+  width: 0%;
+  background: var(--teal);
+}
+
+.ml-prob-bar-fill.ml-prob-high {
+  background: var(--positive);
+}
+
+.ml-prob-bar-fill.ml-prob-low {
+  background: var(--negative);
+}
+
+.ml-prob-value {
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--text);
+}
+
+.ml-comparison-note {
+  margin-top: var(--space-sm);
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  line-height: 1.5;
+  max-width: 100%;
+}
+
+.ml-comparison-note span {
+  font-weight: 600;
+  color: var(--text-dim);
+}
+
+
+/* ============================================
+   AGE ICONS (selector del cuestionario)
+   ============================================ */
+.age-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.age-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: currentColor;
+}
+
+/* ============================================
+   NOTA PERSONAL DEL EQUIPO
+   ============================================ */
+.team-note-section {
+  background: var(--bg-warm);
+  padding: var(--space-2xl) 0;
+}
+
+.team-note {
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.team-note-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--space-md);
+}
+
+.team-note p:not(.team-note-label):not(.team-note-signature) {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--text);
+  max-width: 100%;
+}
+
+.team-note-signature {
+  margin-top: var(--space-lg);
+  font-style: italic;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+
+/* ============================================
+   FOOTER - EQUIPO
+   ============================================ */
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.team-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-lg);
+  padding-top: var(--space-lg);
+}
+
+.team-list li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.team-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.team-role {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-faint);
+}
+
+@media (max-width: 640px) {
+  .footer-top {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+
+/* ============================================
    DATA GROUP SELECTOR (importancia/matriz por franja de edad)
    ============================================ */
 .data-group-selector {

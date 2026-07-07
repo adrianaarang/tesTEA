@@ -58,3 +58,38 @@
   /* Ancho maximo del contenido */
   --max-w:        1080px;
 }
+
+/* ============================================
+   MODO OSCURO — mismas variables, paleta oscura
+   Se activa con [data-theme="dark"] en <html>
+   ============================================ */
+[data-theme="dark"] {
+  --teal:         #5FC2BC;
+  --teal-deep:    #8AD9D3;
+  --teal-light:   rgba(95, 194, 188, 0.12);
+  --amber:        #F0B84D;
+  --amber-soft:   rgba(240, 184, 77, 0.14);
+  --honey:        #D4A574;
+
+  --positive:     #E08094;
+  --positive-bg:  rgba(224, 128, 148, 0.12);
+  --negative:     #7FBF8E;
+  --negative-bg:  rgba(127, 191, 142, 0.12);
+
+  --bg:           #12181A;
+  --bg-warm:      #182220;
+  --surface:      #1D2725;
+  --border:       #2E3B38;
+  --border-light: #26302D;
+  --text:         #EAF2F0;
+  --text-dim:     #9FB3AF;
+  --text-faint:   #6D827E;
+
+  --accent:       var(--teal);
+  --accent-hover: var(--teal-deep);
+  --highlight:    var(--amber);
+
+  --shadow-sm:    0 1px 3px rgba(0, 0, 0, 0.35);
+  --shadow-md:    0 4px 14px rgba(0, 0, 0, 0.45);
+  --shadow-lg:    0 10px 28px rgba(0, 0, 0, 0.55);
+}

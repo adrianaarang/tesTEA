@@ -23,6 +23,12 @@
   height: 64px;
 }
 
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
 .nav-links {
   display: flex;
   gap: var(--space-lg);
