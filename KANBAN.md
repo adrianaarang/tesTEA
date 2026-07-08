@@ -74,17 +74,17 @@ Nadie hace solo codigo, solo revision o solo documentacion.
 - **Revisa:** Juan Manuel Paredes
 - **Documenta:** Elizabeth Sena
 - **Definicion de terminado:**
-  - [ ] Notebook 04_evaluacion_analisis.ipynb completo
-  - [ ] Funciones reutilizables en src/evaluate.py
-  - [ ] Metricas calculadas: accuracy, precision, recall, F1, AUC-ROC
-  - [ ] Recall priorizado como metrica principal (contexto de cribado medico)
-  - [ ] Matriz de confusion visualizada para cada modelo
-  - [ ] Curva ROC comparativa
-  - [ ] SHAP o importancia de variables para interpretar el mejor modelo
-  - [ ] Comparacion de rendimiento entre grupos de edad
-  - [ ] Analisis de falsos negativos (los mas criticos en cribado)
-  - [ ] PR revisado y aprobado por Persona 2
-  - [ ] Comentarios y celdas markdown escritos por Persona 5
+  - [x] Notebook 04_evaluacion_analisis.ipynb completo
+  - [x] Funciones reutilizables en src/evaluate.py
+  - [x] Metricas calculadas: accuracy, precision, recall, F1, AUC-ROC
+  - [x] Recall priorizado como metrica principal (contexto de cribado medico)
+  - [x] Matriz de confusion visualizada para cada modelo
+  - [x] Curva ROC comparativa
+  - [x] SHAP o importancia de variables para interpretar el mejor modelo
+  - [x] Comparacion de rendimiento entre grupos de edad
+  - [x] Analisis de falsos negativos (los mas criticos en cribado)
+  - [x] PR revisado y aprobado por Persona 2
+  - [x] Comentarios y celdas markdown escritos por Persona 5
 
 ### Front completo (dia 2-6)
 - **Codifica:** Adriana Aránguez
