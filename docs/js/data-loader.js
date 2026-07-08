@@ -3,32 +3,501 @@
 // Datos de respaldo por si metrics.json todavia no existe en el servidor.
 // Misma estructura que el real: groups (por franja de edad) + overall (resumen destacado).
 const DUMMY_METRICS = {
-  groups: {
-    adults: {
-      n_test: 141,
-      n_train: 563,
-      models: [
-        { name: "Baseline", accuracy: 0.73, precision: 0, recall: 0, f1: 0, auc_roc: 0.5, confusion_matrix: [[103, 0], [38, 0]] },
-        { name: "Regresion Logistica", accuracy: 0.98, precision: 0.95, recall: 0.97, f1: 0.96, auc_roc: 0.99, confusion_matrix: [[101, 2], [1, 37]] },
-        { name: "Random Forest", accuracy: 0.95, precision: 0.9, recall: 0.92, f1: 0.91, auc_roc: 0.97, confusion_matrix: [[99, 4], [3, 35]] },
-        { name: "XGBoost", accuracy: 0.99, precision: 0.97, recall: 0.97, f1: 0.97, auc_roc: 0.99, confusion_matrix: [[102, 1], [1, 37]] }
+  "groups": {
+    "adults": {
+      "n_test": 141,
+      "n_train": 563,
+      "models": [
+        {
+          "name": "Baseline",
+          "accuracy": 0.7305,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "auc_roc": 0.5,
+          "confusion_matrix": [
+            [
+              103,
+              0
+            ],
+            [
+              38,
+              0
+            ]
+          ]
+        },
+        {
+          "name": "Regresion Logistica",
+          "accuracy": 0.9787,
+          "precision": 0.9487,
+          "recall": 0.9737,
+          "f1": 0.961,
+          "auc_roc": 0.9985,
+          "confusion_matrix": [
+            [
+              101,
+              2
+            ],
+            [
+              1,
+              37
+            ]
+          ]
+        },
+        {
+          "name": "Random Forest",
+          "accuracy": 0.9433,
+          "precision": 0.9167,
+          "recall": 0.8684,
+          "f1": 0.8919,
+          "auc_roc": 0.9875,
+          "confusion_matrix": [
+            [
+              100,
+              3
+            ],
+            [
+              5,
+              33
+            ]
+          ]
+        },
+        {
+          "name": "XGBoost",
+          "accuracy": 0.9787,
+          "precision": 0.9487,
+          "recall": 0.9737,
+          "f1": 0.961,
+          "auc_roc": 0.9992,
+          "confusion_matrix": [
+            [
+              101,
+              2
+            ],
+            [
+              1,
+              37
+            ]
+          ]
+        }
       ],
-      best_model: "XGBoost",
-      feature_importance: [
-        { feature: "A9_Score", importance: 0.24 }, { feature: "A5_Score", importance: 0.12 },
-        { feature: "A6_Score", importance: 0.08 }, { feature: "A4_Score", importance: 0.05 }
+      "best_model": "Regresion Logistica",
+      "feature_importance": [
+        {
+          "feature": "A5_Score",
+          "importance": 0.1204
+        },
+        {
+          "feature": "A9_Score",
+          "importance": 0.1199
+        },
+        {
+          "feature": "A7_Score",
+          "importance": 0.1109
+        },
+        {
+          "feature": "A4_Score",
+          "importance": 0.1075
+        },
+        {
+          "feature": "A10_Score",
+          "importance": 0.1037
+        },
+        {
+          "feature": "A3_Score",
+          "importance": 0.0997
+        },
+        {
+          "feature": "A1_Score",
+          "importance": 0.0898
+        },
+        {
+          "feature": "A6_Score",
+          "importance": 0.0862
+        },
+        {
+          "feature": "A8_Score",
+          "importance": 0.0852
+        },
+        {
+          "feature": "A2_Score",
+          "importance": 0.0767
+        }
+      ]
+    },
+    "adolescents": {
+      "n_test": 21,
+      "n_train": 83,
+      "models": [
+        {
+          "name": "Baseline",
+          "accuracy": 0.619,
+          "precision": 0.619,
+          "recall": 1.0,
+          "f1": 0.7647,
+          "auc_roc": 0.5,
+          "confusion_matrix": [
+            [
+              0,
+              8
+            ],
+            [
+              0,
+              13
+            ]
+          ]
+        },
+        {
+          "name": "Regresion Logistica",
+          "accuracy": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "auc_roc": 1.0,
+          "confusion_matrix": [
+            [
+              8,
+              0
+            ],
+            [
+              0,
+              13
+            ]
+          ]
+        },
+        {
+          "name": "Random Forest",
+          "accuracy": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "auc_roc": 1.0,
+          "confusion_matrix": [
+            [
+              8,
+              0
+            ],
+            [
+              0,
+              13
+            ]
+          ]
+        },
+        {
+          "name": "XGBoost",
+          "accuracy": 0.8571,
+          "precision": 1.0,
+          "recall": 0.7692,
+          "f1": 0.8696,
+          "auc_roc": 1.0,
+          "confusion_matrix": [
+            [
+              8,
+              0
+            ],
+            [
+              3,
+              10
+            ]
+          ]
+        }
+      ],
+      "best_model": "Regresion Logistica",
+      "feature_importance": [
+        {
+          "feature": "A10_Score",
+          "importance": 0.1348
+        },
+        {
+          "feature": "A3_Score",
+          "importance": 0.1275
+        },
+        {
+          "feature": "age",
+          "importance": 0.1248
+        },
+        {
+          "feature": "A5_Score",
+          "importance": 0.114
+        },
+        {
+          "feature": "A8_Score",
+          "importance": 0.1008
+        },
+        {
+          "feature": "A4_Score",
+          "importance": 0.0945
+        },
+        {
+          "feature": "A6_Score",
+          "importance": 0.087
+        },
+        {
+          "feature": "A7_Score",
+          "importance": 0.0847
+        },
+        {
+          "feature": "A2_Score",
+          "importance": 0.0782
+        },
+        {
+          "feature": "A9_Score",
+          "importance": 0.0536
+        }
+      ]
+    },
+    "combined": {
+      "n_test": 1215,
+      "n_train": 4860,
+      "models": [
+        {
+          "name": "Baseline",
+          "accuracy": 0.7029,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "auc_roc": 0.5,
+          "confusion_matrix": [
+            [
+              854,
+              0
+            ],
+            [
+              361,
+              0
+            ]
+          ]
+        },
+        {
+          "name": "Regresion Logistica",
+          "accuracy": 0.907,
+          "precision": 0.7743,
+          "recall": 0.9695,
+          "f1": 0.861,
+          "auc_roc": 0.9553,
+          "confusion_matrix": [
+            [
+              752,
+              102
+            ],
+            [
+              11,
+              350
+            ]
+          ]
+        },
+        {
+          "name": "Random Forest",
+          "accuracy": 0.9424,
+          "precision": 0.8506,
+          "recall": 0.9778,
+          "f1": 0.9098,
+          "auc_roc": 0.992,
+          "confusion_matrix": [
+            [
+              792,
+              62
+            ],
+            [
+              8,
+              353
+            ]
+          ]
+        },
+        {
+          "name": "XGBoost",
+          "accuracy": 0.9942,
+          "precision": 0.981,
+          "recall": 1.0,
+          "f1": 0.9904,
+          "auc_roc": 1.0,
+          "confusion_matrix": [
+            [
+              847,
+              7
+            ],
+            [
+              0,
+              361
+            ]
+          ]
+        }
+      ],
+      "best_model": "XGBoost",
+      "feature_importance": [
+        {
+          "feature": "A6",
+          "importance": 0.1174
+        },
+        {
+          "feature": "A9",
+          "importance": 0.1077
+        },
+        {
+          "feature": "A5",
+          "importance": 0.1076
+        },
+        {
+          "feature": "Age",
+          "importance": 0.1074
+        },
+        {
+          "feature": "A4",
+          "importance": 0.0992
+        },
+        {
+          "feature": "A3",
+          "importance": 0.0981
+        },
+        {
+          "feature": "A7",
+          "importance": 0.0969
+        },
+        {
+          "feature": "A2",
+          "importance": 0.0938
+        },
+        {
+          "feature": "A8",
+          "importance": 0.0896
+        },
+        {
+          "feature": "A10",
+          "importance": 0.0823
+        }
+      ]
+    },
+    "toddlers": {
+      "n_test": 211,
+      "n_train": 843,
+      "models": [
+        {
+          "name": "Baseline",
+          "accuracy": 0.6919,
+          "precision": 0.6919,
+          "recall": 1.0,
+          "f1": 0.8179,
+          "auc_roc": 0.5,
+          "confusion_matrix": [
+            [
+              0,
+              65
+            ],
+            [
+              0,
+              146
+            ]
+          ]
+        },
+        {
+          "name": "Regresion Logistica",
+          "accuracy": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "auc_roc": 1.0,
+          "confusion_matrix": [
+            [
+              65,
+              0
+            ],
+            [
+              0,
+              146
+            ]
+          ]
+        },
+        {
+          "name": "Random Forest",
+          "accuracy": 0.9716,
+          "precision": 0.9861,
+          "recall": 0.9726,
+          "f1": 0.9793,
+          "auc_roc": 0.9942,
+          "confusion_matrix": [
+            [
+              63,
+              2
+            ],
+            [
+              4,
+              142
+            ]
+          ]
+        },
+        {
+          "name": "XGBoost",
+          "accuracy": 0.9858,
+          "precision": 1.0,
+          "recall": 0.9795,
+          "f1": 0.9896,
+          "auc_roc": 0.9998,
+          "confusion_matrix": [
+            [
+              65,
+              0
+            ],
+            [
+              3,
+              143
+            ]
+          ]
+        }
+      ],
+      "best_model": "Regresion Logistica",
+      "feature_importance": [
+        {
+          "feature": "A2",
+          "importance": 0.1108
+        },
+        {
+          "feature": "A9",
+          "importance": 0.1096
+        },
+        {
+          "feature": "A8",
+          "importance": 0.1038
+        },
+        {
+          "feature": "A7",
+          "importance": 0.0988
+        },
+        {
+          "feature": "A4",
+          "importance": 0.0982
+        },
+        {
+          "feature": "A10",
+          "importance": 0.0982
+        },
+        {
+          "feature": "A6",
+          "importance": 0.0979
+        },
+        {
+          "feature": "A5",
+          "importance": 0.0961
+        },
+        {
+          "feature": "A1",
+          "importance": 0.0934
+        },
+        {
+          "feature": "A3",
+          "importance": 0.0932
+        }
       ]
     }
   },
-  overall: {
-    headline_group: "combined",
-    headline_group_label: "Coleccion agrupada (adultos+adolescentes+ninos)",
-    headline_model: "XGBoost",
-    recall: 1.0,
-    f1: 0.99,
-    precision: 0.98,
-    n_test: 1215,
-    note: "Datos de ejemplo (metrics.json todavia no disponible)."
+  "overall": {
+    "headline_group": "combined",
+    "headline_group_label": "Coleccion agrupada (adultos+adolescentes+ninos)",
+    "headline_model": "XGBoost",
+    "recall": 1.0,
+    "f1": 0.9904,
+    "precision": 0.981,
+    "n_test": 1215,
+    "note": "Se destaca el grupo 'combined' por ser el mas robusto estadisticamente (1215 registros de test). Los grupos de adolescents y toddlers alcanzan recall alto pero con muestras de test mucho menores (21 y 211 registros), por lo que esas cifras deben interpretarse con mas cautela."
   }
 };
 
