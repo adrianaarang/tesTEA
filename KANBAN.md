@@ -121,15 +121,15 @@ Nadie hace solo codigo, solo revision o solo documentacion.
 ### Slides y pitch (dia 5-7)
 - **Responsable:** Todo el equipo
 - **Reparto de slides:**
-  - [ ] Persona 1: slide "Proceso: que hemos hecho y por que" (preprocesamiento)
-  - [ ] Persona 2: slide "Resultados: que dice el modelo, que metricas"
-  - [ ] Persona 3: slide "Limitaciones, sesgos y mejoras posibles"
-  - [ ] Persona 4: demo en vivo del front
-  - [ ] Persona 5: slides "Quienes somos" + "Conclusion: que le recomendamos al cliente"
+  - [x] Persona 1: slide "Proceso: que hemos hecho y por que" (preprocesamiento)
+  - [x] Persona 2: slide "Resultados: que dice el modelo, que metricas"
+  - [x] Persona 3: slide "Limitaciones, sesgos y mejoras posibles"
+  - [x] Persona 4: demo en vivo del front
+  - [x] Persona 5: slides "Quienes somos" + "Conclusion: que le recomendamos al cliente"
 - **Definicion de terminado:**
-  - [ ] Pitch ensayado al menos 2 veces
-  - [ ] Duracion ajustada a 10-12 minutos
-  - [ ] Feedback incorporado tras ensayos
+  - [x] Pitch ensayado al menos 2 veces
+  - [x] Duracion ajustada a 10-12 minutos
+  - [x] Feedback incorporado tras ensayos
 
 ## Dependencias entre tareas
 
