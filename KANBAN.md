@@ -55,7 +55,7 @@ Nadie hace solo codigo, solo revision o solo documentacion.
 ### Modelado (dia 2-4)
 - **Codifica:** José Manuel Paredes
 - **Revisa:** Laura Silva
-- **Documenta:** Elizabeth Sena
+- **Documenta:** 
 - **Definicion de terminado:**
   - [x] Notebook 03_modelado.ipynb completo
   - [x] Baseline (predecir siempre la clase mayoritaria)
@@ -72,7 +72,7 @@ Nadie hace solo codigo, solo revision o solo documentacion.
 ### Evaluacion y analisis critico (dia 4-5)
 - **Codifica:** Isabella Tellez
 - **Revisa:** Juan Manuel Paredes
-- **Documenta:** Elizabeth Sena
+- **Documenta:** 
 - **Definicion de terminado:**
   - [x] Notebook 04_evaluacion_analisis.ipynb completo
   - [x] Funciones reutilizables en src/evaluate.py
@@ -88,7 +88,7 @@ Nadie hace solo codigo, solo revision o solo documentacion.
 
 ### Front completo (dia 2-6)
 - **Codifica:** Adriana Aránguez
-- **Revisa:** Elizabeth Sena
+- **Revisa:** 
 - **Documenta:** Laura Silva
 - **Definicion de terminado:**
   - [x] Estructura HTML en docs/index.html
