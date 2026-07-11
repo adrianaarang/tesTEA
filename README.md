@@ -208,7 +208,6 @@ Estas limitaciones no invalidan el proyecto, pero delimitan claramente su alcanc
 | Adriana Aránguez | Scrum Master |
 | José Manuel Paredes | Desarrollador |
 | Laura Silva | Desarrollador |
-| Elizabeth Sena | Desarrollador |
 
 [![GitHub](https://img.shields.io/badge/GitHub-adrianaarang-181717?logo=github)](https://github.com/adrianaarang)
 
