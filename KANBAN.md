@@ -8,10 +8,10 @@ Nadie hace solo codigo, solo revision o solo documentacion.
 | Tarea | Codifica | Revisa (PR) | Documenta |
 |---|---|---|---|
 | Preprocesamiento | Laura Silva | Adriana Aránguez | José Manuel Paredes|
-| Modelado | José Manuel Paredes | Laura Silva | Elizabeth Sena |
-| Evaluacion + SHAP | Isabella Tellez | José Manuel Paredes | Elizabeth Sena |
-| Front |Adriana Aránguez| Elizabeth Sena | Laura Silva |
-| README + marco etico + JSONs | Elizabeth Sena | Adriana Aránguez| Isabella Tellez |
+| Modelado | José Manuel Paredes | Laura Silva | Adriana Aránguez |
+| Evaluacion + SHAP | Isabella Tellez | José Manuel Paredes | Adriana Aránguez |
+| Front |Adriana Aránguez|  | Laura Silva |
+| README + marco etico + JSONs | Adriana Aránguez | Isabella Tellez |
 
 - **Codifica:** escribe el codigo y lo sube en su rama
 - **Revisa:** hace code review del PR antes de hacer merge a main
@@ -106,9 +106,9 @@ Nadie hace solo codigo, solo revision o solo documentacion.
   - [x] Comentarios en el codigo escritos por Persona 1
 
 ### README, marco etico y exportacion de JSONs (dia 3-6)
-- **Codifica:** Elizabeth Sena
+- **Codifica:** Adriana Aránguez
 - **Revisa:** Adriana Aránguez
-- **Documenta:**Isabella Tellez
+- **Documenta:**
 - **Definicion de terminado:**
   - [x] JSONs de metricas exportados a docs/assets/data/metrics.json
   - [x] README completo: contexto de negocio, marco etico, metodologia, limitaciones, conclusiones
